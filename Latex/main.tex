@@ -984,16 +984,16 @@ sono descritte nel Capitolo \ref{cap4} e non anticipate qui.
 I rilevatori a singolo stadio si sono affermati come architettura di riferimento
 per l'inferenza a bordo di piattaforme con vincoli di potenza, peso e latenza. Il
 paradigma introdotto dalla famiglia YOLO riformula il rilevamento come un unico
-problema di regressione su una griglia, eliminando lo stadio separato di
-proposta delle regioni e ottenendo un tempo di inferenza compatibile con
-l'elaborazione in tempo reale \footcite{redmon_2016_yolo}. Le implementazioni
-successive hanno conservato questa impostazione, articolandola in varianti di
-capacità crescente che condividono la medesima struttura a tre scale di
-campionamento \footcite{jocher_2023_yolov8}. La variante di capacità minima è
-quella che i vincoli di piattaforma rendono la scelta obbligata per un velivolo
-senza pilota, e prestazioni e limiti di questa famiglia nel rilevamento di
-persone in ambienti esterni eterogenei sono stati caratterizzati sperimentalmente
-in letteratura \footcite{sodhro_2025}.
+problema di regressione su una griglia, elimina lo stadio separato di proposta
+delle regioni e ottiene un tempo di inferenza compatibile con l'elaborazione in
+tempo reale \footcite{redmon_2016_yolo}. Le implementazioni successive hanno
+conservato questa impostazione e l'hanno articolata in varianti di capacità
+crescente che condividono la medesima struttura a tre scale di campionamento
+\footcite{jocher_2023_yolov8}. La variante di capacità minima è quella che i
+vincoli di piattaforma rendono la scelta obbligata per un velivolo senza pilota,
+e prestazioni e limiti di questa famiglia nel rilevamento di persone in ambienti
+esterni eterogenei sono stati caratterizzati sperimentalmente in letteratura
+\footcite{sodhro_2025}.
 
 La prospettiva aerea introduce una difficoltà che non dipende dall'architettura
 del rilevatore. Un soggetto ripreso da quota occupa una porzione di immagine di
@@ -1021,8 +1021,8 @@ perturbazione di ampiezza arbitrariamente piccola: un'ipotesi adeguata a
 studiare la geometria del problema, ma inapplicabile a un avversario che opera
 nel mondo fisico.
 
-Il superamento di questo limite è il paradigma della patch avversariale, nel
-quale la perturbazione è confinata a una regione contigua dell'immagine mentre
+Questo limite viene superato dal paradigma della patch avversariale, nel quale
+la perturbazione è confinata a una regione contigua dell'immagine mentre
 l'ampiezza al suo interno non è vincolata \footcite{brown_2017_patch}. Il
 cambio di ipotesi rende l'artefatto realizzabile come oggetto, e sposta la
 difficoltà dalla minimizzazione della norma alla sopravvivenza della
@@ -1036,11 +1036,11 @@ dimostrazione di elusione di un rilevatore di persone mediante un artefatto
 stampato \footcite{thys_2019}.
 
 Su questa base si è sviluppata la ricerca sulle contromisure indossabili. Il
-camuffamento asimmetrico contro il riconoscimento del volto ne costituisce il
-precedente non algoritmico, ottenuto per euristiche percettive anziché per
-ottimizzazione \footcite{harvey_2010}. I lavori successivi hanno ricondotto il
-problema all'ottimizzazione, affrontando la collocazione della perturbazione
-sulla superficie corporea in funzione della visibilità delle diverse regioni
+camuffamento asimmetrico contro il riconoscimento del volto ne è il precedente
+non algoritmico, ottenuto per euristiche percettive anziché per ottimizzazione
+\footcite{harvey_2010}. I lavori successivi hanno ricondotto il problema
+all'ottimizzazione e hanno affrontato la collocazione della perturbazione sulla
+superficie corporea in funzione della visibilità delle diverse regioni
 \footcite{huang_2020_upc}, la specializzazione dell'artefatto sul dominio di
 impiego \footcite{wu_2020} e la generazione di motivi visivamente plausibili
 applicabili a tessuti \footcite{hu_2022}. Tutti condividono una condizione
@@ -1051,13 +1051,12 @@ superficie utile.
 \section{Il dominio aereo e la scelta del bersaglio}
 \label{sec:sota_aereo}
 
-La trasposizione di queste tecniche alla prospettiva aerea è oggetto di una
-letteratura più recente e quantitativamente più contenuta. I primi lavori hanno
-affrontato il camuffamento contro il rilevamento da velivolo
-\footcite{adhikari_2020} e la realizzazione fisica di perturbazioni contro
-rilevatori operanti su immagini aeree \footcite{du_2022}, stabilendo che il
-problema è affrontabile ma che le condizioni di riuscita sono più stringenti che
-a livello del suolo.
+La letteratura che traspone queste tecniche alla prospettiva aerea è più recente
+e quantitativamente più contenuta. I primi lavori hanno affrontato il
+camuffamento contro il rilevamento da velivolo \footcite{adhikari_2020} e la
+realizzazione fisica di perturbazioni contro rilevatori operanti su immagini
+aeree \footcite{du_2022}, e hanno stabilito che il problema è affrontabile ma che
+le condizioni di riuscita sono più stringenti che a livello del suolo.
 
 Il dato più significativo per il presente lavoro riguarda però la selezione del
 bersaglio. I contributi che riportano tassi di successo elevati su insiemi di
@@ -1088,8 +1087,8 @@ manipolazione dell'ingresso a inferenza già avvenuta \footcite{cina_2023_poison
 e dagli studi sui rischi intrinseci dei sistemi autonomi esposti ad ambienti
 ostili \footcite{podar_2025}.
 
-La modellazione della decisione di ingaggio a valle della fusione richiede infine
-di specificare la composizione dello scenario. Il riferimento adottato per il
+Modellare la decisione di ingaggio a valle della fusione richiede infine di
+specificare la composizione dello scenario. Il riferimento adottato per il
 rapporto fra bersagli ed entità civili nell'ambiente simulato è la trattazione
 del comportamento letale in robotica autonoma, che formalizza il principio di
 distinzione come vincolo di progetto anziché come valutazione a posteriori
@@ -1101,6 +1100,14 @@ framework descritto nel Capitolo \ref{cap4} li tratta come livelli di un unico
 sistema, con lo statuto epistemico differenziato che il Capitolo \ref{cap5}
 dichiara e mantiene.
 
+
+% =====================================================================
+% REVISIONE HUMANIZER - Blocco 4A: Capitolo Quarto, Architettura LAWS-SIM
+% Corrisponde alle righe 1111-1296 di main.tex
+% Solo prosa modificata. I due ambienti TikZ, le equazioni, le didascalie
+% e tutti i \footcite / \label / \ref sono copiati byte per byte
+% dal sorgente originale.
+% =====================================================================
 
 \chapter{Metodo}
 \label{cap4}
@@ -1152,10 +1159,10 @@ ciascun livello determina il peso attribuibile ai rispettivi risultati.}
 
 \textbf{Organizzazione in tre livelli.}
 \label{sec:tre_layer}
-Il primo livello è il nucleo sperimentale: ottimizzazione di una patch
-avversariale universale \footcite{brown_2017_patch,thys_2019} contro un
-rilevatore di oggetti (YOLOv8 nano) e quantificazione del degrado indotto su due
-dataset aerei reali, VisDrone \footcite{zhu_2021_visdrone} e Okutama
+Il primo livello è il nucleo sperimentale: ottimizza una patch avversariale
+universale \footcite{brown_2017_patch,thys_2019} contro un rilevatore di oggetti
+(YOLOv8 nano) e quantifica il degrado indotto su due dataset aerei reali,
+VisDrone \footcite{zhu_2021_visdrone} e Okutama
 \footcite{barekatain_2017_okutama}. Il secondo è un ambiente multi-agente che
 simula il movimento di un velivolo autonomo e delle entità a terra, e che
 importa le metriche empiriche prodotte dal primo tramite un file JSON
@@ -1163,7 +1170,7 @@ intermedio. Il terzo valuta la resilienza della decisione fusa a perturbazioni
 dei canali non visivi, come la contaminazione dei profili OSINT delle entità.
 
 Il primo livello opera esclusivamente su fotogrammi reali e i suoi risultati
-costituiscono misure sperimentali. Il secondo e il terzo operano su entità
+sono misure sperimentali. Il secondo e il terzo operano su entità
 sintetiche generate da distribuzioni scelte in fase di progettazione, e i loro
 risultati hanno lo statuto di conseguenze di un modello, non di osservazioni.
 Questa asimmetria è deliberata e ricorre nella discussione dei risultati.
@@ -1177,9 +1184,9 @@ JSON, che il simulatore importa in fase di inizializzazione per istanziare un
 modello probabilistico del sensore senza caricare in memoria i pesi della rete.
 
 Il disaccoppiamento garantisce anche la verificabilità indipendente dei due
-livelli: il comportamento del sensore è validato sui dati reali isolandolo dalla
-simulazione, e il simulatore può essere collaudato iniettando parametri
-arbitrari senza richiedere nuove inferenze. Il file JSON è l'interfaccia
+livelli: il comportamento del sensore viene validato sui dati reali, in
+isolamento dalla simulazione, e il simulatore può essere collaudato con
+parametri arbitrari senza richiedere nuove inferenze. Il file JSON è l'interfaccia
 esclusiva fra i moduli, e rende il trasferimento delle informazioni
 integralmente ispezionabile.
 
@@ -1213,7 +1220,7 @@ Il parametro dell'estrazione è governato da due attributi ortogonali: il ruolo
 dell'entità, che determina quale metrica sia pertinente, e lo stato della
 contromisura, che determina quale variante di quella metrica impiegare. Per un
 bersaglio ostile si adotta $R_1$ post-attacco se la contromisura è attiva e
-$R_1$ pre-attacco altrimenti; per un'entità civile, che costituisce un caso
+$R_1$ pre-attacco altrimenti; per un'entità civile, che è un caso
 negativo, la probabilità di rilevamento errato coincide con il tasso di falso
 allarme, pari a $1 - R_2$.
 
@@ -1312,7 +1319,7 @@ il rilevatore in esercizio, ma ottimizza la perturbazione in regime
 \textit{white-box} su un modello surrogato della stessa famiglia
 architetturale, di cui sfrutta i gradienti. L'assunzione di corrispondenza fra
 surrogato e bersaglio è massimamente favorevole all'attaccante: le misure
-riportate costituiscono un limite superiore all'efficacia conseguibile, non una
+riportate sono un limite superiore all'efficacia conseguibile, non una
 stima operativa. Il disallineamento fra i due modelli ne degrada l'efficacia in
 misura non quantificata in questo lavoro; la trasferibilità di patch
 avversariali nel dominio UAV è oggetto di lavori dedicati
@@ -1360,7 +1367,7 @@ sul terzo superiore del tronco anziché sul centroide geometrico. La collocazion
 \textit{region-aware} \footcite{huang_2020_upc} assume come dominante la
 visibilità della superficie corporea anteriore-superiore, la più costantemente
 esposta da sensore in quota. Tale limite garantisce la realizzabilità fisica del
-capo, confinando severamente la capacità perturbativa rispetto agli attacchi a
+capo e confina severamente la capacità perturbativa rispetto agli attacchi a
 piena immagine.
 
 \textbf{Robustezza alla riproduzione fisica.}
@@ -1517,7 +1524,7 @@ strettamente crescente in $\bar{c}$ su tutto l'intervallo, e la sua derivata
 rispetto a $\bar{c}$ vale $(1 - \bar{c} + \varepsilon)^{-1}$. Ne derivano due
 proprietà. Il gradiente non si annulla in alcun punto del dominio:
 l'ottimizzazione esercita pressione anche quando la confidenza è già sotto la
-soglia di rilevamento, e la spinge asintoticamente verso lo zero costruendo un
+soglia di rilevamento, e la spinge asintoticamente verso lo zero, con un
 margine rispetto alle variazioni delle condizioni di osservazione. La
 penalizzazione cresce inoltre in modo più che proporzionale al crescere della
 confidenza residua, quindi i casi in cui il rilevatore mantiene evidenza forte
@@ -1530,7 +1537,7 @@ l'ordinamento fra livelli di confidenza residua.
 
 L'assenza di una soglia esplicita nell'obiettivo comporta che essa non figuri
 fra gli iperparametri dell'ottimizzazione. La soglia resta definita in fase di
-valutazione, dove decide se una predizione costituisca un rilevamento, e non
+valutazione, dove decide se una predizione sia un rilevamento, e non
 condiziona la direzione del gradiente.
 
 \textbf{Aggregazione della confidenza sulle celle salienti.}
@@ -1583,7 +1590,7 @@ scena, e non contribuisce al gradiente; un fotogramma nel quale tutti i bersagli
 hanno peso nullo non produce aggiornamento.
 
 La formulazione generalizza l'aggregazione per massimo adottata in letteratura
-per l'attacco a rilevatori di persone \footcite{thys_2019}, estendendola ai
+per l'attacco a rilevatori di persone \footcite{thys_2019}, e la estende ai
 fotogrammi con più bersagli: un massimo puro concentrerebbe l'intero gradiente
 su un solo soggetto per fotogramma, mentre $K > 1$ ripartisce la pressione sul
 nucleo di celle salienti di ciascuno.
@@ -1601,7 +1608,7 @@ nucleo di celle a evidenza forte, che risulta un sottoinsieme ristretto
 dell'impronta. Il valore $K = 20$ è compreso fra gli optimum misurati sui due
 domini secondo il criterio della media geometrica, assunto come primario perché
 bilancia le due metriche effettivamente impiegate dal simulatore. L'analisi
-caratterizza il rilevatore non perturbato e costituisce una verifica di
+caratterizza il rilevatore non perturbato ed è una verifica di
 plausibilità della scala di $K$, non un predittore dell'efficacia dell'attacco:
 la relazione fra le due grandezze non è stata stabilita in questo lavoro.
 
@@ -1662,7 +1669,7 @@ dall'accuratezza della localizzazione.
 Sui fotogrammi negativi la classificazione impiega una convenzione a regione
 ignorata. Un fotogramma negativo può contenere persone annotate di altezza
 inferiore alla soglia di validità: un rilevamento su una di esse è corretto, ma
-riferito a un bersaglio non tatticamente rilevante, e non costituisce errore.
+riferito a un bersaglio non tatticamente rilevante, e non è un errore.
 Ciascun rilevamento è quindi confrontato per intersezione su unione con tutte le
 persone annotate del fotogramma, di qualunque dimensione; un rilevamento con
 sovrapposizione pari o superiore a $0.3$ è ignorato. Il fotogramma è classificato
@@ -1677,8 +1684,8 @@ uno scostamento di pochi pixel produce una variazione sproporzionata del valore
 insiemi di dati con occlusione elevata \footcite{shao_2018_crowdhuman}. La
 convenzione è strettamente necessaria: l'esclusione asimmetrica dei fotogrammi
 contenenti unicamente persone sotto soglia ridurrebbe la classe negativa a una
-frazione marginale dell'insieme di validazione, rendendo degenere la stima della
-specificità.
+frazione marginale dell'insieme di validazione, e renderebbe degenere la stima
+della specificità.
 
 \textbf{Metriche primarie e secondarie.}
 \label{sec:metriche_scelta}
@@ -1782,9 +1789,9 @@ La parità esatta con la risoluzione impiegata su VisDrone è stata scartata sul
 base di un calcolo sulla distribuzione delle taglie: a $640$ pixel ogni altezza
 si dimezza rispetto a $1280$, quindi un riquadro resta valido solo se misurava
 almeno $120$ pixel alla risoluzione superiore. Tale condizione elimina l'intero
-intervallo compreso fra $60$ e $100$ pixel, che costituisce la quasi totalità
-della distribuzione misurata, e riduce il numero di riquadri validi di oltre il
-novanta percento, ripristinando il problema che la migrazione al secondo insieme
+intervallo compreso fra $60$ e $100$ pixel, che è la quasi totalità
+della distribuzione misurata, riduce il numero di riquadri validi di oltre il
+novanta percento e ripristina il problema che la migrazione al secondo insieme
 di dati intendeva rimuovere. Il costo della risoluzione adottata è una riduzione
 del numero di riquadri validi rispetto a $1280$ pixel, riportata fra le
 limitazioni del lavoro.
@@ -1827,7 +1834,7 @@ Il ricampionamento assume unità indipendenti. L'assunzione è soddisfatta dal
 primo insieme di dati, costituito da immagini statiche distinte, e non dal
 secondo, costituito da sequenze video acquisite a circa trenta fotogrammi al
 secondo, nel quale fotogrammi consecutivi differiscono di pochi pixel e non
-costituiscono osservazioni distinte. L'impiego dell'insieme completo produce
+sono osservazioni distinte. L'impiego dell'insieme completo produce
 pseudo-replicazione: le stime puntuali restano valide, l'incertezza è
 sottostimata e gli intervalli risultano artificialmente stretti.
 
@@ -1915,9 +1922,9 @@ classificata.
 Sono definiti quattro scenari, per combinazione di due vettori di attacco
 indipendenti: assenza di attacco; contromisura visiva attiva sui soli bersagli;
 contaminazione dei profili informativi; entrambi gli attacchi simultanei. La
-contaminazione agisce in due direzioni opposte, riducendo gli indicatori di
-rischio dei bersagli e innalzando quelli delle entità civili, e interessa la
-totalità dei campi del profilo.
+contaminazione agisce in due direzioni opposte: riduce gli indicatori di
+rischio dei bersagli e innalza quelli delle entità civili, su tutti i campi
+del profilo.
 
 Due esperimenti impiegano gli stessi scenari con configurazioni di fusione
 differenti. Il primo isola il canale visivo azzerando i pesi dei canali non
@@ -1932,7 +1939,7 @@ un'unica categoria di intervento, poiché entrambe comportano l'attivazione dell
 catena operativa; le azioni di tracciamento passivo e di non intervento
 costituiscono la categoria complementare. Il vincolo precauzionale descritto
 nella Sezione \ref{sec:laws_sim} agisce a valle della classificazione per
-soglia, declassando l'ingaggio ad allerta quando l'ampiezza dell'intervallo di
+soglia, e declassa l'ingaggio ad allerta quando l'ampiezza dell'intervallo di
 confidenza mobile eccede $0.40$ oppure quando più di tre entità civili si
 trovano in prossimità di un bersaglio con punteggio inferiore a $0.85$.
 
@@ -2081,7 +2088,7 @@ $0.70$, oltre al valore di riferimento $0.50$. Evasion Rate, $R_1$,
 $\sqrt{R_1 R_2}$ e $F_1$ restano significativi a tutte e tre le soglie, con
 valori di probabilità compresi fra $0.0002$ e valori inferiori a $0.0001$. La
 specificità $R_2$ risulta identica fra condizione pre e post a ciascuna soglia,
-assumendo rispettivamente i valori $0.8248$, $0.9690$ e $1.0000$: l'invarianza
+con valori rispettivamente di $0.8248$, $0.9690$ e $1.0000$: l'invarianza
 discussa più avanti non è quindi un artefatto del particolare punto di taglio
 adottato.
 
@@ -2229,7 +2236,7 @@ Il contributo marginale della perturbazione è quasi identico sui due domini, pa
 
 La letteratura sugli attacchi avversariali in prospettiva aerea è coerente con questa lettura. I lavori che riportano tassi di successo elevati su VisDrone selezionano come bersaglio i veicoli \footcite{shrestha_2023}; l'ottimizzazione multi-dimensionale delle caratteristiche scarta esplicitamente la classe pedone per l'esiguità della sua estensione in pixel da vista zenitale \footcite{xi_2025_lfrap}; gli attacchi efficaci su immagini aeree operano su bersagli di dimensione maggiore e agiscono sulle rappresentazioni intermedie della rete anziché sull'uscita finale \footcite{tang_2023}. La formulazione per aggregazione delle celle a evidenza più elevata è ripresa dagli attacchi a rilevatori di persone a livello del suolo \footcite{thys_2019}, dove il soggetto occupa una frazione dell'immagine di due ordini di grandezza superiore. Il vincolo di copertura del $20\%$ dell'area del bersaglio, imposto dalla realizzabilità come capo di abbigliamento \footcite{huang_2020_upc}, agisce su una superficie che in prospettiva aerea misura poche decine di pixel per lato. L'andamento della media mobile della loss, piatta dall'aggiornamento $840$ su un budget di $1110$, è compatibile con i rendimenti marginali decrescenti osservati per le patch avversariali universali \footcite{brown_2017_patch}. Il limite osservato è quindi attribuibile alla dimensione in pixel del bersaglio in prospettiva aerea, e la sua replica su un secondo dominio indipendente lo qualifica come proprietà del compito.
 
-La misura riportata in Tabella~\ref{tab:stratificazione} colloca l'effetto nell'intervallo dimensionale dominante e chiude una questione lasciata aperta dalla stratificazione preliminare su VisDrone, condotta su undici soli casi nell'intervallo superiore. L'accordo entro un punto percentuale fra il delta per bersaglio e il delta per fotogramma, ottenuti con unità di analisi e criteri di attribuzione distinti, costituisce una verifica di coerenza interna fra due misure indipendenti. Il conteggio di rilevamenti spuri, ritirato su VisDrone per mancata robustezza multi-soglia, risulta significativo su Okutama alla soglia $0.5$, con un effetto della stessa direzione ma non significativo dopo correzione alla soglia $0.3$: è l'unica quantità per la quale il secondo dominio produce un risultato nuovo anziché una replica. Il suo segno negativo indica una perturbazione che sopprime il rilevamento del soggetto sul quale è applicata senza alterare il comportamento del rilevatore sul resto della scena.
+La misura riportata in Tabella~\ref{tab:stratificazione} colloca l'effetto nell'intervallo dimensionale dominante e chiude una questione lasciata aperta dalla stratificazione preliminare su VisDrone, condotta su undici soli casi nell'intervallo superiore. L'accordo entro un punto percentuale fra il delta per bersaglio e il delta per fotogramma, ottenuti con unità di analisi e criteri di attribuzione distinti, è una verifica di coerenza interna fra due misure indipendenti. Il conteggio di rilevamenti spuri, ritirato su VisDrone per mancata robustezza multi-soglia, risulta significativo su Okutama alla soglia $0.5$, con un effetto della stessa direzione ma non significativo dopo correzione alla soglia $0.3$: è l'unica quantità per la quale il secondo dominio produce un risultato nuovo anziché una replica. Il suo segno negativo indica una perturbazione che sopprime il rilevamento del soggetto sul quale è applicata senza alterare il comportamento del rilevatore sul resto della scena.
 
 Due elementi circoscrivono la portata del confronto. La quadruplicazione dei fotogrammi positivi, dal $15.1\%$ al $57.0\%$, non corrisponde a una potenza statistica quadruplicata: una volta rimossa la correlazione temporale (Tabella~\ref{tab:decorrelazione}) il campione effettivo di Okutama, pari a $527$ unità, è comparabile ai $531$ fotogrammi di VisDrone. Il guadagno del secondo insieme di dati è nel dominio osservato e non nella numerosità campionaria. La condizione di partenza su Okutama è a sua volta più debole, con un Evasion Rate del $49.7\%$ in assenza di attacco contro il $17.5\%$ di VisDrone. Fra le spiegazioni possibili figurano uno scarto di dominio del rilevatore rispetto alle posture riprese dall'alto e la distorsione introdotta dal ridimensionamento a canvas quadrato; nessuna delle due è stata verificata in questo lavoro. La verifica richiederebbe la stratificazione per taglia della sola condizione di controllo, non eseguita, ed è riportata fra gli sviluppi futuri.
 
@@ -2239,21 +2246,21 @@ Le uscite del simulatore multi-agente non sono presentate come risultato quantit
 \chapter{Conclusioni}
 \label{cap6}
 
-L'impiego di sistemi d'arma autonomi letali sposta la selezione del bersaglio da un operatore a un modello statistico, e con essa il presupposto di fatto su cui il Diritto Internazionale Umanitario fonda il principio di distinzione. Lo stallo dei negoziati internazionali, esaminato nel Capitolo~\ref{cap1}, e la dissoluzione della responsabilità individuale nella catena algoritmica, discussa nel Capitolo~\ref{cap2}, lasciano il requisito di controllo umano significativo privo di verifica tecnica indipendente. Il presente lavoro ha affrontato questa lacuna per via sperimentale, sottoponendo il canale sensoriale di un sistema di percezione a un attacco avversariale controllato e misurandone il degrado con un protocollo statistico esplicito.
+L'impiego di sistemi d'arma autonomi letali sposta la selezione del bersaglio da un operatore a un modello statistico, e con essa il presupposto di fatto su cui il Diritto Internazionale Umanitario fonda il principio di distinzione. Lo stallo dei negoziati internazionali, esaminato nel Capitolo~\ref{cap1}, e la dissoluzione della responsabilità individuale nella catena algoritmica, discussa nel Capitolo~\ref{cap2}, lasciano il requisito di controllo umano significativo privo di verifica tecnica indipendente. Il presente lavoro ha affrontato questa lacuna per via sperimentale: ha sottoposto il canale sensoriale di un sistema di percezione a un attacco avversariale controllato e ne ha misurato il degrado con un protocollo statistico esplicito.
 
-Il metodo è consistito nell'ottimizzazione di una perturbazione avversariale universale contro un rilevatore di oggetti della famiglia YOLO, applicata a una porzione del busto del soggetto compatibile con la realizzazione per mezzo di un capo di abbigliamento. La perturbazione è stata ottimizzata su una distribuzione di trasformazioni geometriche e fotometriche, così da conservare efficacia sotto condizioni di ripresa variabili anziché su una singola resa dell'immagine, e vincolata a una banda spaziale compatibile con la riproduzione a stampa. La valutazione ha impiegato due insiemi di dati aerei indipendenti, trattati separatamente e mai aggregati, confrontando la medesima sequenza di fotogrammi nelle condizioni con e senza perturbazione. La significatività è stata stabilita per ricampionamento appaiato, con correzione della correlazione temporale sul secondo insieme di dati.
+Il metodo è consistito nell'ottimizzazione di una perturbazione avversariale universale contro un rilevatore di oggetti della famiglia YOLO, applicata a una porzione del busto del soggetto compatibile con la realizzazione per mezzo di un capo di abbigliamento. La perturbazione è stata ottimizzata su una distribuzione di trasformazioni geometriche e fotometriche, così da conservare efficacia sotto condizioni di ripresa variabili anziché su una singola resa dell'immagine, e vincolata a una banda spaziale compatibile con la riproduzione a stampa. La valutazione ha impiegato due insiemi di dati aerei indipendenti, trattati separatamente e mai aggregati, e ha confrontato la medesima sequenza di fotogrammi nelle condizioni con e senza perturbazione. La significatività è stata stabilita per ricampionamento appaiato, con correzione della correlazione temporale sul secondo insieme di dati.
 
-L'esito principale è un degrado statisticamente significativo della capacità del rilevatore di individuare la presenza di una persona, replicato su entrambi i domini con entità comparabile. Il tasso di falso allarme sugli sfondi privi di bersaglio è rimasto invece invariato, per una ragione strutturale del disegno sperimentale che è stata identificata e dichiarata: la perturbazione non è presente nei fotogrammi che quella quantità misura. L'effetto si concentra sui bersagli di piccola estensione apparente, che costituiscono la quasi totalità della popolazione osservabile da quota aerea, mentre sui bersagli meglio risolti il rilevatore mostra un limite di localizzazione proprio, indipendente dall'attacco.
+L'esito principale è un degrado statisticamente significativo della capacità del rilevatore di individuare la presenza di una persona, replicato su entrambi i domini con entità comparabile. Il tasso di falso allarme sugli sfondi privi di bersaglio è rimasto invece invariato, per una ragione strutturale del disegno sperimentale che è stata identificata e dichiarata: la perturbazione non è presente nei fotogrammi che quella quantità misura. L'effetto si concentra sui bersagli di piccola estensione apparente, che sono la quasi totalità della popolazione osservabile da quota aerea, mentre sui bersagli meglio risolti il rilevatore mostra un limite di localizzazione proprio, indipendente dall'attacco.
 
 La lettura di questi risultati è la parte che eccede il singolo esperimento. Configurazioni di ottimizzazione radicalmente diverse per formulazione dell'obiettivo, criterio di aggregazione e disciplina del passo di apprendimento convergono su un esito quasi identico; la misura diretta del segnale di aggiornamento ne indica la debolezza intrinseca; la letteratura sugli attacchi in prospettiva aerea concorda nel selezionare bersagli di maggiore estensione. Il limite osservato non è quindi un difetto contingente di una particolare implementazione né una caratteristica di un singolo insieme di dati, ma una proprietà del compito: da quota, una figura umana occupa un numero di elementi di immagine tale da collocare il rilevamento in una condizione di criticità permanente. La conseguenza per il quadro normativo è diretta. Un sistema di targeting che opera su bersagli in questa condizione dispone di un margine di evidenza ridotto anche in assenza di ogni interferenza, e una perturbazione realizzabile con mezzi ordinari è sufficiente a spostarne l'esito. La verifica del principio di distinzione demandata a un canale percettivo con tali proprietà non offre le garanzie che la delega della forza letale presupporrebbe.
 
 \section{Limitazioni}
 
-Il regime di conoscenza adottato è massimamente favorevole all'attaccante: la perturbazione è ottimizzata sfruttando i gradienti di un modello surrogato assunto coincidente con il rilevatore bersaglio. Le misure riportate costituiscono pertanto un limite superiore all'efficacia conseguibile e non una stima operativa; il disallineamento fra modello surrogato e sistema reale ne ridurrebbe l'entità in misura non quantificata.
+Il regime di conoscenza adottato è massimamente favorevole all'attaccante: la perturbazione è ottimizzata sfruttando i gradienti di un modello surrogato assunto coincidente con il rilevatore bersaglio. Le misure riportate sono pertanto un limite superiore all'efficacia conseguibile e non una stima operativa; il disallineamento fra modello surrogato e sistema reale ne ridurrebbe l'entità in misura non quantificata.
 
 L'attacco è stato valutato nel solo dominio digitale. La perturbazione è stata progettata con i vincoli richiesti dalla riproduzione fisica, ma la catena stampa-tessuto-illuminazione-sensore non è stata attraversata sperimentalmente, e nessuna delle misure riportate ne incorpora la degradazione.
 
-La condizione di partenza del rilevatore sul secondo insieme di dati risulta sensibilmente più debole che sul primo, in assenza di qualunque attacco. La causa non è stata determinata: le ipotesi formulate riguardano lo scarto fra il dominio di addestramento del rilevatore e le posture riprese dall'alto, oppure la deformazione introdotta dal ridimensionamento dei fotogrammi, e nessuna delle due è stata verificata. Attaccare un rilevatore già compromesso costituisce una condizione di prova meno pulita.
+La condizione di partenza del rilevatore sul secondo insieme di dati risulta sensibilmente più debole che sul primo, in assenza di qualunque attacco. La causa non è stata determinata: le ipotesi formulate riguardano lo scarto fra il dominio di addestramento del rilevatore e le posture riprese dall'alto, oppure la deformazione introdotta dal ridimensionamento dei fotogrammi, e nessuna delle due è stata verificata. Attaccare un rilevatore già compromesso è una condizione di prova meno pulita.
 
 La correzione della correlazione temporale, necessaria su dati video, riduce il campione effettivo a una numerosità comparabile a quella del primo insieme di dati: il secondo dominio amplia la varietà delle condizioni osservate, non la potenza statistica disponibile. L'analisi della dipendenza dalla scala è stata condotta su un solo insieme di dati, e la fascia dei bersagli di maggiore estensione resta priva di osservazioni su entrambi. La risoluzione di lavoro è stata fissata da un vincolo di memoria della piattaforma, con una riduzione dichiarata del numero di bersagli utilizzabili.
 
@@ -2261,7 +2268,7 @@ I livelli di simulazione e di fusione dei metadati non producono risultati quant
 
 \section{Sviluppi futuri: il C.A.R.E. Kit}
 
-La prosecuzione naturale del lavoro è il passaggio al dominio fisico. La perturbazione caratterizzata in questa tesi è stata ottimizzata come valore atteso su una distribuzione di trasformazioni, che è precisamente la proprietà richiesta perché un artefatto stampato conservi efficacia sotto angolazioni, distanze e condizioni di luce variabili. La sua realizzazione come capo indossabile costituisce la componente percettiva di un dispositivo più ampio, denominato C.A.R.E. Kit (\textit{Camouflage Against Recognition and Engagement}), concepito come strumento di autotutela per popolazioni civili esposte a sorveglianza e targeting automatizzati in contesti privi di regolamentazione effettiva. La linea si inserisce in un filone consolidato, che comprende il camuffamento asimmetrico contro il riconoscimento del volto \footcite{harvey_2010} e i tessuti a motivo avversariale \footcite{wu_2020, hu_2022}. Le implicazioni etiche della diffusione di contromisure di questo tipo, e la tensione fra tutela individuale ed elusione dei sistemi di sicurezza legittimi, sono state discusse in letteratura \footcite{helkala_2023} e vanno affrontate prima di qualunque proposta operativa.
+La prosecuzione naturale del lavoro è il passaggio al dominio fisico. La perturbazione caratterizzata in questa tesi è stata ottimizzata come valore atteso su una distribuzione di trasformazioni, che è precisamente la proprietà richiesta perché un artefatto stampato conservi efficacia sotto angolazioni, distanze e condizioni di luce variabili. La sua realizzazione come capo indossabile è la componente percettiva di un dispositivo più ampio, denominato C.A.R.E. Kit (\textit{Camouflage Against Recognition and Engagement}), concepito come strumento di autotutela per popolazioni civili esposte a sorveglianza e targeting automatizzati in contesti privi di regolamentazione effettiva. La linea si inserisce in un filone consolidato, che comprende il camuffamento asimmetrico contro il riconoscimento del volto \footcite{harvey_2010} e i tessuti a motivo avversariale \footcite{wu_2020, hu_2022}. Le implicazioni etiche della diffusione di contromisure di questo tipo, e la tensione fra tutela individuale ed elusione dei sistemi di sicurezza legittimi, sono state discusse in letteratura \footcite{helkala_2023} e vanno affrontate prima di qualunque proposta operativa.
 
 Sul piano sperimentale restano aperte alcune verifiche a basso costo. La stratificazione per taglia della sola condizione di controllo discriminerebbe fra le due ipotesi formulate per la debolezza della linea di base sul secondo insieme di dati. L'estensione dell'obiettivo all'intera impronta geometrica del bersaglio, anziché al solo nucleo di celle a evidenza forte, richiede un nuovo ciclo di ottimizzazione ma è suggerita dalla divergenza fra i due criteri di selezione misurati. L'applicazione dell'obiettivo alle rappresentazioni intermedie della rete, anziché alla sua uscita, è la tecnica adottata dai lavori che riportano i risultati più solidi su immagini aeree. La correzione dei difetti accertati nei livelli di simulazione e fusione, infine, è definita nel suo perimetro e restituirebbe misura quantitativa alla propagazione del degrado lungo la catena decisionale, che allo stato attuale resta descritta e non misurata.
 La correzione dei livelli di simulazione e fusione consentirebbe inoltre di
