@@ -2491,16 +2491,18 @@
     <bcf:citekey order="111" intorder="1">zhu_2021_visdrone</bcf:citekey>
     <bcf:citekey order="112" intorder="1">barekatain_2017_okutama</bcf:citekey>
     <bcf:citekey order="113" intorder="1">efron_1993_bootstrap</bcf:citekey>
-    <bcf:citekey order="114" intorder="1">shrestha_2023</bcf:citekey>
-    <bcf:citekey order="115" intorder="1">xi_2025_lfrap</bcf:citekey>
-    <bcf:citekey order="116" intorder="1">tang_2023</bcf:citekey>
-    <bcf:citekey order="117" intorder="1">thys_2019</bcf:citekey>
-    <bcf:citekey order="118" intorder="1">huang_2020_upc</bcf:citekey>
-    <bcf:citekey order="119" intorder="1">brown_2017_patch</bcf:citekey>
-    <bcf:citekey order="120" intorder="1">harvey_2010</bcf:citekey>
-    <bcf:citekey order="121" intorder="1">wu_2020</bcf:citekey>
-    <bcf:citekey order="121" intorder="2">hu_2022</bcf:citekey>
-    <bcf:citekey order="122" intorder="1">helkala_2023</bcf:citekey>
+    <bcf:citekey order="114" intorder="1">barekatain_2017_okutama</bcf:citekey>
+    <bcf:citekey order="115" intorder="1">zhu_2021_visdrone</bcf:citekey>
+    <bcf:citekey order="116" intorder="1">shrestha_2023</bcf:citekey>
+    <bcf:citekey order="117" intorder="1">xi_2025_lfrap</bcf:citekey>
+    <bcf:citekey order="118" intorder="1">tang_2023</bcf:citekey>
+    <bcf:citekey order="119" intorder="1">thys_2019</bcf:citekey>
+    <bcf:citekey order="120" intorder="1">huang_2020_upc</bcf:citekey>
+    <bcf:citekey order="121" intorder="1">brown_2017_patch</bcf:citekey>
+    <bcf:citekey order="122" intorder="1">harvey_2010</bcf:citekey>
+    <bcf:citekey order="123" intorder="1">wu_2020</bcf:citekey>
+    <bcf:citekey order="123" intorder="2">hu_2022</bcf:citekey>
+    <bcf:citekey order="124" intorder="1">helkala_2023</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
