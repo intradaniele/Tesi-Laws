@@ -117,14 +117,14 @@ I progressi dell'intelligenza artificiale hanno cambiato il modo in cui si pensa
 Il lavoro si articola in sei capitoli, che ne ricostruiscono le implicazioni concrete. Il primo esamina il fallimento diplomatico nella gestione dei Sistemi d'Arma Autonomi Letali (LAWS), con le divergenze strategiche fra le posizioni degli Stati e le conseguenze per la governance globale. Il secondo affronta i dilemmi etici e la tanatopolitica algoritmica, dall'illusione dell'autonomia alla necessità di un controllo umano di default. Il terzo ricostruisce lo stato dell'arte dei sistemi di vision e degli adversarial attack, che minacciano direttamente il concetto di ``Human-in-the-loop'', con le relative vulnerabilità. Il quarto capitolo descrive le metodologie usate nella parte sperimentale: attacchi avversariali di patching, miglioramento dell'efficienza della patch tramite Expectation over Transformation (EoT) e training della patch sui due dataset aerei presi in considerazione. Il quinto raccoglie i risultati e gli output significativi che danno valore a questo lavoro. Il sesto rielabora quanto svolto e ne trae le conclusioni, fra cui la proposta di un approccio nuovo per creare uno strumento popolare di difesa dei diritti umani, tramite contromisure fisiche basate sulle debolezze intrinseche della Computer Vision.
  
 \section{Obiettivi}
-Il presente lavoro affronta sperimentalmente la sicurezza dei sistemi di percezione basati su Computer Vision impiegati nei sistemi di targeting militare, e quantifica l'impatto di tecniche di \textit{Adversarial Machine Learning} sulla loro affidabilità operativa. Il quadro di riferimento è il Diritto Internazionale Umanitario (DIU), che vincola l'uso della forza letale alla presenza di un controllo umano significativo sul processo decisionale. Poiché l'attuale stallo della diplomazia internazionale sui Sistemi d'Arma Autonomi Letali (LAWS) lascia questo vincolo privo di una verifica tecnica indipendente, lo studio ne misura empiricamente la tenuta: sottopone il canale sensoriale del sistema a un attacco avversariale controllato e osserva come l'effetto si propaghi fino alla decisione finale.
+Il presente lavoro affronta sperimentalmente la sicurezza dei sistemi di percezione basati su Computer Vision impiegati nei sistemi di targeting militare, e quantifica l'impatto di tecniche di \textit{Adversarial Machine Learning} sulla loro affidabilità operativa. Il quadro di riferimento è il Diritto Internazionale Umanitario (DIU), che vincola l'uso della forza letale alla presenza di un controllo umano significativo sul processo decisionale. Poiché l'attuale stallo della diplomazia internazionale sui LAWS lascia questo vincolo privo di una verifica tecnica indipendente, lo studio ne misura empiricamente la tenuta: sottopone il canale sensoriale del sistema a un attacco avversariale controllato e osserva come l'effetto si propaghi fino alla decisione finale.
  
 Gli obiettivi specifici sono i seguenti:
 \begin{itemize}
-    \item \textbf{Analisi geopolitica e normativa:} esaminare il divario fra l'approccio pragmatico-militare delle principali superpotenze e i tentativi di regolamentazione, e mostrare come la diplomazia internazionale (per esempio i tavoli della Convention on Certain Conventional Weapons, CCW) abbia fallito di fronte alle necessità tattiche dettate dai moderni teatri di conflitto.
+    \item \textbf{Analisi geopolitica e normativa:} esaminare il divario fra l'approccio pragmatico-militare delle principali superpotenze e i tentativi di regolamentazione, e mostrare come la diplomazia internazionale (per esempio i tavoli della Convention on Certain Conventional Weapons, CCW) non sia riuscita a tenere il passo rispetto alle necessità tattiche dettate dai moderni teatri di conflitto.
     \item \textbf{Valutazione della governance e della necro-etica dell'autonomia:} approfondire il concetto di tanatopolitica algoritmica e mostrare come la disarticolazione fra l'umano e lo strumento di morte introduca problemi insormontabili di accountability e di ``bias'' nel trattamento dei dati in zone di guerra.
     \item \textbf{Quantificazione sperimentale delle vulnerabilità:} valutare empiricamente la robustezza dei modelli di Object Detection (nello specifico l'architettura \textit{You Only Look Once}, YOLO) utilizzati nei sistemi di targeting, con tecniche di \textit{Adversarial Machine Learning} che mostrano quanto sia facile compromettere la ``confidence'' algoritmica. La valutazione è condotta su due dataset aerei indipendenti, per capire se le vulnerabilità osservate siano una caratteristica del singolo dataset o si replichino su domini distinti. Entrano nel conto anche gli altri fattori che possono influenzare la decisione di ``engagement'', come le fonti aperte (\textit{Open Source Intelligence}, OSINT) e il comportamento del soggetto identificato da YOLO, riprodotti tramite un simulatore (\textit{LAWS-SIM}).
-    \item \textbf{Misurazione dei limiti di una contromisura passiva:} ottimizzare una perturbazione avversariale indossabile e misurarne statisticamente l'efficacia contro un rilevatore impiegato da piattaforma aerea, per stimare quanta protezione una contromisura di questo tipo possa realisticamente offrire. La perturbazione così caratterizzata è la componente percettiva di un dispositivo indossabile completo, il ``C.A.R.E. Kit'', la cui realizzazione fisica è delineata fra gli sviluppi futuri.
+    Nel concreto, l'engagement in futuro sarà effettuato applicando una trama colorata su un indumento o zaino.  
 \end{itemize}
 \chapter{Dual-Use, contesto operativo e geopolitica}
 \label{cap1}
@@ -148,7 +148,7 @@ intervento umano in una \textit{Automated Warfare} è l'incidente sovietico del
 1983: il colonnello Stanislav Petrov, responsabile del centro di comando,
 riconobbe come errore di sistema un falso allarme di lancio missilistico
 prodotto dalla confusione fra nuvole ad alta quota e un vettore balistico
-intercontinentale, e decise di non ordinare il contrattacco nucleare.
+intercontinentale, e decise di non ordinare il contrattacco nucleare \footcite{scharre_2018_army}.
  
 La seconda fase, negli anni Ottanta, vede l'introduzione di sistemi più
 sofisticati come gli \textit{Anti-Tank Guided Weapons}, missili guidati verso
@@ -191,7 +191,7 @@ L'architettura geopolitica contemporanea è segnata dalla natura bivalente delle
 tecnologie digitali, definita in letteratura come \textit{Dual-Use}. A
 differenza delle storiche tecnologie militari, come l'energia nucleare o
 l'ingegneria aerospaziale, la cui evoluzione era confinata entro laboratori
-governativi, l'odierno ecosistema dell'intelligenza artificiale è trainato quasi
+statali, l'odierno ecosistema dell'intelligenza artificiale è trainato quasi
 esclusivamente dal settore privato \footcite{longpre_2022}. Da questa
 sovrapposizione nasce uno slittamento funzionale: le medesime reti neurali e
 algoritmi di \textit{Computer Vision} addestrati per guida autonoma,
@@ -223,7 +223,7 @@ spina dorsale della condotta bellica algoritmica.
 La proliferazione di queste tecnologie commerciali altera irreversibilmente gli
 equilibri di potere globali, poiché la democratizzazione a basso costo
 dell'intelligenza artificiale permette anche ad attori statali minori di
-sviluppare letalità autonoma \footcite{longpre_2022}. Diviene così quasi
+sviluppare letalità autonoma. Diviene così quasi
 impossibile applicare una regolamentazione modellata sui trattati di non
 proliferazione: bandire o limitare severamente la tecnologia militare
 significherebbe paralizzare l'innovazione dell'intero mercato civile globale. È
@@ -273,10 +273,10 @@ e faticano a ingabbiare una tecnologia computazionale che sfugge alle categorie
 giuridiche classiche. Gli Stati leader nello sviluppo di intelligenza
 artificiale militare oppongono inoltre resistenza a qualsiasi limitazione della
 propria sovranità tecnologica, tanto che solo una ristretta minoranza di nazioni
-ha supportato apertamente un bando preventivo totale.
+ha supportato apertamente un bando preventivo totale \footcite{wareham_2020}.
  
 Dal 2013, 97 Stati hanno elaborato la propria posizione sui LAWS in sede
-multilaterale \footcite{wareham_2020} e hanno riconosciuto che la rimozione
+multilaterale \footcite[p.~29]{wareham_2020} e hanno riconosciuto che la rimozione
 dell'intervento umano nell'uso della forza produce problemi etici, legali,
 operativi e tecnologici. Circa due terzi degli stati contributori fanno parte della CCW
 fin dall'inizio, mentre i restanti hanno partecipato ai convegni tenutisi fra il
@@ -301,7 +301,7 @@ l'autonomia non deve tradursi in perdita di responsabilità umana sulle decision
 critiche. Le riunioni CCW, iniziate positivamente nel 2016, si sono però arenate
 per l'assenza di risultati multilaterali significativi, di fronte alle
 opposizioni di superpotenze come Stati Uniti e Russia, che hanno ritenuto
-prematura la firma di un nuovo negoziato \footcite{ant_pen_escalation}.
+prematura la firma di un nuovo negoziato \footcite{ccw_2019}.
  
 \subsection{Analisi dei teatri operativi e delle posizioni statali}
  
@@ -313,7 +313,7 @@ esistenti non siano LAWS e che non si diano zone grigie di
 operatori umani che hanno deciso di schierarli e attivarli. Non ha riconosciuto
 le preoccupazioni etiche sulla rimozione del controllo umano né sostenuto
 proposte di divieto, e ha scelto invece, tramite l'ambasciatore L. Bencini
-\footcite{ccw_2019}, un approccio \textit{two way} che riconosce l'importanza
+\footcite[p.~29]{wareham_2020}, un approccio \textit{two way} che riconosce l'importanza
 del controllo umano significativo senza escludere lo sviluppo di sistemi
 autonomi in determinate circostanze. La ragione è anche industriale: un divieto
 totale colpirebbe il piano industriale di Leonardo Spa, fra i principali
@@ -350,7 +350,8 @@ per via negoziale a capacità algoritmiche avanzate equivarrebbe a un disarmo
 unilaterale nel dominio cyber e dell'autonomia.
  
 \textbf{Il caso USA-Venezuela.}
-Gli Stati Uniti hanno mantenuto una posizione sostanzialmente indifferente. Nel
+Gli Stati Uniti hanno mantenuto una posizione sostanzialmente indifferente
+\footcite[p.~52]{wareham_2020}. Nel
 2012, dopo un rinnovo dello sviluppo dei LAWS da parte del Dipartimento della
 Difesa, hanno sottolineato che tale misura non incentiva né proibisce lo
 sviluppo di questi sistemi, mentre proseguono investimenti massivi
@@ -359,7 +360,8 @@ in guardia dalla stigmatizzazione di questi strumenti, e hanno rilevato come
 possano essere impiegati sia per fini bellici sia umanitari: una posizione che
 si collega direttamente al caso Anthropic e mostra come una grande potenza possa
 minimizzare i rischi a beneficio dell'industria e degli interessi nazionali. Sul
-fronte opposto, il Venezuela ha proposto nel 2016 un divieto allo sviluppo,
+fronte opposto, il Venezuela ha proposto nel 2016 un divieto allo sviluppo
+\footcite[p.~53]{wareham_2020},
 acquisizione, scambio e schieramento dei LAWS, con l'argomento che decisioni di
 questo tipo non debbano essere eseguite senza intervento umano e che la vita di
 una persona non possa essere programmabile.
@@ -468,7 +470,9 @@ impiegati contro le forze in ritirata affiliate al generale Haftar.
 \begin{figure} [t]
 \centering
 \includegraphics[width=0.9\textwidth]{img/infog-kargu.png}
-\caption{Reperti fotografici ed estratti analitici del sistema STM Kargu-2 nel teatro libico. Fonte: Annex 30 del rapporto finale del Panel of Experts on Libya \footcite{un_libya_2021}.}
+\caption{Reperti fotografici ed estratti analitici del sistema STM Kargu-2 nel teatro libico. Fonte: Annex 30, United Nations Security Council, Final Report of the Panel of
+Experts on Libya established pursuant to Security Council resolution 1973
+(2011), S/2021/229, 2021. Documento ufficiale delle Nazioni Unite. \footcite{un_libya_2021}.}
 \label{fig:kargu}
 \end{figure}
  
