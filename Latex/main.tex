@@ -27,7 +27,7 @@
 
 \usepackage{csquotes}
 %  BIBLIOGRAFIA: motore biblatex/biber per citazioni a piè di pagina 
-\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none]{biblatex}
+\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, ibidtracker=false]{biblatex}
 \addbibresource{bibliografia.bib}
 
 \newtheorem{myteor}{Teorema}[section]
@@ -148,7 +148,7 @@ intervento umano in una \textit{Automated Warfare} è l'incidente sovietico del
 1983: il colonnello Stanislav Petrov, responsabile del centro di comando,
 riconobbe come errore di sistema un falso allarme di lancio missilistico
 prodotto dalla confusione fra nuvole ad alta quota e un vettore balistico
-intercontinentale, e decise di non ordinare il contrattacco nucleare \footcite{scharre_2018_army}.
+intercontinentale, e decise di non ordinare il contrattacco nucleare \footcite{hoffman_1999_petrov}.
  
 La seconda fase, negli anni Ottanta, vede l'introduzione di sistemi più
 sofisticati come gli \textit{Anti-Tank Guided Weapons}, missili guidati verso
@@ -188,11 +188,13 @@ sviluppo nel settore.
 \section{Il paradigma del Dual-Use e il Capitalismo della Sorveglianza}
  
 L'architettura geopolitica contemporanea è segnata dalla natura bivalente delle
-tecnologie digitali, definita in letteratura come \textit{Dual-Use}. A
+tecnologie digitali, definita in letteratura come \textit{Dual-Use}: la medesima tecnologia,
+sviluppata per un impiego civile, è riconvertibile a impiego militare senza
+modifiche sostanziali. A
 differenza delle storiche tecnologie militari, come l'energia nucleare o
-l'ingegneria aerospaziale, la cui evoluzione era confinata entro laboratori
-statali, l'odierno ecosistema dell'intelligenza artificiale è trainato quasi
-esclusivamente dal settore privato \footcite{longpre_2022}. Da questa
+l'ingegneria aerospaziale, la cui evoluzione era confinata entro laboratori statali, l'odierno ecosistema dell'intelligenza artificiale è trainato quasi
+esclusivamente dal settore privato \footcite{longpre_2022}. Nel sottoinsieme
+della Computer Vision, in particolare, da questa
 sovrapposizione nasce uno slittamento funzionale: le medesime reti neurali e
 algoritmi di \textit{Computer Vision} addestrati per guida autonoma,
 riconoscimento facciale o logistica possono essere convertiti, con minimi
@@ -244,20 +246,19 @@ di sicurezza nazionale, come dimostrato dalle pressioni del Pentagono su
 Anthropic per la rimozione dei vincoli etici dal modello Claude. L'Unione
 Europea si pone invece come ``superpotenza normativa'', e introduce pilastri
 come l'AI Act \footcite{wareham_2020} nel tentativo di ingabbiare giuridicamente
-una tecnologia da cui dipende strutturalmente. In questo divario l'etica viene
-piegata agli interessi del Dual-Use e del monopolio tecnologico, mentre si
-confrontano chi scrive il codice e chi scrive le regole.
+una tecnologia da cui dipende strutturalmente. In questo divario il vincolo etico è subordinato alla logica del Dual-Use e
+alla difesa del vantaggio tecnologico acquisito: le imprese che sviluppano i
+sistemi e gli Stati che ne scrivono le regole perseguono obiettivi non
+allineati, e nessuno dei due è nella posizione di imporre un limite condiviso
+all'altro.
  
 \subsection{Il parere degli stati sul possibile divieto ai LAWS}
-\begin{flushright}
-\begin{minipage}{0.6\textwidth}
-\epigraph{
-    ``Weapon systems that could, by themselves, target and attack human beings are morally repugnant and politically unacceptable. ''
-}{\textit{Antonio Guterres, United Nations Secretary-General}}
-\end{minipage}
-\end{flushright}
- 
-Questa condanna istituzionale nasce dalla mobilitazione della società civile
+
+Il Segretario Generale delle Nazioni Unite Antonio Guterres ha definito i
+sistemi d'arma capaci di selezionare e colpire esseri umani senza controllo
+umano ``moralmente ripugnanti e politicamente inaccettabili''
+\footcite{un_2018_guterres_sgsm}. Questa condanna istituzionale nasce dalla
+mobilitazione della società civile
 globale. La preoccupazione che i sistemi d'arma autonomi possano rivelarsi
 intrinsecamente indiscriminati, violando il divieto di impiegare strumenti di
 guerra incapaci di distinguere fra civili e legittimi obiettivi militari, ha
@@ -472,7 +473,7 @@ impiegati contro le forze in ritirata affiliate al generale Haftar.
 \includegraphics[width=0.9\textwidth]{img/infog-kargu.png}
 \caption{Reperti fotografici ed estratti analitici del sistema STM Kargu-2 nel teatro libico. Fonte: Annex 30, United Nations Security Council, Final Report of the Panel of
 Experts on Libya established pursuant to Security Council resolution 1973
-(2011), S/2021/229, 2021. Documento ufficiale delle Nazioni Unite. \footcite{un_libya_2021}.}
+(2011), S/2021/229, 2021. \footcite{un_libya_2021} Documento ufficiale delle Nazioni Unite.}
 \label{fig:kargu}
 \end{figure}
  
@@ -514,9 +515,9 @@ e il soggetto umano \textit{respons-abile}, ovvero capace di rispondere e di
 assumere una piena responsabilità, attualmente impossibile da attribuire a un
 sistema algoritmico. Sul piano architetturale, l'autonomia letale sposta il
 processo decisionale dalla semantica umana all'inferenza stocastica.\footnote{L'impiego
-del termine ``stocastico'' non è casuale: a differenza del ragionamento umano,
-che opera per nessi semantici e causali, la macchina mappa vettori di dati in
-distribuzioni di probabilità per approssimare un risultato. Come si dimostrerà
+del termine ``stocastico'' non è casuale: la decisione non discende
+dall'applicazione di una regola esplicita, ma dal superamento di una soglia da
+parte di un punteggio prodotto per inferenza. Come si dimostrerà
 sperimentalmente nel \hyperref[cap5]{Capitolo Quinto}, una perturbazione applicata all'ingresso
 altera direttamente queste distribuzioni di probabilità, fino a far attraversare
 la soglia decisionale a predizioni che le erano già prossime, senza che alcun
@@ -634,10 +635,12 @@ Siamo di fronte a \textit{``un potere che non amministra la vita, ma la regola
 attraverso l'eliminazione di ciò che eccede la norma''} \footcite{buffa_2025}. La
 norma non è più un valore giuridico o morale, ma una soglia statistica di
 classificazione che separa ciò che è considerato bersaglio da ciò che non lo è.
-Se l'algoritmo viene ottimizzato per minimizzare i falsi negativi, ovvero la
-mancata individuazione del nemico, la \textit{loss function} accetta
-matematicamente l'inclusione di civili innocenti fra i falsi positivi: la
-necropolitica diventa un parametro di \textit{tuning} ingegneristico.
+Qualunque classificatore impiegato su un problema non separabile impone un
+compromesso fra mancate individuazioni e falsi positivi, e la scelta del punto
+di lavoro su quel compromesso non è una proprietà del modello ma una decisione di
+chi lo configura. Spostare la soglia verso la riduzione dei falsi negativi
+comporta necessariamente l'inclusione di soggetti non ostili fra i positivi: la
+necropolitica diventa un parametro di configurazione.
 
 \section{La ``Black Box'' militare e l'assenza di Meaningful Human Control}
 
