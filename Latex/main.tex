@@ -27,7 +27,7 @@
 
 \usepackage{csquotes}
 %  BIBLIOGRAFIA: motore biblatex/biber per citazioni a piè di pagina 
-\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, ibidtracker=false]{biblatex}
+\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, citetracker=false, ibidtracker=false, loccittracker=false, opcittracker=false]{biblatex}
 \addbibresource{bibliografia.bib}
 
 \newtheorem{myteor}{Teorema}[section]
@@ -90,7 +90,7 @@ Dedicato a chi crede che la tecnologia possa essere un mezzo per il progresso e 
 
 Questo lavoro nasce da una profonda necessità di comprendere e resistere all'irrefrenabile insinuazione della \textit{technè} nella sfera più intima e vulnerabile dell'essere umano. In una società che chiede insistentemente di essere efficienti, produttivi, iperconnessi e miscelati con le macchine, occorre interrogarsi sulle implicazioni sociali e politiche di questa trasformazione.
 L'intelligenza artificiale in ambito militare ha infatti cessato di essere un semplice \textit{strumento} per diventare un vero e proprio \textit{agente}, spingendo il dibattito pubblico a concentrarsi quasi esclusivamente su dilemmi filosofici. Ma l'etica da sola si rivela inefficace se non viene tradotta in rigidi vincoli ingegneristici.
-Rispetto a una canonica tesi in sicurezza informatica, questo lavoro si focalizza sulla dimensione umanitaria e giuridica per dimostrare una tesi ben precisa: la violazione dei diritti umani, nel contesto dei Sistemi d'Arma Autonomi Letali (LAWS), non deriva solo da ciniche scelte geopolitiche, ma anche e soprattutto da vulnerabilità architetturali intrinseche ai sistemi stessi. Criticità come i bias nei dati di addestramento, la non interpretabilità delle reti neurali (\textit{Black Box}), la suscettibilità al \textit{Data Poisoning} e agli \textit{Adversarial Attacks} si trasformano direttamente in danni collaterali sul campo.
+Rispetto a una canonica tesi in sicurezza informatica, questo lavoro si focalizza sulla dimensione umanitaria e giuridica per dimostrare una tesi ben precisa: la violazione dei diritti umani, nel contesto dei Lethal Autonomous Weapon Systems (LAWS), non deriva solo da ciniche scelte geopolitiche, ma anche e soprattutto da vulnerabilità architetturali intrinseche ai sistemi stessi. Criticità come i bias nei dati di addestramento, la non interpretabilità delle reti neurali (\textit{Black Box}), la suscettibilità al \textit{Data Poisoning} e agli \textit{Adversarial Attacks} si trasformano direttamente in danni collaterali sul campo.
 Attraverso un'analisi interdisciplinare, la tesi si propone quindi di esaminare il trattamento dei dati sensibili e le fragilità algoritmiche dei LAWS, delineando come, in questo nuovo ecosistema bellico, la sicurezza informatica e la corretta architettura del software costituiscano un presidio necessario, e oggi largamente inesplorato, per la difesa dei diritti umani.
 
 \prefacesection{Ringraziamenti}
@@ -114,7 +114,7 @@ Un ringraziamento altrettanto sentito al Prof. Rivolta, che mi ha supportato e g
  
 I progressi dell'intelligenza artificiale hanno cambiato il modo in cui si pensa la sicurezza globale, e sollevano domande a cui il solo piano tecnico non basta a rispondere: riguardano l'etica e il diritto. Delegare decisioni letali a sistemi algoritmici complessi apre una frattura fra la velocità dell'innovazione e i tempi lunghi della regolamentazione internazionale.
  
-Il lavoro si articola in sei capitoli, che ne ricostruiscono le implicazioni concrete. Il primo esamina il fallimento diplomatico nella gestione dei Sistemi d'Arma Autonomi Letali (LAWS), con le divergenze strategiche fra le posizioni degli Stati e le conseguenze per la governance globale. Il secondo affronta i dilemmi etici e la tanatopolitica algoritmica, dall'illusione dell'autonomia alla necessità di un controllo umano di default. Il terzo ricostruisce lo stato dell'arte dei sistemi di vision e degli adversarial attack, che minacciano direttamente il concetto di ``Human-in-the-loop'', con le relative vulnerabilità. Il quarto capitolo descrive le metodologie usate nella parte sperimentale: attacchi avversariali di patching, miglioramento dell'efficienza della patch tramite Expectation over Transformation (EoT) e training della patch sui due dataset aerei presi in considerazione. Il quinto raccoglie i risultati e gli output significativi che danno valore a questo lavoro. Il sesto rielabora quanto svolto e ne trae le conclusioni, fra cui la proposta di un approccio nuovo per creare uno strumento popolare di difesa dei diritti umani, tramite contromisure fisiche basate sulle debolezze intrinseche della Computer Vision.
+Il lavoro si articola in sei capitoli, che ne ricostruiscono le implicazioni concrete. Il primo esamina il fallimento diplomatico nella gestione dei LAWS, con le divergenze strategiche fra le posizioni degli Stati e le conseguenze per la governance globale. Il secondo affronta i dilemmi etici e la tanatopolitica algoritmica, dall'illusione dell'autonomia alla necessità di un controllo umano di default. Il terzo ricostruisce lo stato dell'arte dei sistemi di vision e degli adversarial attack, che minacciano direttamente il concetto di ``Human-in-the-loop'', con le relative vulnerabilità. Il quarto capitolo descrive le metodologie usate nella parte sperimentale: attacchi avversariali di patching, miglioramento dell'efficienza della patch tramite Expectation over Transformation (EoT) e training della patch sui due dataset aerei presi in considerazione. Il quinto raccoglie i risultati e gli output significativi che danno valore a questo lavoro. Il sesto rielabora quanto svolto e ne trae le conclusioni, fra cui la proposta di un approccio nuovo per creare uno strumento popolare di difesa dei diritti umani, tramite contromisure fisiche basate sulle debolezze intrinseche della Computer Vision.
  
 \section{Obiettivi}
 Il presente lavoro affronta sperimentalmente la sicurezza dei sistemi di percezione basati su Computer Vision impiegati nei sistemi di targeting militare, e quantifica l'impatto di tecniche di \textit{Adversarial Machine Learning} sulla loro affidabilità operativa. Il quadro di riferimento è il Diritto Internazionale Umanitario (DIU), che vincola l'uso della forza letale alla presenza di un controllo umano significativo sul processo decisionale. Poiché l'attuale stallo della diplomazia internazionale sui LAWS lascia questo vincolo privo di una verifica tecnica indipendente, lo studio ne misura empiricamente la tenuta: sottopone il canale sensoriale del sistema a un attacco avversariale controllato e osserva come l'effetto si propaghi fino alla decisione finale.
@@ -124,7 +124,7 @@ Gli obiettivi specifici sono i seguenti:
     \item \textbf{Analisi geopolitica e normativa:} esaminare il divario fra l'approccio pragmatico-militare delle principali superpotenze e i tentativi di regolamentazione, e mostrare come la diplomazia internazionale (per esempio i tavoli della Convention on Certain Conventional Weapons, CCW) non sia riuscita a tenere il passo rispetto alle necessità tattiche dettate dai moderni teatri di conflitto.
     \item \textbf{Valutazione della governance e della necro-etica dell'autonomia:} approfondire il concetto di tanatopolitica algoritmica e mostrare come la disarticolazione fra l'umano e lo strumento di morte introduca problemi insormontabili di accountability e di ``bias'' nel trattamento dei dati in zone di guerra.
     \item \textbf{Quantificazione sperimentale delle vulnerabilità:} valutare empiricamente la robustezza dei modelli di Object Detection (nello specifico l'architettura \textit{You Only Look Once}, YOLO) utilizzati nei sistemi di targeting, con tecniche di \textit{Adversarial Machine Learning} che mostrano quanto sia facile compromettere la ``confidence'' algoritmica. La valutazione è condotta su due dataset aerei indipendenti, per capire se le vulnerabilità osservate siano una caratteristica del singolo dataset o si replichino su domini distinti. Entrano nel conto anche gli altri fattori che possono influenzare la decisione di ``engagement'', come le fonti aperte (\textit{Open Source Intelligence}, OSINT) e il comportamento del soggetto identificato da YOLO, riprodotti tramite un simulatore (\textit{LAWS-SIM}).
-    Nel concreto, l'engagement in futuro sarà effettuato applicando una trama colorata su un indumento o zaino.  
+    Nel concreto, l'ingaggio da parte del sistema avviene applicando sul soggetto una trama colorata stampata su indumento o zaino: è la superficie fisica su cui la perturbazione avversariale viene realizzata.  
 \end{itemize}
 \chapter{Dual-Use, contesto operativo e geopolitica}
 \label{cap1}
@@ -167,7 +167,7 @@ progressivamente eroso e il paradigma si è spostato da un modello di
 \textit{Human-in-the-loop}, in cui l'operatore deve selezionare o confermare
 l'obiettivo, a uno di \textit{Human-on-the-loop}, in cui può intervenire fra
 identificazione e ingaggio, fino a un modello di \textit{Human-out-of-the-loop}
-in cui l'operatore è escluso dal processo decisionale letale.\footnote{La
+in cui l'operatore è escluso dal processo decisionale letale. La
 tripartizione non descrive il grado di intelligenza del sistema, ma la relazione
 strutturale fra operatore e ciclo decisionale della macchina
 \footcite{horowitz_scharre_2015}: nel primo caso l'azione richiede approvazione
@@ -177,7 +177,7 @@ possibilità di intervento successivo all'attivazione \footcite{kallenborn_2021}
 Alcuni autori hanno messo in discussione la tenuta euristica di questa
 tassonomia, proponendo scale di autonomia più granulari, per la difficoltà di
 collocare univocamente sistemi che combinano gradi diversi di autonomia nelle
-fasi di selezione, ingaggio e attivazione \footcite{sharkey_2016}.} Droni come
+fasi di selezione, ingaggio e attivazione \footcite{sharkey_2016}. Droni come
 il Predator o il Reaper esemplificano il primo paradigma: perlustrano il
 territorio in modalità autonoma ma richiedono un controllo stringente
 dell'operatore sulla decisione di ingaggio. L'evoluzione di questi sistemi resta
@@ -193,15 +193,14 @@ sviluppata per un impiego civile, è riconvertibile a impiego militare senza
 modifiche sostanziali. A
 differenza delle storiche tecnologie militari, come l'energia nucleare o
 l'ingegneria aerospaziale, la cui evoluzione era confinata entro laboratori statali, l'odierno ecosistema dell'intelligenza artificiale è trainato quasi
-esclusivamente dal settore privato \footcite{longpre_2022}. Nel sottoinsieme
+esclusivamente dal settore privato \footcite{aiindex_2024}. Nel sottoinsieme
 della Computer Vision, in particolare, da questa
 sovrapposizione nasce uno slittamento funzionale: le medesime reti neurali e
 algoritmi di \textit{Computer Vision} addestrati per guida autonoma,
 riconoscimento facciale o logistica possono essere convertiti, con minimi
 adattamenti ingegneristici, in sistemi di tracciamento e ingaggio per i LAWS.
  
-Questa convergenza si traduce nella militarizzazione di quello che Shoshana
-Zuboff ha definito ``Capitalismo della Sorveglianza'': un sistema economico
+Questa convergenza fra tecnologia civile e impiego militare si traduce nella militarizzazione di quello che Shoshana Zuboff ha definito ``Capitalismo della Sorveglianza'': un sistema economico
 fondato sull'osservazione sistematica dei comportamenti, sulla loro previsione
 e, sempre più spesso, sulla loro modifica, nel quale le grandi piattaforme non
 si limitano a raccogliere dati ma estraggono esperienza umana per trasformarla
@@ -245,7 +244,7 @@ conservano valenza etico-giuridica fino a quando non entrano in gioco esigenze
 di sicurezza nazionale, come dimostrato dalle pressioni del Pentagono su
 Anthropic per la rimozione dei vincoli etici dal modello Claude. L'Unione
 Europea si pone invece come ``superpotenza normativa'', e introduce pilastri
-come l'AI Act \footcite{wareham_2020} nel tentativo di ingabbiare giuridicamente
+come l'AI Act \footcite{vogiatzoglou_2024_ai_act_exception} nel tentativo di ingabbiare giuridicamente
 una tecnologia da cui dipende strutturalmente. In questo divario il vincolo etico è subordinato alla logica del Dual-Use e
 alla difesa del vantaggio tecnologico acquisito: le imprese che sviluppano i
 sistemi e gli Stati che ne scrivono le regole perseguono obiettivi non
@@ -308,7 +307,7 @@ prematura la firma di un nuovo negoziato \footcite{ccw_2019}.
  
 \textbf{Il caso Italia.}
 L'Italia ha supportato dal novembre 2013 l'avvio di dibattiti multilaterali sui
-\textit{killer robots}, ma nel 2018 ha sostenuto che i sistemi ad arma autonomi
+\textit{killer robots}, ma nel 2018 ha sostenuto che i sistemi d'arma autonomi
 esistenti non siano LAWS e che non si diano zone grigie di
 \textit{accountability} fintanto che gli effetti restino attribuibili agli
 operatori umani che hanno deciso di schierarli e attivarli. Non ha riconosciuto
@@ -316,7 +315,7 @@ le preoccupazioni etiche sulla rimozione del controllo umano né sostenuto
 proposte di divieto, e ha scelto invece, tramite l'ambasciatore L. Bencini
 \footcite[p.~29]{wareham_2020}, un approccio \textit{two way} che riconosce l'importanza
 del controllo umano significativo senza escludere lo sviluppo di sistemi
-autonomi in determinate circostanze. La ragione è anche industriale: un divieto
+autonomi in determinate circostanze. La ragione è probabilmente anche industriale: un divieto
 totale colpirebbe il piano industriale di Leonardo Spa, fra i principali
 produttori mondiali del settore. La posizione italiana resta un equilibrio
 vulnerabile fra l'articolo 11 della Costituzione, che ripudia la guerra come
@@ -335,18 +334,18 @@ la necessità di una maggiore responsabilità delle aziende fornitrici. Fra i
 sistemi citati figurano i cacciabombardieri F-35, sviluppati con contributo di
 Leonardo, e i bulldozer D9 trasformati in mezzi automatizzati comandati a
 distanza da Elbit Systems e RADA Electronics Industries. Fra il 2019 e il 2023
-l'Italia ha esportato circa $23.8$ milioni di euro in sistemi d'arma, fra cui
-dodici elicotteri leggeri AW119 Koala e quattro cannoni navali Super Rapid da
+l'Italia ha esportato verso Israele, secondo i dati SIPRI, circa $23.8$ milioni
+di euro in maggiori sistemi d'arma \footcite{iriad_2025_export_israele}, fra cui dodici elicotteri leggeri AW119 Koala e quattro cannoni navali Super Rapid da
 $76$ mm.
  
 La stessa cautela diplomatica emerge dal non-paper sulla minaccia ibrida redatto
 dal Ministro della Difesa Guido Crosetto, che riconosce il cyberspazio come
 dominio operativo di pari grado rispetto a quelli convenzionali e sostiene che
 la protezione delle infrastrutture critiche richieda strumenti e competenze
-militari \footcite{crosetto_2025_nonpaper}. La logica è la stessa: la capacità
-tecnologica viene trattata come condizione di sicurezza irrinunciabile e non
-come minaccia da limitare, il che spiega la coerenza fra l'approccio \textit{two
-way} sostenuto in sede CCW e l'atteggiamento nazionale. Per l'Italia, rinunciare
+militari \footcite{crosetto_2025_nonpaper}. La logica è speculare: la stessa capacità che alcuni sviluppatori trattano come rischio
+da limitare, uno Stato la tratta come condizione di sicurezza da preservare,
+perché il disarmo unilaterale davanti ad avversari che continuano ad armarsi
+cibernicamente è percepito come svantaggio strategico, non come prudenza. Per l'Italia, rinunciare
 per via negoziale a capacità algoritmiche avanzate equivarrebbe a un disarmo
 unilaterale nel dominio cyber e dell'autonomia.
  
@@ -360,7 +359,7 @@ nell'intelligenza artificiale applicata a scenari militari. Nel 2019 hanno messo
 in guardia dalla stigmatizzazione di questi strumenti, e hanno rilevato come
 possano essere impiegati sia per fini bellici sia umanitari: una posizione che
 si collega direttamente al caso Anthropic e mostra come una grande potenza possa
-minimizzare i rischi a beneficio dell'industria e degli interessi nazionali. Sul
+minimizzare i rischi a beneficio dell'industria e degli interessi nazionali; il parallelo con il caso Anthropic, discusso nella Sezione~\ref{sec:governance}, è ripreso più avanti. Sul
 fronte opposto, il Venezuela ha proposto nel 2016 un divieto allo sviluppo
 \footcite[p.~53]{wareham_2020},
 acquisizione, scambio e schieramento dei LAWS, con l'argomento che decisioni di
@@ -372,7 +371,7 @@ La postura di Israele è strategica ed emblematica. Firmatario della CCW e
 partecipante attivo, ha storicamente allineato le proprie posizioni a quelle di
 Stati Uniti e Russia, opponendosi a un divieto preventivo e disapprovando un
 approccio speculativo verso le tecnologie future \footcite{antebi_2018}. Nel
-2018 la delegazione israeliana ha sostenuto che i sistemi ad arma autonomi non
+2018 la delegazione israeliana ha sostenuto che i sistemi d'arma autonomi non
 debbano essere considerati entità dotate di volontà decisionale separata
 dall'uomo, e ha rimarcato che il comandante dell'operazione ha il dovere di
 vigilare sull'operato del sistema, conservando intatta la catena di
@@ -387,9 +386,11 @@ esportatore leader di munizioni vaganti: le famiglie HERO di UVision, l'Orbiter
 criticità etiche marcate. Sebbene Israele dichiari che la maggior parte di
 questi sistemi richieda intervento umano nella selezione del bersaglio, droni
 suicidi come l'Harop sono progettati per operare in modalità
-\textit{fire-and-forget}, con la capacità tecnica di essere lanciati,
-localizzare autonomamente le emissioni radar nemiche e colpirle con la testata
-integrata. L'impiego di questi sistemi da parte dell'Azerbaigian nel conflitto
+\textit{fire-and-forget}\footnote{Letteralmente ``spara e dimentica'': una volta
+lanciata, l'arma prosegue senza ulteriore intervento dell'operatore.}: una volta
+lanciati, localizzano autonomamente le emissioni radar nemiche e le colpiscono
+con la testata integrata, senza possibilità di richiamo o correzione da parte
+dell'operatore. L'impiego di questi sistemi da parte dell'Azerbaigian nel conflitto
 del Nagorno-Karabakh contro l'Armenia è stato documentato come uno dei
 primissimi esempi pratici di \textit{killer robots} \footcite{antebi_2018}.
  
@@ -444,7 +445,7 @@ laboratori a cielo aperto in cui le potenze militari testano sistemi algoritmici
 a discapito delle popolazioni civili.
  
 \textbf{Il caso Russo-Ucraino.}
-Il conflitto in Ucraina è il primo banco di prova su larga scala per
+Il conflitto in Ucraina può essere considerato il primo banco di prova su larga scala per
 l'integrazione dell'intelligenza artificiale nei sistemi d'arma convenzionali.
 La Russia, in sede CCW, ha mantenuto una posizione ostruzionistica, sostenendo
 che le definizioni di LAWS fossero troppo vaghe per un bando preventivo e che il
@@ -456,13 +457,15 @@ come il drone russo Lancet o l'ucraino Saker Scout integrano moduli di visione
 artificiale capaci di agganciare il bersaglio e completare l'attacco anche in
 assenza di collegamento con l'operatore. Il principio dello
 \textit{Human-in-the-loop} viene quindi eroso non per ideologia ma per necessità
-tattica: se il segnale cade, la macchina deve decidere se colpire o rientrare.
+tattica: se il collegamento radio viene interrotto o disturbato
+(\textit{jamming}), la macchina deve decidere autonomamente se colpire o
+rientrare.
 La guerra moderna si è così spostata ben oltre i limiti discussi nelle sedi
-diplomatiche, e i negoziati diventano obsoleti prima ancora di essere firmati.
+diplomatiche, e i negoziati sui LAWS diventano obsoleti prima ancora di essere firmati.
  
 \textbf{Il caso Libico.}
 Se l'Ucraina è stata il laboratorio in cui questi sistemi sono stati sperimentati
-su scala, la Libia è stata il teatro del paziente zero. Nel marzo 2020, durante
+su scala, la Libia è stata il teatro del ``paziente zero''. Nel marzo 2020, durante
 la seconda guerra civile libica, un report del Consiglio di Sicurezza delle
 Nazioni Unite \footcite{un_libya_2021} ha documentato un evento spartiacque: i
 sistemi d'arma autonomi letali aerei Kargu-2, di produzione turca, sono stati
@@ -511,22 +514,13 @@ evidenzia due criticità geopolitiche:
 
 I concetti di autonomia e indipendenza nei LAWS non sono una banale evoluzione
 tecno-meccanica, ma una radicale disarticolazione del legame fra l'azione bellica
-e il soggetto umano \textit{respons-abile}, ovvero capace di rispondere e di
+e il soggetto umano \textit{responsabile}, ovvero capace di rispondere e di
 assumere una piena responsabilità, attualmente impossibile da attribuire a un
 sistema algoritmico. Sul piano architetturale, l'autonomia letale sposta il
-processo decisionale dalla semantica umana all'inferenza stocastica.\footnote{L'impiego
-del termine ``stocastico'' non è casuale: la decisione non discende
-dall'applicazione di una regola esplicita, ma dal superamento di una soglia da
-parte di un punteggio prodotto per inferenza. Come si dimostrerà
-sperimentalmente nel \hyperref[cap5]{Capitolo Quinto}, una perturbazione applicata all'ingresso
-altera direttamente queste distribuzioni di probabilità, fino a far attraversare
-la soglia decisionale a predizioni che le erano già prossime, senza che alcun
-parametro del sistema venga toccato. L'esito dell'ingaggio dipende quindi da una
-traslazione statistica priva di fondamenti semantici.} Come verrà spiegato nel
+processo decisionale dalla semantica umana all'inferenza stocastica. Come verrà spiegato nel
 \hyperref[cap4]{Capitolo Quarto}, la macchina identifica un bersaglio calcolando distribuzioni di
-probabilità per minimizzare una funzione di perdita preimpostata, ma è
-strutturalmente incapace di \textit{rispondere} del proprio tasso d'errore
-nell'ingaggio \footcite{simmons_edler_2025}.
+probabilità per minimizzare una funzione di perdita preimpostata, ma non ha potere decisionale né titolarità giuridica, e non può quindi essere
+chiamata a rispondere del proprio tasso d'errore nell'ingaggio \footcite{simmons_edler_2025}.
 
 La delega delle funzioni critiche di selezione e ingaggio a sistemi algoritmici,
 come \textit{pipeline} di \textit{Computer Vision} e di \textit{Data Fusion}
@@ -600,7 +594,7 @@ un problema accessorio rispetto alla tanatopolitica algoritmica, ne è la
 precondizione materiale: se il nodo sensore che alimenta la catena decisionale
 letale è per costruzione compromettibile, nella propria integrità fisica quanto
 in quella del dato trasmesso, l'intera infrastruttura di targeting eredita quella
-fragilità e diventa un apparato \textit{not-Safe-by-Design}.\footnote{Nel
+fragilità e diventa un apparato \textit{not-Safe-by-Design}. Nel
 contesto dei LAWS, definire un'infrastruttura \textit{not-Safe-by-Design}
 significa riconoscere che la vulnerabilità non è un \textit{bug} risolvibile, ma
 una caratteristica emergente del paradigma probabilistico stesso. Come evidenziato
@@ -611,7 +605,7 @@ da attacchi avversariali \footcite{cina_2023_poisoning}. Dal punto di vista del
 Diritto Internazionale Umanitario, strutturare la catena di ingaggio su una base
 percettiva matematicamente instabile e crittograficamente compromettibile
 equivale a violare strutturalmente i principi di distinzione e proporzionalità, e
-rende l'arma illecita sin dalla fase di progettazione.}
+rende l'arma illecita sin dalla fase di progettazione.
 
 Un parallelo contemporaneo, esterno al teatro bellico ma strutturalmente
 identico, chiarisce la portata generale del meccanismo. Il 9 luglio 2026 il
@@ -628,7 +622,7 @@ costruita per una finalità protettiva circoscritta crea, per sua stessa natura
 tecnica, una capacità di sorveglianza che eccede il mandato originario e resta
 disponibile per un riutilizzo successivo. Il Dual-Use non riguarda quindi
 soltanto il trasferimento di tecnologia dal civile al militare, ma la stessa
-architettura di raccolta dati, in tempo di pace sempre potenzialmente
+architettura di raccolta dati, in tempo di pace è sempre potenzialmente
 riconvertibile in strumento di controllo.
 
 Siamo di fronte a \textit{``un potere che non amministra la vita, ma la regola
@@ -789,8 +783,7 @@ riportare le distorsioni presenti nei dati di addestramento, le amplifica, senza
 che in tempo di guerra esista una possibilità concreta di validazione
 \textit{ex ante}.
 
-Il punteggio assegnato non è una certezza, ma un \textit{confidence score}
-stocastico. Stabilire a quale punteggio un individuo diventi un bersaglio
+Il punteggio assegnato non è una certezza, ma un \textit{confidence score}. Stabilire a quale punteggio un individuo diventi un bersaglio
 legittimo non è una decisione etico-giuridica, ma un parametro di \textit{tuning}
 che altera il \textit{trade-off} fra \textit{Precision} e \textit{Recall}
 \footcite{podar_2025}: massimizzare la \textit{Recall} significa ridurre al minimo
@@ -870,15 +863,12 @@ campo di studio denominato ``Algoretica'', recentemente riaffermato dal magister
 di Papa Leone XIV con l'enciclica \textit{Magnifica Humanitas} del maggio 2026
 \footcite{enciclica_2026}. Il documento lancia un allarme contro l'oligopolio
 delle \textit{Big Tech}, perché la concentrazione del potere computazionale e dei
-dati rischia di generare nuove forme di dominio asimmetrico. Si scaglia inoltre
-contro lo sviluppo di armi autonome, esige che l'intelligenza artificiale venga
-disarmata e riafferma l'inaccettabilità morale di delegare a una macchina
-decisioni irreversibili di vita o di morte. Resta però da chiedersi se il vertice
-spirituale di una singola confessione religiosa, che è al contempo Capo di Stato
-dotato di uno schiacciante peso geopolitico, possa arrogarsi il diritto, o
-disporre della forza materiale, di stabilire i confini etici di un fenomeno
-tecnico-militare globale: in uno scenario multipolare dominato dal realismo,
-l'autorità morale resta un argine strutturalmente insufficiente.
+dati rischia di generare nuove forme di dominio asimmetrico. Si è espresso inoltre sullo sviluppo di armi autonome, chiedendone il disarmo e
+sostenendo l'inaccettabilità morale di delegare a una macchina decisioni
+irreversibili di vita o di morte. La portata di questa presa di posizione resta
+circoscritta: come per le dichiarazioni di altri capi di Stato, l'autorità
+morale non dispone di strumenti di attuazione, e in uno scenario multipolare non
+vincola le scelte di chi sviluppa o impiega questi sistemi.
 
 La debolezza dell'etica privata emerge con maggiore evidenza nell'ipocrisia delle
 grandi aziende tecnologiche. Durante la presentazione di \textit{Magnifica
@@ -913,13 +903,15 @@ lessico militare legittima il \textit{targeting} letale \footcite{carter_2026}.
 Di fronte alla resistenza iniziale dell'azienda, il governo ha minacciato il suo
 inserimento in una lista nera per rischio alla sicurezza nazionale, una misura
 che metteva a rischio contratti miliardari e ha spinto competitor diretti come
-OpenAI a offrirsi per colmare il vuoto operativo. L'accusa formale, che Anthropic
-potesse codificare limitazioni persistenti nel modello, trova riscontro negli
-studi sui cosiddetti \textit{sleeper agents}, che dimostrano come comportamenti
-nascosti in un LLM possano sopravvivere all'addestramento di sicurezza standard
-\footcite{hubinger_2024_sleeper}, sebbene tale ricerca nasca per difendere i
-modelli da attori malevoli e non per descrivere la condotta legittima del
-fornitore.
+OpenAI a offrirsi per colmare il vuoto operativo. L'accusa mossa ad Anthropic era di aver codificato nel modello vincoli etici
+persistenti, contrari all'uso richiesto dal Pentagono. Il fondamento tecnico
+dell'accusa è plausibile: la ricerca sui cosiddetti \textit{sleeper agents}
+dimostra che un comportamento nascosto, una volta inserito in un LLM, può
+sopravvivere all'addestramento di sicurezza standard \footcite{hubinger_2024_sleeper}.
+Quella ricerca nasce per difendere i modelli da un attore malevolo che inserisce
+il comportamento nascosto, non per descrivere un fornitore che lo rimuove: il
+meccanismo però è lo stesso, e mostra che un vincolo etico può resistere anche
+quando chi lo controlla vorrebbe eliminarlo.
 
 Il paradosso di dirigenti che discutono di etica in Vaticano mentre pochi mesi
 prima i loro algoritmi pianificano raid letali su commissione del Pentagono
@@ -930,10 +922,14 @@ giuridico: la letteratura sulla governance dell'accesso distingue fra un accesso
 strutturato leggero, tipico di una API cloud, in cui il developer mantiene piena
 visibilità e capacità di \textit{enforcement} in tempo reale, e un accesso
 profondo, in cui il modello viene integrato in un'infrastruttura classificata
-mediante un attore terzo \footcite{shevlane_2022_access}. Raggiunto il secondo
-livello, il controllo tecnico che il developer conserva si riduce drasticamente,
-perché l'\textit{enforcement} della policy dipende ormai da clausole contrattuali
-e non più da un interruttore direttamente azionabile.
+mediante un attore terzo \footcite{shevlane_2022_access}. Raggiunto il secondo livello, il controllo tecnico che il developer conserva si
+riduce drasticamente: il modello non gira più sui server dello sviluppatore, ma
+su infrastruttura cloud gestita da terzi, e il vincolo etico non è più
+imposto a livello di codice bensì affidato a una clausola contrattuale che il
+cliente può violare senza che lo sviluppatore se ne accorga o possa intervenire
+in tempo reale. È precisamente questo il meccanismo contestato nel caso
+Anthropic-Pentagono: l'accesso non passava più per un'interfaccia diretta e
+controllabile, ma per un intermediario che ne allentava la sorveglianza.
 
 Lo scontro ha attraversato anche l'aula giudiziaria, con esiti che confermano la
 tesi del capitolo con l'autorità di una corte federale. Il 27 marzo 2026 la
@@ -990,7 +986,7 @@ capitolo ricostruisce lo stato della ricerca sui due elementi tecnici che quella
 catena presuppone: il rilevatore di oggetti che alimenta la percezione, e le
 tecniche note per comprometterlo. L'esposizione è limitata a quanto necessario a
 collocare il contributo sperimentale; le formulazioni impiegate in questo lavoro
-sono descritte nel \hyperref[cap4]{Capitolo Quarto} e non anticipate qui.
+sono descritte nel \hyperref[cap4]{Capitolo Quarto}, dove verranno opportunamente approfondite.
 
 \section{Rilevamento di persone in prospettiva aerea}
 \label{sec:sota_detection}
@@ -1128,7 +1124,7 @@ sviluppato in questo lavoro non è un sistema d'arma o una replica funzionale, m
 uno strumento per quantificare l'impatto di una contromisura passiva applicata al
 corpo di una persona sulla percezione di un sistema autonomo. La sua struttura
 riflette questa finalità: un modulo di \textit{vision} basato su due dataset
-reali e un ambiente simulato che ne propaga gli effetti fino a una decisione,
+reali (immagini statiche e sequenze video) e un ambiente simulato che ne propaga gli effetti fino a una decisione,
 come illustrato in Figura \ref{fig:tre_livelli}.
 
 \begin{figure}[htbp]
@@ -1177,9 +1173,12 @@ dei canali non visivi, come la contaminazione dei profili OSINT delle entità.
 
 Il primo livello opera esclusivamente su fotogrammi reali e i suoi risultati
 sono misure sperimentali. Il secondo e il terzo operano su entità
-sintetiche generate da distribuzioni scelte in fase di progettazione, e i loro
+sintetiche generate da distribuzioni probabilistiche scelte in fase di progettazione, e i loro
 risultati hanno lo statuto di conseguenze di un modello, non di osservazioni.
-Questa asimmetria è deliberata e ricorre nella discussione dei risultati.
+Questa asimmetria è deliberata: il lavoro concentra lo sforzo sperimentale sul
+canale visivo, mentre i Livelli 2 e 3 restano una struttura di supporto
+dimostrativa, anche per l'indisponibilità di dati reali sul comportamento di un
+simulatore di questo tipo. Ricorre nella discussione dei risultati.
 
 \textbf{Il ponte di interscambio.}
 Valutare YOLOv8 a ogni passo temporale imporrebbe un costo proibitivo, dato il
@@ -2268,7 +2267,7 @@ Le uscite del simulatore multi-agente non sono presentate come risultato quantit
 \chapter{Conclusioni}
 \label{cap6}
 
-L'impiego di sistemi d'arma autonomi letali sposta la selezione del bersaglio da un operatore a un modello statistico, e con essa il presupposto di fatto su cui il Diritto Internazionale Umanitario fonda il principio di distinzione. Lo stallo dei negoziati internazionali, esaminato nel \hyperref[cap1]{Capitolo Primo}, e la dissoluzione della responsabilità individuale nella catena algoritmica, discussa nel \hyperref[cap2]{Capitolo Secondo}, lasciano il requisito di controllo umano significativo privo di verifica tecnica indipendente. Il presente lavoro ha affrontato questa lacuna per via sperimentale: ha sottoposto il canale sensoriale di un sistema di percezione a un attacco avversariale controllato e ne ha misurato il degrado con un protocollo statistico esplicito.
+L'impiego di sistemi d'arma autonomi letali sposta la selezione del bersaglio da un operatore a un modello statistico, e con essa il presupposto di fatto su cui il Diritto Internazionale Umanitario fonda il principio di distinzione. Lo stallo dei negoziati internazionali, esaminato nel \hyperref[cap1]{Capitolo Primo}, e la dissoluzione della responsabilità individuale nella catena algoritmica, discussa nel \hyperref[cap2]{Capitolo Secondo}, lasciano il requisito di controllo umano significativo privo di un'effettiva verifica tecnica indipendente. Il presente lavoro ha affrontato questa lacuna per via sperimentale: ha sottoposto il canale sensoriale di un sistema di percezione a un attacco avversariale controllato e ne ha misurato il degrado con un protocollo statistico esplicito.
 
 Il metodo è consistito nell'ottimizzazione di una perturbazione avversariale universale contro un rilevatore di oggetti della famiglia YOLO, applicata a una porzione del busto del soggetto compatibile con la realizzazione per mezzo di un capo di abbigliamento. La perturbazione è stata ottimizzata su una distribuzione di trasformazioni geometriche e fotometriche, così da conservare efficacia sotto condizioni di ripresa variabili anziché su una singola resa dell'immagine, e vincolata a una banda spaziale compatibile con la riproduzione a stampa. La valutazione ha impiegato due insiemi di dati aerei indipendenti, trattati separatamente e mai aggregati, e ha confrontato la medesima sequenza di fotogrammi nelle condizioni con e senza perturbazione. La significatività è stata stabilita per ricampionamento appaiato, con correzione della correlazione temporale sul secondo insieme di dati.
 
