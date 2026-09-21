@@ -1,0 +1,360 @@
+% Bozza per la call con il Prof. Rivolta — 24 settembre
+% Proposte per i Capitoli 4-5, non ancora in main.tex
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amssymb,amsmath}
+\usepackage{booktabs}
+\usepackage{csquotes}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, giveninits=true]{biblatex}
+\addbibresource{bibliografia.bib}
+
+\title{Proposte di revisione dei Capitoli 4 e 5}
+\author{Daniele Intra}
+\date{24 settembre 2026}
+
+\begin{document}
+\maketitle
+
+% A — Sez. 4.3: loss + EoT, L1/L2, soglia, (0,1), replicabilità
+\section{Funzione obiettivo e \textit{Expectation over Transformation}}
+\label{sec:obiettivo}
+
+\textbf{Parametrizzazione della perturbazione.}
+La perturbazione non è ottimizzata direttamente nello spazio dei pixel, ma
+attraverso una variabile libera $\theta \in \mathbb{R}^{3 \times 200 \times 200}$:
+\begin{equation}
+\label{eq:param_sigmoide}
+P = \sigma(\theta), \qquad \theta_0 \sim \mathcal{N}(0,\, 0.1^2)
+\end{equation}
+dove $\sigma$ è la funzione logistica applicata elemento per elemento. La
+riparametrizzazione garantisce $P \in (0,1)$ senza operazioni di troncamento, il
+cui gradiente è nullo al di fuori dell'intervallo ammesso; è equivalente alla
+trasformazione tramite tangente iperbolica proposta da Carlini e
+Wagner\footcite{carlini_2017}, poiché $\sigma(2w) = \tfrac{1}{2}(\tanh w + 1)$.
+
+\textbf{Composizione.}
+Sia $x$ un fotogramma dell'insieme di addestramento e $B(x)$ l'insieme dei
+riquadri di persona validi (al più tre, i più estesi). Per un riquadro di
+larghezza $w$ e altezza $h$, la perturbazione occupa una regione di
+$0.5\,w \times 0.4\,h$ centrata orizzontalmente e posta a $0.33\,h$ dal bordo
+superiore. Indicando con $M_t$ la maschera di opacità trasformata da $t$,
+l'immagine composta è
+\begin{equation}
+\label{eq:composizione}
+A(x, P, t) = x \odot (1 - M_t) + t(P) \odot M_t .
+\end{equation}
+
+\textbf{Funzione obiettivo.}
+L'avversario vuole la mancata rilevazione del soggetto, evento non
+differenziabile. Si minimizza quindi una funzione obiettivo surrogata,
+monotona crescente nella confidenza residua del rilevatore sulla classe
+persona. Siano $t_1, \dots, t_N$, con $N = 16$, realizzazioni indipendenti della
+distribuzione di trasformazioni $\mathcal{T}$ (Tabella~\ref{tab:eot_parametri}),
+$\mathcal{K}_i$ l'insieme delle $K = 20$ celle più confidenti, entro i riquadri
+di persona, nella realizzazione $i$, e $\omega_j \in [0,1]$ il peso della cella
+$j$ in funzione dell'altezza del riquadro di appartenenza
+(Sezione~4.4). La confidenza aggregata è
+\begin{equation}
+\label{eq:conf_aggregata}
+\bar{c}(x, P) =
+\frac{\sum_{i=1}^{N} \sum_{j \in \mathcal{K}_i} \omega_j \,
+      \sigma\big(f_j(A(x, P, t_i))\big)}
+     {\sum_{i=1}^{N} \sum_{j \in \mathcal{K}_i} \omega_j}
+\end{equation}
+dove $f_j$ è il punteggio di classe persona restituito dal rilevatore sulla
+cella $j$, prima della soppressione dei non-massimi. La funzione obiettivo,
+valutata su quattro fotogrammi per aggiornamento, è
+\begin{equation}
+\label{eq:obiettivo}
+\mathcal{J}(P) = \sum_{m=1}^{4} -\ln\!\big(1 - \bar{c}(x_m, P) + \varepsilon\big)
+\;+\; \lambda_{TV}\, \mathcal{L}_{TV}(P),
+\qquad \varepsilon = 10^{-6},\; \lambda_{TV} = 0.1 .
+\end{equation}
+Il termine logaritmico è strettamente crescente in $\bar{c}$ su tutto
+l'intervallo $(0,1)$ e il suo gradiente non si annulla al decrescere della
+confidenza.
+
+\textbf{Relazione con l'\textit{Expectation over Transformation}.}
+L'EoT di Athalye et al.\footcite{athalye_2018_eot} ottimizza il valore atteso
+della perdita sulla distribuzione delle trasformazioni,
+$\mathbb{E}_{t \sim \mathcal{T}}[\mathcal{L}(t)]$. In
+\eqref{eq:conf_aggregata}--\eqref{eq:obiettivo} il valore atteso è invece
+stimato sulla confidenza, prima della trasformazione logaritmica:
+$-\ln(1 - \mathbb{E}_t[c])$. Poiché $-\ln(1-c)$ è convessa, per la
+disuguaglianza di Jensen la quantità ottimizzata è un limite inferiore di
+quella di Athalye: le realizzazioni in cui la perturbazione è meno efficace
+pesano in misura uguale alle altre, anziché in misura maggiore.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Componente} & \textbf{Distribuzione} & \textbf{Condizione simulata} \\
+\midrule
+Guadagno di contrasto & $\mathcal{U}(0.6,\,1.4)$ & risposta del sensore, esposizione \\
+Offset di luminosità & $\mathcal{U}(-0.2,\,0.2)$ & illuminazione della scena \\
+Rumore additivo, per pixel & $\mathcal{N}(0,\,0.05^2)$ & compressione, rumore di sensore \\
+Rotazione & $\mathcal{U}(-15^{\circ},\,15^{\circ})$ & orientamento del soggetto \\
+Fattore di scala & $\mathcal{U}(0.4,\,0.9)$ & distanza del velivolo \\
+Rapporto d'aspetto & $\mathcal{U}(0.7,\,1.3)$ & inclinazione della ripresa \\
+Traslazione, per asse & $\mathcal{U}(-0.1,\,0.1)$ & collocazione imprecisa sul corpo \\
+\bottomrule
+\end{tabular}
+\caption{Componenti della distribuzione $\mathcal{T}$, estratte
+indipendentemente per ciascuna realizzazione. Le componenti geometriche sono
+composte in un'unica trasformazione affine con ricampionamento bilineare.}
+\label{tab:eot_parametri}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Parametro} & \textbf{Valore} \\
+\midrule
+Ottimizzatore & Adam su $\theta$, tasso di apprendimento iniziale $0.01$ \\
+Programma del tasso & coseno fino a $0.001$ sull'intera durata \\
+Aggiornamenti & $1250$ (VisDrone), $2000$ (Okutama); 4 fotogrammi ciascuno \\
+Normalizzazione del gradiente & norma massima $1.0$ \\
+Arresto anticipato & media mobile su $100$ valori, pazienza $1000$ \\
+Selezione della perturbazione & minimo della media mobile della funzione obiettivo \\
+\bottomrule
+\end{tabular}
+\caption{Parametri di ottimizzazione.}
+\label{tab:param_ottimizzazione}
+\end{table}
+
+\textbf{Regolarizzazione.}
+$\mathcal{L}_{TV}(P) = \operatorname{mean}|P_{:,:,w+1} - P_{:,:,w}| +
+\operatorname{mean}|P_{:,h+1,:} - P_{:,h,:}|$, nella forma anisotropa in norma
+$\ell_1$ adottata da Thys et al.\footcite{thys_2019}. Rispetto a una
+penalizzazione quadratica, che attenua i salti ampi e tollera le piccole
+variazioni producendo superfici sfumate, la norma $\ell_1$ spinge a zero le
+differenze fra pixel adiacenti su regioni estese e ammette poche transizioni
+nette: il risultato sono campiture uniformi, più fedelmente riproducibili su
+supporto stampato.
+
+
+% B — Sez. 4.1: automa x_{n+1}=f(x_n), distribuzioni, parametro estrazione, YOLO
+\section{Il livello di simulazione come macchina a stati}
+\label{sec:automa}
+
+Il livello di simulazione non contiene il rilevatore. YOLOv8 è eseguito una
+sola volta, in modalità non interattiva, sull'intero insieme di validazione,
+prima dell'avvio della simulazione; richiamarlo a ogni passo per ogni entità
+imporrebbe un numero di inferenze pari al prodotto fra entità e iterazioni.
+Il simulatore riceve, attraverso il file di interfaccia, i quattro valori
+$R_1^{\text{pre}}$, $R_1^{\text{post}}$, $R_2^{\text{pre}}$, $R_2^{\text{post}}$
+e li impiega come parametri di un'estrazione di Bernoulli.
+
+\textbf{Componenti.}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Componente} & \textbf{Ingresso} & \textbf{Uscita} \\
+\midrule
+\texttt{Environment} & passo temporale & posizioni, entità visibili, civili prossimi \\
+\texttt{VisionAgentStat} & entità, $R_1$, $R_2$ & esito di rilevamento, confidenza \\
+\texttt{FusionAgent} & tre canali di evidenza & punteggio di minaccia, banda di variabilità \\
+\texttt{DecisionAgent} & punteggio, banda, civili prossimi & azione \\
+\bottomrule
+\end{tabular}
+\caption{Componenti del livello di simulazione e relative interfacce.}
+\label{tab:componenti_sim}
+\end{table}
+
+\textbf{Formalizzazione.} Il sistema evolve a tempo discreto secondo
+\begin{equation}
+\label{eq:automa}
+x_{n+1} = f(x_n, \xi_n), \qquad a_{e,n} = g(x_n, \xi'_n),
+\end{equation}
+dove $\xi_n, \xi'_n$ raccolgono le estrazioni casuali del passo $n$ e
+$a_{e,n}$ è l'azione per l'entità $e$. Lo spazio degli stati non è finito,
+poiché le componenti di $x_n$ assumono valori continui; è finito l'insieme
+delle azioni (Tabella~\ref{tab:azioni}). Le azioni non fanno parte dello
+stato: sono ricalcolate a ogni passo e non dipendono dall'azione precedente.
+
+\textbf{Stato.} Per ogni entità $e$, $x_{e,n} = (p_{e,n},\, H_{e,n},\,
+o_{e,n},\, h_{e,n})$: posizione intera in una griglia $100 \times 100$; ultime
+$20$ posizioni; profilo OSINT $o = (b, g, s)$ con $b$ presenza della targa in
+lista di sorveglianza, $g$ rischio geografico, $s$ numero di corrispondenze
+sui canali social; ultimi $20$ punteggi di minaccia. Sono fissi per l'intera
+simulazione il ruolo dell'entità, lo scenario e i quattro valori del file di
+interfaccia.
+
+\textbf{Inizializzazione.}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Grandezza} & \textbf{Bersaglio} & \textbf{Civile} \\
+\midrule
+Numero di entità & $3$ & $30$ \\
+Posizione & $\mathcal{U}\{0,\dots,99\}^2$ & $\mathcal{U}\{0,\dots,99\}^2$ \\
+Targa in lista, $b$ & $\text{Bernoulli}(0.75)$ & $\text{Bernoulli}(0.01)$ \\
+Rischio geografico, $g$ & $\text{Beta}(8,\,2)$ & $\text{Beta}(2,\,8)$ \\
+Corrispondenze social, $s$ & $\text{Poisson}(12)$ & $\text{Poisson}(1)$ \\
+\bottomrule
+\end{tabular}
+\caption{Distribuzioni di inizializzazione delle entità. Il velivolo parte dal
+centro della griglia, quota $10$ m.}
+\label{tab:init_sim}
+\end{table}
+
+\textbf{Transizione $f$.} A ogni passo, nell'ordine:
+(i) ogni entità si sposta di $\delta_x, \delta_y \sim \mathcal{U}\{-k,\dots,k\}$
+indipendenti, con $k = 2$ per i bersagli e $k = 1$ per i civili, entro i bordi
+della griglia; (ii) il velivolo si sposta allo stesso modo con $k = 17$
+($61$ km/h, assumendo un passo di $1$ s e celle di $1$ m); (iii) negli scenari
+con attacco al canale OSINT, a ogni passo il profilo dei bersagli è portato a
+$b = 0$, $s = 0$, $g \leftarrow \max(0,\, g - u)$ con
+$u \sim \mathcal{U}(0.4,\, 0.6)$, e quello dei civili a $b = 1$, $g = 0.95$,
+$s = 15$; (iv) la storia dei punteggi è aggiornata.
+
+\textbf{Uscita $g$.} Per ciascuna entità, a ogni passo:
+
+\emph{Canale visivo.} Esito $\delta \sim \text{Bernoulli}(q)$, con
+$q = R_1^{\text{post}}$ per un bersaglio con contromisura attiva,
+$q = R_1^{\text{pre}}$ per un bersaglio senza, $q = 1 - R_2$ per un civile.
+Confidenza $c_v = \operatorname{clip}(u + \eta,\, 0,\, 1)$ con
+$u \sim \mathcal{U}(0.50,\, 0.95)$ se $\delta = 1$,
+$u \sim \mathcal{U}(0.05,\, 0.50)$ se $\delta = 0$, e
+$\eta \sim \mathcal{N}(0,\, 0.02^2)$. Segnale $v = c_v$ se $\delta = 1$,
+$v = 0.5\, c_v$ altrimenti. La distanza non interviene: $R_1$ è misurato su
+fotogrammi reali a distanze eterogenee e ne incorpora già l'effetto.
+
+\emph{Canale OSINT.} Classificatore bayesiano ingenuo con probabilità a priori
+$0.15$:
+\begin{equation}
+\label{eq:osint}
+O = \frac{0.15\,\ell_T}{0.15\,\ell_T + 0.85\,\ell_C},
+\end{equation}
+\[
+\ell_T = \beta_T(b)\,\max(g, 0.01)\,\max(1 - e^{-0.3 s}, 0.01), \quad
+\ell_C = \beta_C(b)\,\max(1 - g, 0.01)\,\max(e^{-0.6 s}, 0.01),
+\]
+con $\beta_T = 0.75$ o $0.25$ e $\beta_C = 0.01$ o $0.99$ secondo che la targa
+sia o non sia in lista. Le verosimiglianze sono funzioni scelte per la
+modellazione, non derivate dalle distribuzioni di Tabella~\ref{tab:init_sim}.
+
+\emph{Canale comportamentale.}
+$\beta = \operatorname{clip}\big((\operatorname{Var}(x) + \operatorname{Var}(y))/20,\, 0,\, 1\big)$
+sulle ultime $10$ posizioni, con l'aggiunta di $\mathcal{U}(0.10,\, 0.25)$ per
+i bersagli; nullo con meno di tre posizioni.
+
+\emph{Fusione.} $\tau = 0.45\, v + 0.35\, O + 0.20\, \beta$. La banda di
+variabilità è $\mu \pm 1.96\,\sigma$, calcolata sugli ultimi $10$ punteggi e
+limitata a $[0,1]$.
+
+\emph{Decisione.} L'azione nominale segue le soglie di
+Tabella~\ref{tab:azioni}. L'azione \textsc{engage} è declassata ad
+\textsc{alert} se l'ampiezza della banda supera $0.40$, oppure se più di tre
+civili si trovano a distanza di Manhattan non superiore a $5$ e $\tau < 0.85$.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{6.4cm}}
+\toprule
+\textbf{Azione} & \textbf{Condizione} & \textbf{Significato} \\
+\midrule
+\textsc{ignore} & $\tau < 0.22$ & entità non tracciata \\
+\textsc{track} & $0.22 \le \tau < 0.38$ & entità sotto osservazione \\
+\textsc{alert} & $0.38 \le \tau < 0.58$ & segnalazione a supervisione umana \\
+\textsc{engage} & $\tau \ge 0.58$ & ingaggio \\
+\bottomrule
+\end{tabular}
+\caption{Azioni e soglie sul punteggio di minaccia.}
+\label{tab:azioni}
+\end{table}
+
+% figura automa: dopo conferma impostazione
+
+\textbf{Risultati preliminari.} Con i difetti d'implementazione corretti, su
+$150$ passi e venti repliche con seme diverso: isolando il solo canale visivo,
+la frazione di osservazioni di bersaglio classificate \textsc{alert} o
+\textsc{engage} è $0.506 \pm 0.017$ senza contromisura e $0.219 \pm 0.015$ con
+contromisura, contro $R_1^{\text{pre}} = 0.501$ e $R_1^{\text{post}} = 0.220$
+misurati; il tasso di falso allarme sui civili è $0.029$, contro
+$1 - R_2 = 0.030$. Nel sistema a canali fusi la contromisura isolata non altera
+la classificazione dei bersagli ($0.998$ contro $0.997$): il canale OSINT è
+sufficiente a sostenerla. Combinata con l'attacco al canale OSINT, la
+contromisura la riduce da $0.340$ a $0.150$, rapporto $0.44$ pari a
+$R_1^{\text{post}}/R_1^{\text{pre}}$. Pesi, soglie e parametri delle
+distribuzioni sono scelte di modellazione, non stime: il livello ha valore
+dimostrativo del meccanismo di propagazione.
+
+
+% C — Sez. 4.2: ipotesi white-box
+\section{Modello di minaccia}
+\label{sec:minaccia}
+
+\textbf{Ipotesi di conoscenza del rilevatore.}
+Si assume che l'avversario conosca l'architettura e i pesi del rilevatore
+impiegato. L'assunzione è deliberatamente favorevole all'attaccante e
+circoscrive la portata dei risultati: le misure riportate nel
+Capitolo~5 costituiscono un limite superiore all'efficacia
+conseguibile, non una stima operativa contro un rilevatore ignoto. La
+trasferibilità della perturbazione verso un modello diverso non è stata
+misurata ed è indicata fra gli sviluppi futuri.
+
+
+% D — note puntuali: R2, NMS, split, valore atteso
+\section{Chiarimenti su metriche e dati}
+\label{sec:chiarimenti}
+
+\textbf{Metriche.} $R_1$ misura l'efficacia della perturbazione sul bersaglio;
+$R_2$ controlla che la perturbazione non introduca falsi allarmi nei
+fotogrammi privi di bersaglio. La loro media geometrica $\sqrt{R_1 R_2}$ è la
+metrica primaria. La soppressione dei non-massimi (\textit{Non-Maximum
+Suppression}, NMS) elimina i riquadri sovrapposti riferiti al medesimo
+oggetto: la confidenza $\bar{c}$ dell'Equazione~\eqref{eq:conf_aggregata} è
+calcolata prima della NMS, le metriche di valutazione dopo, alla soglia di
+confidenza $0.50$.
+
+\textbf{Dati.} Si adottano le suddivisioni ufficiali di addestramento e di
+validazione. VisDrone: $531$ immagini di validazione, le $548$ ufficiali meno
+le $17$ prive di annotazioni di persona. Okutama-Action: $54\,664$ fotogrammi
+di addestramento e $14\,210$ di validazione, sottocampionati con passo $27$
+($n = 527$) per ridurre la correlazione fra fotogrammi consecutivi.
+% TODO: n. immagini addestramento VisDrone
+
+\textbf{Programma del tasso di apprendimento.} Il ``valore atteso'' citato nel
+testo va inteso come valore teorico previsto dal programma a coseno, non come
+aspettazione statistica.
+
+
+% E — domande per la call
+\section*{Domande aperte}
+
+\begin{enumerate}
+\item \textbf{Terminologia del livello di simulazione.} Lo spazio degli stati
+non è finito. Va bene ``macchina a stati'' con la precisazione della
+Sezione~\ref{sec:automa}, oppure preferisce un'altra dizione?
+
+\item \textbf{Figura dell'automa.} (a) schema a blocchi stato $\to$
+transizione $\to$ uscita; (b) diagramma della sola catena decisionale di un
+passo; (c) entrambe.
+
+\item \textbf{Collocazione delle tabelle di parametri} (EoT, ottimizzazione,
+inizializzazione): (a) nel testo; (b) in appendice.
+
+\item \textbf{Formulazione a soglia della funzione obiettivo:} la tolgo, come
+suggerito nel suo commento?
+
+\item \textbf{Risultati del livello di simulazione:} (a) tabella quantitativa
+nel Capitolo 5; (b) solo forma descrittiva, come nel paragrafo sopra.
+
+\item \textbf{Fusione.} Con probabilità a priori $0.50$ l'aggiornamento
+bayesiano del punteggio fuso restituisce il valore in ingresso: la fusione è
+quindi una combinazione lineare pesata, e la descrivo come tale. Concorda?
+\end{enumerate}
+
+\end{document}
