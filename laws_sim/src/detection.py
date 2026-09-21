@@ -122,7 +122,7 @@ class VisionAgentStat:
             random.uniform(DETECTION_THRESHOLD, 0.95) if detected
             else random.uniform(0.05, DETECTION_THRESHOLD)
         )
-        conf = float(np.clip(conf_raw * dist_scale + random.gauss(0, 0.02), 0.0, 1.0))
+        conf = float(np.clip(conf_raw + random.gauss(0, 0.02), 0.0, 1.0))
 
         if not detected and entity.role == AgentRole.TARGET:
             self.fn_count += 1

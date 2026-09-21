@@ -27,7 +27,7 @@
 
 \usepackage{csquotes}
 %  BIBLIOGRAFIA: motore biblatex/biber per citazioni a piè di pagina 
-\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none]{biblatex}
+\usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, giveninits=true]{biblatex}
 \addbibresource{bibliografia.bib}
 
 \newtheorem{myteor}{Teorema}[section]
@@ -204,7 +204,7 @@ Questa convergenza fra tecnologia civile e impiego militare si traduce nella mil
 fondato sull'osservazione sistematica dei comportamenti, sulla loro previsione
 e, sempre più spesso, sulla loro modifica, nel quale le grandi piattaforme non
 si limitano a raccogliere dati ma estraggono esperienza umana per trasformarla
-in profitto e potere. Come analizzato criticamente da Olivieri nel quadro della
+in profitto e potere. Come analizzato criticamente da Oliveri nel quadro della
 tanatopolitica \footcite{oliveri_2024}, l'infrastruttura di datificazione
 globale subisce a sua volta un cambio di destinazione d'uso: i dati biometrici,
 comportamentali e di geolocalizzazione estratti in tempo di pace per fini di
@@ -359,7 +359,7 @@ nell'intelligenza artificiale applicata a scenari militari. Nel 2019 hanno messo
 in guardia dalla stigmatizzazione di questi strumenti, e hanno rilevato come
 possano essere impiegati sia per fini bellici sia umanitari: una posizione che
 si collega direttamente al caso Anthropic e mostra come una grande potenza possa
-minimizzare i rischi a beneficio dell'industria e degli interessi nazionali; il parallelo con il caso Anthropic, discusso nella Sezione~\ref{sec:governance}, è ripreso più avanti. Sul
+minimizzare i rischi a beneficio dell'industria e degli interessi nazionali. Sul
 fronte opposto, il Venezuela ha proposto nel 2016 un divieto allo sviluppo
 \footcite[p.~53]{wareham_2020},
 acquisizione, scambio e schieramento dei LAWS, con l'argomento che decisioni di
@@ -468,7 +468,7 @@ Se l'Ucraina è stata il laboratorio in cui questi sistemi sono stati sperimenta
 su scala, la Libia può essere ritenuta il teatro del ``paziente zero''. Nel marzo 2020, durante
 la seconda guerra civile libica, un report del Consiglio di Sicurezza delle
 Nazioni Unite \footcite{un_libya_2021} ha documentato un evento spartiacque: i
-sistemi d'arma autonomi letali aerei Kargu-2, di produzione turca, sono stati
+LAWS aerei Kargu-2, di produzione turca, sono stati
 impiegati contro le forze in ritirata affiliate al generale Haftar.
  
 \begin{figure} [t]
@@ -1182,8 +1182,12 @@ dimostrativa, anche per l'indisponibilità di dati reali sul comportamento di un
 simulatore di questo tipo. Ricorre nella discussione dei risultati.
 
 \textbf{Il ponte di interscambio.}
-Valutare YOLOv8 a ogni passo temporale imporrebbe un costo proibitivo, dato il
-prodotto fra numero di entità visibili e centinaia di iterazioni per scenario. I
+Richiamare YOLOv8 a ogni passo temporale della simulazione, per ciascuna
+entità visibile, imporrebbe un costo computazionale proibitivo poichè il prodotto
+fra centinaia di iterazioni per scenario e il numero di entità nel campo
+d'osservazione renderebbe l'inferenza il collo di bottiglia dominante. YOLOv8
+viene quindi eseguito una sola volta, in modalità non interattiva, sull'intero
+insieme di validazione, prima che il simulatore venga avviato. I
 due livelli sono quindi disaccoppiati: l'inferenza è eseguita in modalità non
 interattiva sull'intero insieme di validazione e l'output è salvato su un file
 JSON, che il simulatore importa in fase di inizializzazione per istanziare un

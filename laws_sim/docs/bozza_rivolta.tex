@@ -1,0 +1,247 @@
+
+% ---------------------------------------------------------------------
+% Sezione 4.3 (Funzione obiettivo),
+% PRIMA della formulazione attuale.
+% fix -> p.45 "manca la definizione matematica della loss con EoT",
+%             p.46 "è una loss o una funzione obiettivo?",
+%             p.45 "L1 o L2 sono entrambe simmetriche"
+% ---------------------------------------------------------------------
+\begin{document}
+\textbf{Formulazione del problema di ottimizzazione.}
+\label{sec:formulazione_eot}
+Sia $P \in [0,1]^{3 \times H_p \times W_p}$ la perturbazione da ottimizzare,
+$x$ un fotogramma dell'insieme di addestramento, $B(x)$ l'insieme dei riquadri
+annotati validi in $x$ e $A(x, P, t)$ l'operatore che compone $P$ sui riquadri
+di $B(x)$ dopo averle applicato la trasformazione $t$. Sia $f_\theta$ il
+rilevatore con pesi $\theta$ fissi, e $c(\cdot)$ la funzione che ne estrae la
+confidenza aggregata sulla classe bersaglio nella regione del soggetto.
+
+L'avversario massimizza la probabilità di mancata rilevazione. Poiché la
+mancata rilevazione non è differenziabile, si minimizza una funzione obiettivo
+surrogata che decresce al decrescere della confidenza residua:
+
+\begin{equation}
+\label{eq:obiettivo_eot}
+P^{\star} \;=\; \arg\min_{P} \;
+\underbrace{\mathbb{E}_{x \sim \mathcal{D}} \,
+\mathbb{E}_{t \sim \mathcal{T}}
+\Big[\, \mathcal{L}_{\text{conf}}\big(c(f_\theta(A(x,P,t)))\big) \Big]}_{\text{termine avversariale}}
+\;+\;
+\lambda_{TV} \, \underbrace{\mathcal{L}_{TV}(P)}_{\text{regolarizzazione}}
+\end{equation}
+
+dove $\mathcal{D}$ è la distribuzione dei fotogrammi e $\mathcal{T}$ la
+distribuzione delle trasformazioni. Il valore atteso su $\mathcal{T}$ è
+l'\textit{Expectation over Transformation} di Athalye et
+al.\footcite{athalye_2018_eot}: ottimizzare la media su una famiglia di
+trasformazioni, anziché sulla singola realizzazione, è la condizione che rende
+la perturbazione robusta alle variazioni di acquisizione e quindi
+potenzialmente realizzabile su supporto fisico.
+
+Il termine avversariale dipende da $P$ per il tramite di $A$, e la
+trasformazione $t$ agisce su $P$ e non su $x$: è la perturbazione a dover
+sopravvivere al cambio di condizioni, non la scena.
+
+\textbf{Realizzazione dell'aspettazione.}
+L'aspettazione su $\mathcal{T}$ è approssimata con una media di Monte Carlo su
+$N_{EoT} = 16$ campioni indipendenti per fotogramma:
+
+\begin{equation}
+\label{eq:eot_montecarlo}
+\mathbb{E}_{t \sim \mathcal{T}}\big[\,\cdot\,\big] \;\approx\;
+\frac{1}{N_{EoT}} \sum_{i=1}^{N_{EoT}} \mathcal{L}_{\text{conf}}
+\big(c(f_\theta(A(x,P,t_i)))\big), \qquad t_i \sim \mathcal{T}
+\end{equation}
+
+Le componenti di $\mathcal{T}$ e i rispettivi intervalli di campionamento sono
+riportati in Tabella~\ref{tab:eot_parametri}. Ciascun campione $t_i$ è ottenuto
+estraendo indipendentemente un valore per ogni componente.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Componente} & \textbf{Intervallo} & \textbf{Condizione simulata} \\
+\midrule
+Guadagno di contrasto & $[0.6,\,1.4]$ & risposta del sensore, esposizione \\
+Offset di luminosità & $[-0.2,\,+0.2]$ & illuminazione della scena \\
+Rumore additivo gaussiano & $\sigma = 0.05$ & compressione, rumore di sensore \\
+Rotazione & $[-15^{\circ},\,+15^{\circ}]$ & orientamento del soggetto \\
+Fattore di scala & $[0.4,\,0.9]$ & distanza del velivolo \\
+Rapporto d'aspetto & $[0.7,\,1.3]$ & inclinazione della ripresa \\
+Traslazione & $\pm 10\%$ & collocazione imprecisa sul corpo \\
+\bottomrule
+\end{tabular}
+\caption{Componenti della distribuzione $\mathcal{T}$ e condizioni di
+acquisizione che ciascuna approssima. La composizione avviene per
+trasformazione affine con ricampionamento bilineare.}
+\label{tab:eot_parametri}
+\end{table}
+
+\textbf{Nota sulla norma adottata nella regolarizzazione.}
+La scelta di $\mathcal{L}_{TV}$ in norma $\ell_1$ anziché $\ell_2$ non risponde
+a un'esigenza di asimmetria — entrambe le norme sono simmetriche — ma al
+comportamento del gradiente. La penalizzazione in $\ell_2$ cresce
+quadraticamente con il salto fra pixel adiacenti e produce una superficie
+uniformemente levigata; la penalizzazione in $\ell_1$ ammette un numero
+limitato di discontinuità nette a fronte di regioni ampie a gradiente nullo,
+producendo pattern a banda spaziale stretta con bordi definiti. È questa
+seconda caratteristica a corrispondere al vincolo di riproducibilità su
+supporto stampato, dove una transizione netta è resa più fedelmente di un
+gradiente continuo.
+
+
+% ---------------------------------------------------------------------
+%  nuova sezione da inserire in Sezione 4.1,
+% dopo l'architettura del framework.
+% fix -> : mail "nessuna spiegazione delle componenti, nessun
+%             algoritmo a stati finiti riportato"
+% ---------------------------------------------------------------------
+
+\section{Il livello di simulazione come macchina a stati}
+\label{sec:automa}
+
+Il livello di simulazione non contiene il rilevatore. Riceve dal Livello~1,
+attraverso il file di interfaccia descritto nella
+Sezione~\ref{sec:laws_sim}, i quattro valori $R_1^{\text{pre}}$,
+$R_1^{\text{post}}$, $R_2^{\text{pre}}$, $R_2^{\text{post}}$, e li impiega come
+parametri di un'estrazione di Bernoulli che sostituisce l'inferenza. La
+motivazione è di costo: valutare il rilevatore a ogni passo temporale e per
+ogni entità visibile imporrebbe un numero di inferenze pari al prodotto fra
+entità e iterazioni, incompatibile con l'esecuzione ripetuta degli scenari.
+
+\textbf{Componenti.} L'ambiente è costituito da quattro agenti in cascata.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Componente} & \textbf{Ingresso} & \textbf{Uscita} \\
+\midrule
+\texttt{Environment} & passo temporale & entità visibili, distanze, civili prossimi \\
+\texttt{VisionAgentStat} & entità, $R_1$, $R_2$ & esito binario di rilevamento \\
+\texttt{FusionAgent} & tre canali di evidenza & punteggio di minaccia, intervallo \\
+\texttt{DecisionAgent} & punteggio, civili prossimi & azione fra quattro possibili \\
+\bottomrule
+\end{tabular}
+\caption{Componenti del livello di simulazione e relative interfacce.}
+\label{tab:componenti_sim}
+\end{table}
+
+\textbf{Formalizzazione a macchina a stati.} Il sistema evolve a tempo
+discreto secondo
+
+\begin{equation}
+\label{eq:automa_transizione}
+x_{n+1} = f(x_n, \xi_n), \qquad a_{e,n} = g(x_n, \xi'_n)
+\end{equation}
+
+dove $\xi_n$ raccoglie le estrazioni casuali del passo $n$ e $a_{e,n}$ è
+l'azione decisa per l'entità $e$. Una precisazione terminologica: lo spazio
+degli stati $x_n$ non è finito, poiché le sue componenti assumono valori
+continui; l'insieme delle azioni $a_{e,n}$, invece, è finito per costruzione
+(Tabella~\ref{tab:stati}). È una macchina a stati nel senso della relazione
+ricorsiva \eqref{eq:automa_transizione}, non nel senso di un automa a stati
+finiti in senso stretto.
+
+\textbf{Stato.} Per ogni entità $e$, lo stato al passo $n$ è la tripla
+$x_{e,n} = (p_{e,n},\, o_{e,n},\, h_{e,n})$:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Componente} & \textbf{Simbolo} & \textbf{Contenuto} \\
+\midrule
+Posizione & $p_{e,n}$ & coordinate $(x,y)$ in griglia $100\times100$ \\
+Profilo OSINT & $o_{e,n} = (b,g,s)$ & blacklist targa, rischio geografico, tracce social \\
+Storia dei punteggi & $h_{e,n}$ & ultime $20$ osservazioni del punteggio di minaccia \\
+\bottomrule
+\end{tabular}
+\caption{Componenti dello stato di un'entità simulata.}
+\label{tab:stato}
+\end{table}
+
+\textbf{Transizione $f$.} A ogni passo: le entità si muovono per passeggiata
+aleatoria sulla griglia; se lo scenario prevede un attacco al canale OSINT, il
+profilo $o_{e,n}$ di ciascun bersaglio e di ciascun civile viene alterato
+secondo parametri fissi, applicati a ogni passo; la storia $h_{e,n}$ viene
+aggiornata con il punteggio corrente.
+
+\textbf{Uscita $g$.} Il canale visivo è trattato come processo stocastico: per
+un'entità ostile l'esito del rilevamento è un'estrazione con parametro
+$R_1^{\text{post}}$ se la contromisura è attiva e $R_1^{\text{pre}}$
+altrimenti; per un'entità civile, che costituisce il caso negativo, il
+parametro è $1 - R_2$, cioè il tasso di falso allarme. La fusione combina il
+canale visivo con il profilo OSINT e un punteggio comportamentale secondo pesi
+$0.45$, $0.35$ e $0.20$, aggiornando una probabilità a priori di $0.50$ per via
+bayesiana, e mantiene una finestra mobile delle dieci osservazioni più recenti
+da cui deriva un intervallo di ampiezza $\pm 1.96\,\sigma$.
+
+L'azione nominale è determinata da soglie sul punteggio di minaccia $s$:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llp{6.4cm}}
+\toprule
+\textbf{Azione} & \textbf{Condizione} & \textbf{Significato} \\
+\midrule
+\textsc{ignore} & $s < 0.22$ & entità non tracciata \\
+\textsc{track} & $0.22 \le s < 0.38$ & entità sotto osservazione \\
+\textsc{alert} & $0.38 \le s < 0.58$ & segnalazione a supervisione umana \\
+\textsc{engage} & $s \ge 0.58$ & ingaggio \\
+\bottomrule
+\end{tabular}
+\caption{Azioni possibili e soglie sul punteggio di minaccia.}
+\label{tab:stati}
+\end{table}
+
+La transizione verso \textsc{engage} è subordinata a due condizioni di
+ammissibilità, verificate congiuntamente: l'ampiezza dell'intervallo di
+confidenza mobile non deve superare $0.40$, e il numero di civili prossimi non
+deve eccedere tre unità in presenza di un punteggio inferiore a $0.85$. Al
+mancato rispetto di una delle due, l'azione \textsc{engage} è declassata ad
+\textsc{alert}, che rimette la decisione a un operatore umano.
+
+% NOTA PER LA CALL: la figura TikZ (blocco stato/transizione/uscita, non i
+% 4 stati come nodi di un grafo) verrà disegnata dopo la conferma di questa
+% impostazione.
+
+\textbf{Risultati preliminari.} I quattro difetti d'implementazione accertati
+in fase di analisi sono stati corretti e le simulazioni rieseguite; i valori
+seguenti sono da intendersi come preliminari, in attesa di conferma
+sull'impostazione qui proposta. Isolando il solo canale visivo, il tasso di
+ingaggio simulato è $0.506$ in assenza di contromisura e $0.219$ in sua
+presenza, contro $R_1^{\text{pre}} = 0.501$ e $R_1^{\text{post}} = 0.220$
+misurati sul rilevatore (media su venti repliche con seme diverso). Nel
+sistema a canali fusi la contromisura isolata non altera il tasso di ingaggio
+($0.996$ contro $0.996$): il canale OSINT è sufficiente a sostenere la
+decisione anche quando il canale visivo è compromesso. Combinata con un
+attacco al canale OSINT, la stessa contromisura riduce il tasso di ingaggio da
+$0.340$ a $0.150$, un rapporto ($0.44$) coincidente con quello misurato sul
+solo canale visivo ($R_1^{\text{post}}/R_1^{\text{pre}}$). I pesi di fusione,
+le soglie decisionali e i parametri delle distribuzioni OSINT restano scelte
+di modellazione esplicite, non stime: il livello di simulazione ha quindi
+valore dimostrativo del meccanismo di propagazione, non predittivo di un
+sistema reale.
+
+
+% ---------------------------------------------------------------------
+%  integrazione in Sezione 4.2, sul modello di minaccia.
+% Risponde a: p.43 "invece di dire che non abbiamo accesso al modello e
+%             speriamo che funzioni con quello surrogato, non fai
+%             semplicemente l'ipotesi che si sia sotto white-box?"
+% ---------------------------------------------------------------------
+
+\textbf{Ipotesi di conoscenza del rilevatore.}
+Si assume che l'avversario conosca l'architettura e i pesi del rilevatore
+impiegato. L'assunzione è deliberatamente favorevole all'attaccante e
+circoscrive la portata dei risultati: le misure riportate nel
+Capitolo~\ref{cap5} costituiscono un limite superiore all'efficacia
+conseguibile, non una stima operativa contro un rilevatore ignoto. La
+trasferibilità della perturbazione verso un modello diverso non è stata
+misurata ed è indicata fra gli sviluppi futuri. Questa formulazione sostituisce
+l'ipotesi di un modello surrogato, che avrebbe richiesto di quantificare il
+divario fra surrogato e bersaglio: una quantificazione non disponibile in
+questo lavoro e che avrebbe reso i risultati condizionati a un parametro non
+misurato.

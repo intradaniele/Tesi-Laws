@@ -440,27 +440,22 @@ dell'immagine.
 
 ## D. Portata, limiti, livelli 2 e 3
 
-### D1. «I livelli 2 e 3 producono numeri. Perché non li presenti come risultati?»
+### D1. «I livelli 2 e 3 producono numeri. Sono affidabili?» *(aggiornata 21/9)*
 
-`[V]` Perché hanno quattro difetti accertati per lettura diretta del codice:
+`[V]` I quattro difetti accertati (esito non Bernoulli, baseline costante,
+specificità assente, distanza contata due volte) sono **corretti e verificati**.
+Il simulatore riproduce i valori misurati: nel canale visivo isolato $R_1$
+simulato 0.506 ± 0.017 su 20 seed contro 0.501 misurato; sotto patch 0.219
+contro 0.220; falsi allarmi civili 0.029 contro 0.030.
 
-1. l'esito del rilevamento non è un test statistico ma un'estrazione da
-   distribuzione uniforme con soglia fissa;
-2. la condizione di riferimento non legge le metriche del Livello 1 in assenza di
-   attacco, e confronta quindi una costante di letteratura con il dato misurato
-   sotto attacco;
-3. la specificità non entra nella catena decisionale per le entità civili;
-4. l'effetto della distanza è conteggiato due volte, nella metrica empirica e nel
-   modello analitico, in contrasto con la Sezione 4.1.
+Risultato del sistema fuso: la patch da sola **non** cambia la decisione (0.998
+contro 0.997), perché il canale OSINT basta a portare i bersagli sopra la
+soglia di allerta. Con l'OSINT avvelenato, invece, la patch riduce le
+segnalazioni da 0.340 a 0.150: fattore 0.44, lo stesso di $R_1^{post}/R_1^{pre}$.
 
-`[V]` L'unico enunciato sostenibile è che il sistema a canali fusi mostra un
-degrado inferiore rispetto al canale visivo isolato, coerente con la funzione di
-ridondanza attribuita alla fusione. **L'entità del fenomeno non è quantificabile
-con i dati disponibili.** La correzione è definita nel suo perimetro e non è
-stata eseguita.
-
-Questa asimmetria è **dichiarata in apertura del Capitolo 5**, non scoperta sotto
-esame. Dirlo.
+Limite onesto: pesi, soglie e distribuzioni OSINT sono **scelte di
+modellazione**, non stime. Il simulatore è dimostrativo: mostra il meccanismo di
+propagazione, non predice un sistema reale.
 
 ### D2. «E la metrica CEAE?»
 
@@ -617,20 +612,19 @@ iterazione l'evento binario del rilevamento di una specifica entità. Serve un
 numero che sia il parametro di una Bernoulli, e $F_1$ non lo è. È anche il motivo
 per cui $F_1$ resta metrica **secondaria** in tutto il Capitolo 5.
 
-### G5. «E la distanza fra sensore e bersaglio?»
+### G5. «E la distanza fra sensore e bersaglio?» *(aggiornata 21/9)*
 
-`[V]` Calcolata a tre dimensioni e registrata nei log, ma **non altera l'esito
-dell'estrazione**. Deliberato: $R_1$ è una media empirica su fotogrammi reali e
-incorpora già nativamente una distribuzione eterogenea di distanze e di
-dimensioni apparenti. Un ulteriore fattore di decadimento conteggerebbe lo stesso
-effetto due volte.
+`[V]` Calcolata a tre dimensioni per la visibilità, **non entra né nell'esito
+né nella confidenza**. $R_1$ è una media su fotogrammi reali a distanze diverse:
+un ulteriore decadimento conterebbe lo stesso effetto due volte.
 
-**Attenzione, qui c'è la trappola.** La Sezione 4.1 stabilisce il principio, ma
-il codice del simulatore lo viola: `[V]` il doppio conteggio è il **quarto
-difetto dichiarato** nella Sezione 5.3. Se la domanda arriva, la risposta è
-«il principio è quello, e nel simulatore non è rispettato — è uno dei quattro
-difetti per cui il Livello 2 non produce risultati quantitativi». Concedere,
-non difendere.
+Se chiedono la storia: il piano di correzione iniziale la lasciava nella
+confidenza "a fini di log", ma la confidenza entra nella fusione con peso 0.45.
+Me ne sono accorto e l'ho tolta. Prima del fix, $R_1$ simulato era 0.376 invece
+di 0.501: il doppio conteggio si vedeva nei numeri.
+
+Nota: con griglia 100 m e quota 10 m, la distanza massima è 141.8 m, sotto il
+raggio di 150 m: tutte le entità sono sempre visibili.
 
 ### G6. Il Livello 3, in trenta secondi
 
@@ -643,9 +637,11 @@ oltre $0.40$ su finestra delle dieci osservazioni più recenti, oppure più di t
 civili prossimi con punteggio sotto $0.85$.
 
 La fusione è il percorso lungo cui il degrado percettivo si propaga, **attenuato**
-dalla validazione incrociata. E l'unico enunciato sostenibile — canali fusi meno
-degradati del canale visivo isolato — non è quantificabile con i dati
-disponibili (D1).
+dalla validazione incrociata: numeri in D1.
+
+⚠ Con probabilità a priori 0.50 l'aggiornamento bayesiano restituisce il valore
+di partenza: la fusione è di fatto una **combinazione lineare pesata**. La vera
+inferenza bayesiana è dentro il canale OSINT (a priori 0.15). Dirlo per primi.
 
 ### G7. Il versante vision, in ordine causale
 
@@ -776,6 +772,10 @@ B6 e B7, infine il resto.
 ---
 
 # 6. Ancora aperto
+
+- [x] ~~D1–D4 del simulatore~~ — **chiusi il 21/9**, numeri in D1 e in
+      `thesis_notes.md` FASE 10.
+- [ ] Riscrivere la chiusura del Capitolo 5 di conseguenza.
 
 - [ ] Pulizia dei campi `note` in `bibliografia.bib` — verificare quali delle
       sette sono davvero appunti di lavoro. La voce [42] è priva di autore.

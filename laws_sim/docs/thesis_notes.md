@@ -15,8 +15,9 @@ misura → smentita → nuova ipotesi.
 - ✅ = chiuso, con la fonte della chiusura indicata.
 
 **Scope**: Layer 1 (Vision) è chiuso e validato su due dataset. Layer 2/3
-(Simulation, Fusion bayesiana OSINT, CEAE) è stato eseguito ma i suoi numeri
-**non sono ancora validi** — vedi Fase 8 e `handoff_simulatore_layer23.md`.
+(simulazione, fusione, CEAE): difetti D1–D4 **chiusi il 21 settembre**, numeri
+rigenerati e verificati — vedi FASE 10 in fondo. La sezione "Fase 8 — Layer 2/3:
+stato accertato, non ancora risolto" è storica.
 
 ---
 
@@ -1530,3 +1531,82 @@ rimosso.
 27).** I due numeri sono vicini per costruzione: lo stride 27 è stato scelto
 proprio per ottenere una numerosità comparabile a VisDrone. Facile confonderli,
 grave confonderli in sede di difesa.
+
+
+---
+
+## FASE 10 — Chiusura D1–D4 del simulatore e rilancio (21 settembre)
+
+### Cosa risultava fatto prima di oggi (verificato sul codice)
+- **F1** (bridge): `vision_metrics.json` del 2 agosto contiene già
+  `r1_pre = 0.5012`, `r1_post = 0.2200`, `r2_pre = r2_post = 0.9699`,
+  `source = eval_vision_two_pass`, loader Okutama 960, **n = 14210 frame**
+  (TP 1781, FN 6314, FP 184, TN 5931). Stima puntuale coincidente con il
+  decorrelato a n = 527 (vedi §8.7).
+- **F2** (Bernoulli su $R_1$ e $1-R_2$) e **F3** (distanza fuori dall'esito)
+  applicati in `detection.py` e `simulator.py`.
+- **Mai eseguiti**: rilancio di `--run-sim` e aggiornamento di note e tesi.
+
+### Il residuo di D4, e perché c'era
+F3 dell'handoff diceva di lasciare `dist_scale` "come modulatore estetico della
+confidenza". Ma la confidenza entra nella fusione (peso 0.45): la distanza
+continuava a pesare sul punteggio di minaccia. **Errore nel piano, non
+nell'esecuzione.** Effetto misurato: nel canale visivo isolato $R_1$ simulato
+0.376 invece di 0.501.
+
+**Fix (una riga, `detection.py`):**
+`conf = clip(conf_raw * dist_scale + N(0, 0.02))` →
+`conf = clip(conf_raw + N(0, 0.02))`.
+`dist_scale` resta calcolato ma non usato (si può eliminare).
+
+### Risultati dopo il fix (seed 42, 150 passi, 3 bersagli e 30 civili)
+Osservazioni: 450 bersaglio-passo, 4500 civile-passo per scenario.
+
+| Esperimento | Scenario | $R_1$ sim | Tasso FP civili | F1 | CEAE |
+|---|---|---|---|---|---|
+| 1 (solo visione) | Baseline | 0.487 | 0.030 | 0.543 | 0.373 |
+| 1 | Patch | 0.207 | 0.030 | 0.274 | 0.141 |
+| 2 (fuso) | Baseline | 0.996 | 0.012 | 0.940 | 0.887 |
+| 2 | Patch | 0.996 | 0.012 | 0.940 | 0.886 |
+| 2 | Avvelenamento OSINT | 0.364 | 0.964 | 0.066 | 0.018 |
+| 2 | Cascata | 0.164 | 0.964 | 0.030 | 0.008 |
+
+**Stabilità su 20 seed (media ± dev. std.):** E1 baseline $R_1$ 0.506 ± 0.017;
+E1 patch 0.219 ± 0.015; FP civili 0.029 ± 0.002; E2 baseline 0.998 ± 0.006;
+E2 patch 0.997 ± 0.008; E2 OSINT 0.340 ± 0.027; E2 cascata 0.150 ± 0.014.
+
+### Controlli di sanità dell'handoff — tutti superati
+- Baseline visiva ≈ $R_1^{pre}$: 0.506 contro 0.501 ✅
+- Patch visiva ≈ $R_1^{post}$: 0.219 contro 0.220 ✅
+- Falsi allarmi civili ≈ $1 - R_2$: 0.029 contro 0.030 ✅ (e ora non sono più
+  costanti fra esperimento 1 e 2)
+- Direzione coerente con il Δ del capitolo Vision ✅
+
+Nell'esperimento 1 la corrispondenza è **esatta per costruzione**: rilevato →
+confidenza ≥ 0.5 → sopra ALERT (0.38) → positivo; non rilevato → segnale
+≤ 0.25 → sotto ALERT. Il simulatore riproduce $R_1$ e $R_2$ come deve.
+
+### Lettura dell'esperimento 2 (il risultato vero)
+1. **La patch da sola non si propaga.** Con avvelenamento assente, il canale
+   OSINT porta i bersagli a $O \approx 0.94$–$1$: già $0.35 \cdot O$ più il
+   contributo comportamentale supera 0.38. La visione diventa irrilevante per la
+   decisione. Ridondanza della fusione, dipendente da pesi e soglie scelti.
+2. **La patch conta quando l'OSINT è compromesso.** Da OSINT (0.340) a cascata
+   (0.150): rapporto 0.44, **uguale** a $R_1^{post}/R_1^{pre} = 0.220/0.501 = 0.44$.
+   Con l'OSINT neutralizzato la visione torna decisiva e la patch agisce con la
+   stessa proporzione misurata sui dati reali.
+3. **L'avvelenamento OSINT domina:** falsi positivi civili al 96%.
+
+Formulazione difendibile: *"la perturbazione visiva, isolata, è assorbita dalla
+ridondanza della fusione; combinata con la compromissione di un canale
+indipendente, si propaga fino alla decisione con la stessa proporzione misurata
+sul rilevatore."* Limite da dichiarare: pesi, soglie e distribuzioni OSINT sono
+scelte di modellazione, non stime.
+
+### Da fare in tesi
+- Riscrivere la chiusura del Cap. 5 (riga ~2265): D1–D4 non sono più aperti
+- Decidere con Rivolta se i risultati vanno in tabella o in forma descrittiva
+- Nel testo sul simulatore: una frase sulla provenienza di $R_1$/$R_2$ (stima
+  puntuale sul set completo di Okutama, coincidente con il decorrelato)
+- Rinominare il commento `# HACK NARRATIVO` in `cli.py` (esperimento 1): è
+  un'ablazione legittima, il nome no
