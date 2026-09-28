@@ -25,12 +25,6 @@
 \setlength{\marginparwidth}{2cm}
 \usepackage[disable]{todonotes} %per note e commenti
 
-%  REVISIONE: modifiche in blu e note per i relatori.
-%  Per la versione finale basta sostituire \revisionetrue con \revisionefalse
-\newif\ifrevisione \revisionetrue
-\DeclareRobustCommand{\rev}[1]{\ifrevisione{\color{blue!65!black}#1}\else#1\fi}
-\newcommand{\notarev}[1]{\ifrevisione\par\medskip\noindent\fcolorbox{blue!65!black}{blue!4}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\small\setstretch{1}\textbf{Nota per la revisione.} #1}}\par\medskip\fi}
-
 \usepackage{csquotes}
 %  BIBLIOGRAFIA: motore biblatex/biber per citazioni a piè di pagina 
 \usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, giveninits=true]{biblatex}
@@ -49,49 +43,15 @@
 
 % Ridisegniamo la grafica del titolo della pagina
 \titleformat{\chapter}[display]
-  {\normalfont\huge\bfseries\raggedright}
+  {\normalfont\huge\bfseries}
   {\chaptertitlename\ \capitoloInLettere} % Qui stampa la magia: "\hyperref[cap1]{Capitolo Primo}"
   {20pt}
   {\Huge}
 
-%  FRONTESPIZIO: titolo e sottotitolo su due livelli, interlinea singola
-%  (ridefinisce \titlep di tesi.sty senza modificarlo)
-\makeatletter
-\def\@sottotitolo{}
-\newcommand{\sottotitolo}[1]{\gdef\@sottotitolo{#1}}
-\def\titlep{%
-  \thispagestyle{empty}%
-  \begin{center}
-    \Large
-    {\sc Universit\`a degli Studi di Milano} \\
-    Facolt\`a di Scienze e Tecnologie \\
-    {\em \@dept}
-  \end{center}
-  \vskip1in
-  \begin{center}
-    {\hyphenpenalty=10000\setstretch{1.15}\huge\bfseries \@title\par}%
-    \ifx\@sottotitolo\@empty\else
-      \vspace{1.4em}%
-      {\hyphenpenalty=10000\setstretch{1.15}\fontsize{15}{18}\selectfont \@sottotitolo\par}%
-    \fi
-  \end{center}
-  \vfill
-  \begin{description}
-    \item[Relatore:] \@relatore
-    \item[Correlatore:] \@correlatore
-  \end{description}
-  \vskip0.5in
-  \null\hfill
-  \parbox{3in}{Tesi di: \\ \@author \\ Matricola: \@matricola}
-  \vfill
-  \begin{center}\large Anno Accademico \@anno\end{center}
-  \newpage}
-\makeatother
-
 %  TITOLO E DATI 
 \begin{document}
-\title{Vulnerabilità avversariali nei sistemi d'arma autonomi tra algoritmi e diritti}
-\sottotitolo{Un'analisi sperimentale sulla robustezza della computer vision, implicazioni per il principio di distinzione e per il controllo umano}
+\title{Vulnerabilità avversariali nei sistemi d'arma autonomi tra algoritmi e diritti \\[1em]
+{\Large\mdseries Un'analisi sperimentale sulla robustezza della computer vision, implicazioni per il principio di distinzione e per il controllo umano}}
 \author{Daniele Intra}
 \dept{Corso di Laurea Magistrale in Sicurezza Informatica} 
 \anno{2025-2026}
@@ -131,7 +91,7 @@ Dedicato a chi crede che la tecnologia possa essere un mezzo per il progresso e 
 
 Questo lavoro nasce da una profonda necessità di comprendere e resistere all'irrefrenabile insinuazione della \textit{technè} nella sfera più intima e vulnerabile dell'essere umano. In una società che chiede insistentemente di essere efficienti, produttivi, iperconnessi e miscelati con le macchine, occorre interrogarsi sulle implicazioni sociali e politiche di questa trasformazione.
 L'intelligenza artificiale in ambito militare ha infatti cessato di essere un semplice \textit{strumento} per diventare un vero e proprio \textit{agente}, spingendo il dibattito pubblico a concentrarsi quasi esclusivamente su dilemmi filosofici. Ma l'etica da sola si rivela inefficace se non viene tradotta in rigidi vincoli ingegneristici.
-Rispetto a una canonica tesi in sicurezza informatica, questo lavoro si focalizza sulla dimensione umanitaria e giuridica per \rev{sostenere} una tesi ben precisa: la violazione dei diritti umani, nel contesto dei Lethal Autonomous Weapon Systems (LAWS), non deriva solo da ciniche scelte geopolitiche, ma anche e soprattutto da vulnerabilità architetturali intrinseche ai sistemi stessi. Criticità come i bias nei dati di addestramento, la non interpretabilità delle reti neurali (\textit{Black Box}), la suscettibilità al \textit{Data Poisoning} e agli \textit{Adversarial Attacks} \rev{possono tradursi} in danni collaterali sul campo.
+Rispetto a una canonica tesi in sicurezza informatica, questo lavoro si focalizza sulla dimensione umanitaria e giuridica per dimostrare una tesi ben precisa: la violazione dei diritti umani, nel contesto dei Lethal Autonomous Weapon Systems (LAWS), non deriva solo da ciniche scelte geopolitiche, ma anche e soprattutto da vulnerabilità architetturali intrinseche ai sistemi stessi. Criticità come i bias nei dati di addestramento, la non interpretabilità delle reti neurali (\textit{Black Box}), la suscettibilità al \textit{Data Poisoning} e agli \textit{Adversarial Attacks} si trasformano direttamente in danni collaterali sul campo.
 Attraverso un'analisi interdisciplinare, la tesi si propone quindi di esaminare il trattamento dei dati sensibili e le fragilità algoritmiche dei LAWS, delineando come, in questo nuovo ecosistema bellico, la sicurezza informatica e la corretta architettura del software costituiscano un presidio necessario, e oggi largamente inesplorato, per la difesa dei diritti umani.
 
 \prefacesection{Ringraziamenti}
@@ -155,18 +115,17 @@ Un ringraziamento altrettanto sentito al Prof. Rivolta, che mi ha supportato e g
  
 I progressi dell'intelligenza artificiale hanno cambiato il modo in cui si pensa la sicurezza globale, e sollevano domande a cui il solo piano tecnico non basta a rispondere: riguardano l'etica e il diritto. Delegare decisioni letali a sistemi algoritmici complessi apre una frattura fra la velocità dell'innovazione e i tempi lunghi della regolamentazione internazionale.
  
-Il lavoro si articola in sei capitoli, che ne ricostruiscono le implicazioni concrete. Il primo esamina il fallimento diplomatico nella gestione dei LAWS, con le divergenze strategiche fra le posizioni degli Stati e le conseguenze per la governance globale. \rev{Il secondo affronta i dilemmi etici e la tanatopolitica algoritmica: i limiti della governance europea e statunitense, i sistemi di targeting Lavender e Habsora e il caso Anthropic-Pentagono. Il terzo ricostruisce lo stato dell'arte sui rilevatori di persone in prospettiva aerea e sugli attacchi avversariali, che minacciano direttamente il concetto di \textit{Human-in-the-loop}. Il quarto descrive il metodo sperimentale: l'architettura del framework LAWS-SIM, l'ottimizzazione di una patch avversariale resa robusta alle condizioni di ripresa tramite \textit{Expectation over Transformation} (EoT), le metriche, gli insiemi di dati e il protocollo statistico. Il quinto riporta e discute i risultati sui due insiemi di dati aerei e le uscite del simulatore. Il sesto trae le conclusioni, ne dichiara i limiti e delinea come sviluppo futuro una contromisura fisica indossabile a tutela dei civili, fondata sulle debolezze della Computer Vision.}
+Il lavoro si articola in sei capitoli, che ne ricostruiscono le implicazioni concrete. Il primo esamina il fallimento diplomatico nella gestione dei LAWS, con le divergenze strategiche fra le posizioni degli Stati e le conseguenze per la governance globale. Il secondo affronta i dilemmi etici e la tanatopolitica algoritmica, dall'illusione dell'autonomia alla necessità di un controllo umano di default. Il terzo ricostruisce lo stato dell'arte dei sistemi di vision e degli adversarial attack, che minacciano direttamente il concetto di ``Human-in-the-loop'', con le relative vulnerabilità. Il quarto capitolo descrive le metodologie usate nella parte sperimentale: attacchi avversariali di patching, miglioramento dell'efficienza della patch tramite Expectation over Transformation (EoT) e training della patch sui due dataset aerei presi in considerazione. Il quinto raccoglie i risultati e gli output significativi che danno valore a questo lavoro. Il sesto rielabora quanto svolto e ne trae le conclusioni, fra cui la proposta di un approccio nuovo per creare uno strumento popolare di difesa dei diritti umani, tramite contromisure fisiche basate sulle debolezze intrinseche della Computer Vision.
  
-\section*{Obiettivi}
-\addcontentsline{toc}{section}{Obiettivi}
-Il presente lavoro affronta sperimentalmente la sicurezza dei sistemi di percezione basati su Computer Vision impiegati nei sistemi di targeting militare, e quantifica l'impatto di tecniche di \textit{Adversarial Machine Learning} sulla loro affidabilità operativa. Il quadro di riferimento è il Diritto Internazionale Umanitario (DIU), che vincola l'uso della forza letale alla presenza di un controllo umano significativo sul processo decisionale. Poiché l'attuale stallo della diplomazia internazionale sui LAWS lascia questo vincolo privo di una verifica tecnica indipendente, lo studio ne misura empiricamente \rev{uno dei presupposti tecnici, l'affidabilità del canale percettivo}: sottopone il canale sensoriale del sistema a un attacco avversariale controllato e osserva\rev{, in un ambiente simulato,} come l'effetto si propaghi fino alla decisione finale.
+\section{Obiettivi}
+Il presente lavoro affronta sperimentalmente la sicurezza dei sistemi di percezione basati su Computer Vision impiegati nei sistemi di targeting militare, e quantifica l'impatto di tecniche di \textit{Adversarial Machine Learning} sulla loro affidabilità operativa. Il quadro di riferimento è il Diritto Internazionale Umanitario (DIU), che vincola l'uso della forza letale alla presenza di un controllo umano significativo sul processo decisionale. Poiché l'attuale stallo della diplomazia internazionale sui LAWS lascia questo vincolo privo di una verifica tecnica indipendente, lo studio ne misura empiricamente la tenuta: sottopone il canale sensoriale del sistema a un attacco avversariale controllato e osserva come l'effetto si propaghi fino alla decisione finale.
  
 Gli obiettivi specifici sono i seguenti:
 \begin{itemize}
-    \item \textbf{\rev{Analisi del contesto geopolitico e normativo:}} esaminare il divario fra l'approccio pragmatico-militare delle principali superpotenze e i tentativi di regolamentazione, e mostrare come la diplomazia internazionale (per esempio i tavoli della Convention on Certain Conventional Weapons, CCW) non sia riuscita a tenere il passo rispetto alle necessità tattiche dettate dai moderni teatri di conflitto.
-    \item \textbf{Valutazione della governance e della necro-etica dell'autonomia:} approfondire il concetto di tanatopolitica algoritmica e mostrare come la disarticolazione fra l'umano e lo strumento di morte introduca problemi insormontabili di \textit{accountability} e di \textit{bias} nel trattamento dei dati in zone di guerra.
-    \item \textbf{Quantificazione sperimentale delle vulnerabilità:} valutare empiricamente la robustezza dei modelli di Object Detection (nello specifico l'architettura \textit{You Only Look Once}, YOLO) utilizzati nei sistemi di targeting, con tecniche di \textit{Adversarial Machine Learning}\rev{, per misurare quanto la confidenza algoritmica possa essere compromessa}. La valutazione è condotta su due \rev{insiemi di dati} aerei indipendenti, per capire se le vulnerabilità osservate siano una caratteristica del singolo \rev{insieme} o si replichino su domini distinti. Entrano nel conto anche gli altri fattori che possono influenzare la decisione di \rev{ingaggio}, come le fonti aperte (\textit{Open Source Intelligence}, OSINT) e il comportamento del soggetto identificato da YOLO, riprodotti tramite un simulatore (LAWS-SIM).
-    \rev{Nel concreto, la contromisura studiata è una trama colorata pensata per essere stampata su un indumento del soggetto: è la superficie fisica su cui si realizza la perturbazione avversariale, con lo scopo di impedire che il sistema rilevi, e quindi ingaggi, chi la indossa.}  
+    \item \textbf{Analisi geopolitica e normativa:} esaminare il divario fra l'approccio pragmatico-militare delle principali superpotenze e i tentativi di regolamentazione, e mostrare come la diplomazia internazionale (per esempio i tavoli della Convention on Certain Conventional Weapons, CCW) non sia riuscita a tenere il passo rispetto alle necessità tattiche dettate dai moderni teatri di conflitto.
+    \item \textbf{Valutazione della governance e della necro-etica dell'autonomia:} approfondire il concetto di tanatopolitica algoritmica e mostrare come la disarticolazione fra l'umano e lo strumento di morte introduca problemi insormontabili di accountability e di ``bias'' nel trattamento dei dati in zone di guerra.
+    \item \textbf{Quantificazione sperimentale delle vulnerabilità:} valutare empiricamente la robustezza dei modelli di Object Detection (nello specifico l'architettura \textit{You Only Look Once}, YOLO) utilizzati nei sistemi di targeting, con tecniche di \textit{Adversarial Machine Learning} che mostrano quanto sia facile compromettere la ``confidence'' algoritmica. La valutazione è condotta su due dataset aerei indipendenti, per capire se le vulnerabilità osservate siano una caratteristica del singolo dataset o si replichino su domini distinti. Entrano nel conto anche gli altri fattori che possono influenzare la decisione di ``engagement'', come le fonti aperte (\textit{Open Source Intelligence}, OSINT) e il comportamento del soggetto identificato da YOLO, riprodotti tramite un simulatore (\textit{LAWS-SIM}).
+    Nel concreto, l'ingaggio da parte del sistema avviene applicando sul soggetto una trama colorata stampata su indumento o zaino: è la superficie fisica su cui la perturbazione avversariale viene realizzata.  
 \end{itemize}
 \chapter{Dual-Use, contesto operativo e geopolitica}
 \label{cap1}
@@ -187,19 +146,20 @@ L'evoluzione storica dei LAWS si può dividere in tre fasi. La prima è quella d
 sistemi di difesa aerea semi-automatici e delle navi da guerra impiegate
 nell'intercettazione di missili e aerei ostili. Il caso più emblematico di
 intervento umano in una \textit{Automated Warfare} è l'incidente sovietico del
-1983: il \rev{tenente colonnello Stanislav Petrov, ufficiale di turno al centro di allerta precoce,}
+1983: il colonnello Stanislav Petrov, responsabile del centro di comando,
 riconobbe come errore di sistema un falso allarme di lancio missilistico
 prodotto dalla confusione fra nuvole ad alta quota e un vettore balistico
-intercontinentale, e \rev{decise di non segnalarlo ai superiori come attacco in corso, evitando l'avvio della procedura di rappresaglia nucleare} \footcite{hoffman_1999_petrov}.
+intercontinentale, e decise di non ordinare il contrattacco nucleare \footcite{hoffman_1999_petrov}.
  
 La seconda fase, negli anni Ottanta, vede l'introduzione di sistemi più
 sofisticati come gli \textit{Anti-Tank Guided Weapons}, missili guidati verso
 obiettivi terrestri mediante tecnologia a infrarossi; una versione aggiornata
 del Javelin, dotata del sistema di controllo \textit{Electronic Safe Arm and
-Fire}, è stata impiegata in Ucraina contro i mezzi corazzati russi. \rev{A un sistema progettato in quegli anni è legato un caso significativo di errore: nel 2003, durante l'invasione dell'Iraq,}
+Fire}, è stata impiegata in Ucraina contro i mezzi corazzati russi. Allo stesso
+periodo appartiene un caso emblematico di errore: agli inizi degli anni Duemila
 i computer di gestione della minaccia dei missili terra-aria Patriot statunitensi
 hanno attivato erroneamente il sistema in due occasioni distinte, abbattendo due
-aerei militari alleati e \rev{causando la morte dei tre membri d'equipaggio}
+aerei militari alleati e causando la morte di entrambi i piloti
 \footcite{horowitz_kahn_2024}.
  
 La terza fase ha visto l'introduzione di LAWS sempre più autonomi, capaci di
@@ -220,7 +180,7 @@ tassonomia, proponendo scale di autonomia più granulari, per la difficoltà di
 collocare univocamente sistemi che combinano gradi diversi di autonomia nelle
 fasi di selezione, ingaggio e attivazione \footcite{sharkey_2016}. Droni come
 il Predator o il Reaper esemplificano il primo paradigma: perlustrano il
-territorio \rev{con navigazione in larga parte automatizzata} ma richiedono un controllo stringente
+territorio in modalità autonoma ma richiedono un controllo stringente
 dell'operatore sulla decisione di ingaggio. L'evoluzione di questi sistemi resta
 legata ai budget statali della difesa, e alimenta un divario tecno-militare
 crescente fra le iperpotenze e le nazioni che non possono investire in ricerca e
@@ -234,7 +194,10 @@ sviluppata per un impiego civile, è riconvertibile a impiego militare senza
 modifiche sostanziali. A
 differenza delle storiche tecnologie militari, come l'energia nucleare o
 l'ingegneria aerospaziale, la cui evoluzione era confinata entro laboratori statali, l'odierno ecosistema dell'intelligenza artificiale è trainato quasi
-esclusivamente dal settore privato \footcite{aiindex_2024}. \rev{Per la Computer Vision, l'ambito su cui si concentra questo lavoro, la conseguenza è uno slittamento funzionale: le medesime reti neurali e gli algoritmi} addestrati per guida autonoma,
+esclusivamente dal settore privato \footcite{aiindex_2024}. Nel sottoinsieme
+della Computer Vision, in particolare, da questa
+sovrapposizione nasce uno slittamento funzionale: le medesime reti neurali e
+algoritmi di \textit{Computer Vision} addestrati per guida autonoma,
 riconoscimento facciale o logistica possono essere convertiti, con minimi
 adattamenti ingegneristici, in sistemi di tracciamento e ingaggio per i LAWS.
  
@@ -256,7 +219,7 @@ Dipartimento della Difesa statunitense e le agenzie di intelligence. Iniziative
 come il \textit{Project Maven}, che ha visto l'impiego di tecnologie Google per
 il riconoscimento automatico di immagini da droni militari, o l'integrazione dei
 sistemi di \textit{data fusion} sviluppati da Palantir per le forze armate e per
-agenzie come l'ICE \rev{(\textit{Immigration and Customs Enforcement})}, dimostrano come il settore tecnologico civile fornisca la
+agenzie come l'ICE, dimostrano come il settore tecnologico civile fornisca la
 spina dorsale della condotta bellica algoritmica.
  
 La proliferazione di queste tecnologie commerciali altera irreversibilmente gli
@@ -271,7 +234,8 @@ consuma l'attuale stallo diplomatico.
  
 \section{Lo squilibrio di potere e il fallimento diplomatico}
  
-L'impiego dell'intelligenza artificiale, e in particolare dei \rev{LAWS}, non è stato regolato da un'etica universale ma da un
+L'impiego dell'intelligenza artificiale, e in particolare dei Lethal Autonomous
+Weapon Systems (LAWS), non è stato regolato da un'etica universale ma da un
 realismo geopolitico: la posizione di uno Stato verso la regolamentazione
 algoritmica è strettamente legata alla sua capacità di sviluppare tecnologia
 interna senza dipendere da altri. I due principali attori sono oggi in
@@ -288,7 +252,7 @@ sistemi e gli Stati che ne scrivono le regole perseguono obiettivi non
 allineati, e nessuno dei due è nella posizione di imporre un limite condiviso
 all'altro.
  
-\subsection{Il parere degli Stati sul possibile divieto ai LAWS}
+\subsection{Il parere degli stati sul possibile divieto ai LAWS}
 
 Il Segretario Generale delle Nazioni Unite Antonio Guterres ha definito i
 sistemi d'arma capaci di selezionare e colpire esseri umani senza controllo
@@ -305,7 +269,7 @@ l'introduzione nel dibattito del concetto di \textit{Meaningful Human Control}.
  
 Tradurre questa spinta in un trattato vincolante si scontra con due ostacoli
 strutturali. I negoziati in seno alla CCW si applicano tradizionalmente al
-disarmo convenzionale e al rispetto del \rev{DIU},
+disarmo convenzionale e al rispetto del Diritto Internazionale Umanitario (DIU),
 e faticano a ingabbiare una tecnologia computazionale che sfugge alle categorie
 giuridiche classiche. Gli Stati leader nello sviluppo di intelligenza
 artificiale militare oppongono inoltre resistenza a qualsiasi limitazione della
@@ -315,10 +279,11 @@ ha supportato apertamente un bando preventivo totale \footcite[p.~4]{wareham_202
 Dal 2013, 97 Stati hanno elaborato la propria posizione sui LAWS in sede
 multilaterale \footcite[p.~29]{wareham_2020} e hanno riconosciuto che la rimozione
 dell'intervento umano nell'uso della forza produce problemi etici, legali,
-operativi e tecnologici. Circa due terzi degli Stati contributori fanno parte della CCW
+operativi e tecnologici. Circa due terzi degli stati contributori fanno parte della CCW
 fin dall'inizio, mentre i restanti hanno partecipato ai convegni tenutisi fra il
 2014 e il 2019. Molti Stati si sono espressi a favore di accordi
-\textit{legally-binding}, con posizioni ambigue come quella della Cina, che \rev{si è dichiarata favorevole a vietarne l'impiego ma non lo sviluppo}, coerentemente
+\textit{legally-binding}, con posizioni ambigue come quella della Cina, che ha
+bloccato l'utilizzo dei sistemi autonomi ma non il loro sviluppo, coerentemente
 con la propria posizione fra i Paesi più avanzati del settore.
  
 I lavori del Gruppo di Esperti Governativi del 2019 \footcite{ccw_2019} sono
@@ -334,10 +299,10 @@ una dichiarazione ufficiale del novembre 2019, ha accolto positivamente questi
 principi; lo stesso AI Act, pur non essendo incentrato sulla difesa, adotta un
 approccio \textit{human-centric} basato sul rischio, ed esplicita che
 l'autonomia non deve tradursi in perdita di responsabilità umana sulle decisioni
-critiche. \rev{I lavori del Gruppo di Esperti, istituito nel 2016, si sono però arenati}
+critiche. Le riunioni CCW, iniziate positivamente nel 2016, si sono però arenate
 per l'assenza di risultati multilaterali significativi, di fronte alle
 opposizioni di superpotenze come Stati Uniti e Russia, che hanno ritenuto
-\rev{prematuro l'avvio di un nuovo negoziato} \footcite{ccw_2019}.
+prematura la firma di un nuovo negoziato \footcite{ccw_2019}.
  
 \subsection{Analisi dei teatri operativi e delle posizioni statali}
  
@@ -349,17 +314,17 @@ esistenti non siano LAWS e che non si diano zone grigie di
 operatori umani che hanno deciso di schierarli e attivarli. Non ha riconosciuto
 le preoccupazioni etiche sulla rimozione del controllo umano né sostenuto
 proposte di divieto, e ha scelto invece, tramite l'ambasciatore L. Bencini
-\footcite[p.~29]{wareham_2020}, un approccio \textit{two-way} che riconosce l'importanza
+\footcite[p.~29]{wareham_2020}, un approccio \textit{two way} che riconosce l'importanza
 del controllo umano significativo senza escludere lo sviluppo di sistemi
 autonomi in determinate circostanze. La ragione è probabilmente anche industriale: un divieto
-totale colpirebbe il piano industriale di Leonardo S.p.A., fra i principali
+totale colpirebbe il piano industriale di Leonardo Spa, fra i principali
 produttori mondiali del settore. La posizione italiana resta un equilibrio
 vulnerabile fra l'articolo 11 della Costituzione, che ripudia la guerra come
 mezzo di risoluzione delle controversie internazionali, e la necessità di
 mantenere un'industria militare competitiva.
  
 Il 14 ottobre 2025 l'associazione ``Giuristi e Avvocati per la Palestina''
-\footcite{denunciacpi} ha presentato una denuncia contro Leonardo S.p.A. per la
+\footcite{denunciacpi} ha presentato una denuncia contro Leonardo Spa per la
 produzione e vendita a Israele di sistemi d'arma impiegati contro civili
 palestinesi. La denuncia riprende problematiche già sollevate nel report
 \textit{From Economy of Occupation to Economy of Genocide}
@@ -368,9 +333,9 @@ Nazioni Unite, che documenta come l'occupazione militare israeliana abbia
 prodotto violazioni dei diritti umani anche mediante armi autonome, e sottolinea
 la necessità di una maggiore responsabilità delle aziende fornitrici. Fra i
 sistemi citati figurano i cacciabombardieri F-35, sviluppati con contributo di
-Leonardo, e i bulldozer D9 trasformati in mezzi \rev{comandati a
-distanza} da Elbit Systems e RADA Electronics Industries. Fra il 2019 e il 2023
-l'Italia ha esportato verso Israele, secondo \rev{un'elaborazione IRIAD su dati SIPRI e ISTAT}, circa $23.8$ milioni
+Leonardo, e i bulldozer D9 trasformati in mezzi automatizzati comandati a
+distanza da Elbit Systems e RADA Electronics Industries. Fra il 2019 e il 2023
+l'Italia ha esportato verso Israele, secondo i dati SIPRI, circa $23.8$ milioni
 di euro in maggiori sistemi d'arma \footcite{iriad_2025_export_israele}, fra cui dodici elicotteri leggeri AW119 Koala e quattro cannoni navali Super Rapid da
 $76$ mm.
  
@@ -381,23 +346,24 @@ la protezione delle infrastrutture critiche richieda strumenti e competenze
 militari \footcite{crosetto_2025_nonpaper}. La logica è speculare: la stessa capacità che alcuni sviluppatori trattano come rischio
 da limitare, uno Stato la tratta come condizione di sicurezza da preservare,
 perché il disarmo unilaterale davanti ad avversari che continuano ad armarsi
-\rev{nel dominio cibernetico} è percepito come svantaggio strategico, non come prudenza. Per l'Italia, rinunciare
+cibernicamente è percepito come svantaggio strategico, non come prudenza. Per l'Italia, rinunciare
 per via negoziale a capacità algoritmiche avanzate equivarrebbe a un disarmo
 unilaterale nel dominio cyber e dell'autonomia.
  
 \textbf{Il caso USA-Venezuela.}
 Gli Stati Uniti hanno mantenuto una posizione sostanzialmente indifferente
 \footcite[p.~52]{wareham_2020}. Nel
-2012, \rev{con l'emanazione di una direttiva del Dipartimento della Difesa sui
-sistemi d'arma autonomi}, hanno sottolineato che tale misura non incentiva né proibisce lo
+2012, dopo un rinnovo dello sviluppo dei LAWS da parte del Dipartimento della
+Difesa, hanno sottolineato che tale misura non incentiva né proibisce lo
 sviluppo di questi sistemi, mentre proseguono investimenti massivi
 nell'intelligenza artificiale applicata a scenari militari. Nel 2019 hanno messo
 in guardia dalla stigmatizzazione di questi strumenti, e hanno rilevato come
 possano essere impiegati sia per fini bellici sia umanitari: una posizione che
 si collega direttamente al caso Anthropic e mostra come una grande potenza possa
 minimizzare i rischi a beneficio dell'industria e degli interessi nazionali. Sul
-fronte opposto, il Venezuela ha proposto nel 2016 un divieto allo sviluppo,
-acquisizione, scambio e schieramento dei LAWS \footcite[p.~53]{wareham_2020}, con l'argomento che decisioni di
+fronte opposto, il Venezuela ha proposto nel 2016 un divieto allo sviluppo
+\footcite[p.~53]{wareham_2020},
+acquisizione, scambio e schieramento dei LAWS, con l'argomento che decisioni di
 questo tipo non debbano essere eseguite senza intervento umano e che la vita di
 una persona non possa essere programmabile.
  
@@ -416,7 +382,7 @@ L'approccio diplomatico si scontra però con una produzione industriale che
 spinge costantemente i limiti dell'autonomia. Se Israele primeggia nei sistemi
 puramente difensivi come l'Iron Dome, che richiede comunque approvazione umana
 per intercettare una minaccia materiale e non umana, è anche produttore ed
-esportatore leader di munizioni \rev{circuitanti}: le famiglie HERO di UVision, l'Orbiter
+esportatore leader di munizioni vaganti: le famiglie HERO di UVision, l'Orbiter
 1K, il Green Dragon e in particolare l'Harop e l'Harpy di IAI introducono
 criticità etiche marcate. Sebbene Israele dichiari che la maggior parte di
 questi sistemi richieda intervento umano nella selezione del bersaglio, droni
@@ -484,16 +450,16 @@ Il conflitto in Ucraina può essere considerato il primo banco di prova su larga
 l'integrazione dell'intelligenza artificiale nei sistemi d'arma convenzionali.
 La Russia, in sede CCW, ha mantenuto una posizione ostruzionistica, sostenendo
 che le definizioni di LAWS fossero troppo vaghe per un bando preventivo e che il
-\rev{DIU} esistente fosse sufficiente. Sul campo, però,
+diritto internazionale umanitario esistente fosse sufficiente. Sul campo, però,
 l'evoluzione è stata rapida e dettata dalla guerra elettronica: l'uso massiccio
-di \textit{jamming} \rev{(il disturbo intenzionale delle frequenze radio che
-collegano il drone all'operatore)} da entrambi i fronti rende spesso impossibile il controllo
+di \textit{jamming} da entrambi i fronti rende spesso impossibile il controllo
 remoto dei droni, e l'autonomia diventa l'unica soluzione operativa. Sistemi
 come il drone russo Lancet o l'ucraino Saker Scout integrano moduli di visione
 artificiale capaci di agganciare il bersaglio e completare l'attacco anche in
 assenza di collegamento con l'operatore. Il principio dello
 \textit{Human-in-the-loop} viene quindi eroso non per ideologia ma per necessità
-tattica: se il collegamento radio viene interrotto o disturbato, la macchina deve decidere autonomamente se colpire o
+tattica: se il collegamento radio viene interrotto o disturbato
+(\textit{jamming}), la macchina deve decidere autonomamente se colpire o
 rientrare.
 La guerra moderna si è così spostata ben oltre i limiti discussi nelle sedi
 diplomatiche, e i negoziati sui LAWS diventano obsoleti prima ancora di essere firmati.
@@ -511,11 +477,11 @@ impiegati contro le forze in ritirata affiliate al generale Haftar.
 \includegraphics[width=0.9\textwidth]{img/infog-kargu.png}
 \caption{Reperti fotografici ed estratti analitici del sistema STM Kargu-2 nel teatro libico. Fonte: Annex 30, United Nations Security Council, Final Report of the Panel of
 Experts on Libya established pursuant to Security Council resolution 1973
-(2011), S/2021/229, 2021. \rev{Riprodotto a fini di studio e discussione ai sensi dell'art.~70 della L.~633/1941.}}
+(2011), S/2021/229, 2021. \footcite{un_libya_2021} Documento ufficiale delle Nazioni Unite.}
 \label{fig:kargu}
 \end{figure}
  
-Come evidenziato in Figura~\ref{fig:kargu} dall'Annex 30 del rapporto finale del
+Come evidenziato in Figura \ref{fig:kargu} dall'Annex 30 del rapporto finale del
 Panel of Experts on Libya \footcite{un_libya_2021}, è stato violato l'embargo di
 armi imposto dalla risoluzione 1970 del 2011 \footcite{un_resolution_1970}. I
 reperti fotografici raccolti ad Abu Grein il 25 maggio 2020 identificano i resti
@@ -523,21 +489,21 @@ di una munizione circuitante ad ala rotante STM Kargu-2. L'elemento
 giuridicamente più significativo è la cronologia: il sistema è risultato
 operativo presso le Forze Armate Turche solo dal gennaio 2020, appena quattro
 mesi prima del ritrovamento in territorio libico. Una tempistica tanto ristretta
-\rev{rende improbabile una rivendita da parte di terzi o una sottrazione, e indica
-un trasferimento diretto da parte di Ankara in violazione del paragrafo 9 della
-risoluzione 1970 (2011)}, e smonta la narrativa
+esclude che questi sistemi siano stati esportati o sottratti illecitamente:
+configura un nesso di causalità fra il trasferimento diretto da parte di Ankara
+e la violazione del paragrafo 9 della UNSCR 1970 (2011), e smonta la narrativa
 di una semplice assistenza tecnica limitata a sistemi non letali.
  
 Questi sistemi erano programmati per attaccare bersagli senza connettività dati
-fra operatore e munizione, in una modalità \textit{fire, forget and find}: \rev{è il primo caso documentato in un rapporto
-delle Nazioni Unite di un sistema d'arma in grado di attaccare esseri umani
-senza intervento dell'operatore}, in un contesto di conflitto asimmetrico. L'evento
+fra operatore e munizione, in una modalità \textit{fire, forget and find}: per la
+prima volta nella storia documentata un'intelligenza artificiale ha attaccato
+autonomamente esseri umani in un contesto di conflitto asimmetrico. L'evento
 evidenzia due criticità geopolitiche:
  
 \begin{itemize}
   \item non sono più solamente Stati Uniti o Cina a sviluppare LAWS, ma anche
-  attori come la Turchia, che esportano queste tecnologie \rev{in conflitti combattuti per procura
-  (\textit{proxy wars}), privi di un controllo internazionale effettivo};
+  attori come la Turchia, che esportano queste tecnologie in zone di conflitto
+  deregolamentate, tecnicamente denominate \textit{proxy wars};
   \item in Libia la tecnologia aveva già superato la linea rossa etica, operando
   in una zona grigia di impunità, mentre a Ginevra si discuteva ancora se
   vietare o meno i LAWS e con quali modalità.
@@ -552,9 +518,9 @@ tecno-meccanica, ma una radicale disarticolazione del legame fra l'azione bellic
 e il soggetto umano \textit{responsabile}, ovvero capace di rispondere e di
 assumere una piena responsabilità, attualmente impossibile da attribuire a un
 sistema algoritmico. Sul piano architetturale, l'autonomia letale sposta il
-processo decisionale dalla semantica umana all'inferenza \rev{probabilistica}. Come verrà spiegato nel
+processo decisionale dalla semantica umana all'inferenza stocastica. Come verrà spiegato nel
 \hyperref[cap4]{Capitolo Quarto}, la macchina identifica un bersaglio calcolando distribuzioni di
-probabilità \rev{apprese in addestramento minimizzando} una funzione di perdita preimpostata, ma non ha potere decisionale né titolarità giuridica, e non può quindi essere
+probabilità per minimizzare una funzione di perdita preimpostata, ma non ha potere decisionale né titolarità giuridica, e non può quindi essere
 chiamata a rispondere del proprio tasso d'errore nell'ingaggio \footcite{simmons_edler_2025}.
 
 La delega delle funzioni critiche di selezione e ingaggio a sistemi algoritmici,
@@ -564,14 +530,14 @@ multi-sensore, introduce dilemmi necro-etici riconducibili a una
 viene atomizzato fra gli \textit{hidden layers} di una rete neurale profonda e
 privato di un centro di imputazione giuridica \footcite{buffa_2025}. Questo vuoto
 normativo coincide con il limite tecnico della \textit{Black Box}: la mancanza di
-una \textit{Explainable AI} rende \rev{estremamente difficile} qualsiasi \textit{System Auditing}
+una \textit{Explainable AI} rende intrattabile qualsiasi \textit{System Auditing}
 successivo a un attacco illecito \footcite{wood_2024_xai, christie_2024}. Di
 fronte a questa opacità il \textit{Meaningful Human Control} diventa la questione
 centrale lungo l'intero ciclo di vita del sistema
 \footcite{bode_2025, christie_2024}, ma si scontra con ostacoli cognitivi:
 l'asimmetria fra velocità di elaborazione algoritmica e limiti cognitivi umani
 genera un \textit{Automation Bias} difficilmente scalfibile
-\footcite{horowitz_kahn_2024}. In queste condizioni lo \textit{Human-in-the-loop}
+\footcite{horowitz_kahn_2024}. In queste condizioni lo \textit{human-in-the-loop}
 si degrada da garante del diritto internazionale a finzione procedurale, chiamato
 ad avallare decisioni istantanee prese da un modello statistico.
 
@@ -632,14 +598,12 @@ in quella del dato trasmesso, l'intera infrastruttura di targeting eredita quell
 fragilità e diventa un apparato \textit{not-Safe-by-Design}. Nel
 contesto dei LAWS, definire un'infrastruttura \textit{not-Safe-by-Design}
 significa riconoscere che la vulnerabilità non è un \textit{bug} risolvibile, ma
-\rev{una proprietà strutturale dei modelli appresi dai dati, sensibili a
-perturbazioni piccole ma mirate dei loro ingressi}. Come evidenziato
+una caratteristica emergente del paradigma probabilistico stesso. Come evidenziato
 dalla letteratura sui rischi intrinseci dei sistemi autonomi
 \footcite{podar_2025}, l'affidamento a reti neurali esposte ad ambienti ostili e
 non strutturati comporta un degrado dell'affidabilità inferenziale, influenzabile
-da attacchi avversariali \rev{in fase di inferenza e di addestramento}
-\footcite{carlini_2017, cina_2023_poisoning}. Dal punto di vista del
-\rev{DIU}, strutturare la catena di ingaggio su una base
+da attacchi avversariali \footcite{cina_2023_poisoning}. Dal punto di vista del
+Diritto Internazionale Umanitario, strutturare la catena di ingaggio su una base
 percettiva matematicamente instabile e crittograficamente compromettibile
 equivale a violare strutturalmente i principi di distinzione e proporzionalità, e
 rende l'arma illecita sin dalla fase di progettazione.
@@ -794,12 +758,11 @@ bersagli al giorno. L'accelerazione non è un salto quantitativo, ma certifica i
 collasso qualitativo della supervisione umana.
 
 Il punto tecnicamente rilevante non è che il sistema ignori gli effetti
-collaterali, ma che \rev{nulla, nella sua progettazione, li penalizzi esplicitamente.
-In termini di \textit{machine learning}, un obiettivo di addestramento che non
-contiene un termine per il danno ai non combattenti non esercita alcuna
-pressione a ridurlo: se il sistema è valutato sul numero di bersagli prodotti,
-come riportano le inchieste, ne deriva un \textit{bias} operativo orientato
-all'efficienza.} Non
+collaterali, ma che il suo ottimizzatore non li penalizzi esplicitamente. In
+termini di \textit{machine learning}, ciò che non compare nella \textit{loss
+function} non viene minimizzato: un modello addestrato a massimizzare il numero
+di target confermati, senza un termine di penalizzazione adeguato per il danno a
+non combattenti, genera un \textit{bias} operativo orientato all'efficienza. Non
 si tratta di un errore contingente, ma di una conseguenza diretta della
 progettazione, un caso di \textit{reward misspecification} \footcite{amodei_2016}
 applicato al dominio bellico. Resta da chiedersi se si tratti effettivamente di
@@ -810,7 +773,7 @@ Lavender opera su un piano differente, quello del \textit{behavioral profiling}
 individuale, e assegna a ciascuna persona un punteggio da 1 a 100, calcolato
 confrontando i metadati dell'individuo, applicazioni di messaggistica, posizione
 GPS, dati biometrici, frequentazioni e cambi ricorrenti di numero telefonico, con
-i pattern comportamentali di militanti noti ricavati da un \rev{insieme di addestramento}
+i pattern comportamentali di militanti noti ricavati da un \textit{training set}
 etichettato \footcite{abraham_2024_lavender}. Tecnicamente è un classificatore
 supervisionato la cui soglia di decisione funge da parametro di bilanciamento fra
 falsi positivi e falsi negativi: abbassare la soglia aumenta il numero di
@@ -828,17 +791,17 @@ che altera il \textit{trade-off} fra \textit{Precision} e \textit{Recall}
 i nemici sfuggiti all'identificazione, ma compromette inevitabilmente la
 \textit{Precision}, con un'esplosione calcolata dei falsi positivi, ovvero di
 civili classificati erroneamente come militanti. Il principio di proporzionalità e
-la valutazione del danno collaterale, cardini del DIU, vengono così \rev{ridotti alla scelta di un
-valore di soglia.}
+la valutazione del danno collaterale, cardini del DIU, vengono così nullificati
+dall'ottimizzazione matematica di una funzione di perdita.
 
 Questo meccanismo di sacrificio statistico cessa di essere un'astrazione teorica
 nel momento in cui viene calato nell'architettura del software. Come sarà
 mostrato empiricamente nel \hyperref[cap5]{Capitolo Quinto}, in una rete di \textit{Computer
 Vision} come YOLO la soglia di confidenza non è un dettaglio implementativo ma il
-parametro che decide chi viene visto: \rev{su VisDrone, in assenza
-di qualunque attacco, la frazione di fotogrammi contenenti una persona nei quali
-il rilevatore non ne individua alcuna passa dal $3.75\%$ con soglia $0.30$ al
-$72.5\%$ con soglia $0.70$. Un singolo parametro di configurazione, privo} di qualsiasi contenuto semantico,
+parametro che decide chi viene visto: sul medesimo insieme di dati e in assenza
+di qualunque attacco, la frazione di persone non rilevate passa da meno del
+quattro percento con soglia $0.3$ a oltre il settanta percento con soglia $0.7$.
+Una singola variabile iper-parametrica, priva di qualsiasi contenuto semantico,
 ridefinisce quindi per intero la popolazione che il sistema considera presente
 nella scena.
 
@@ -849,8 +812,8 @@ esposto a manipolazione dell'input: un punteggio costruito, in parte, sulla
 presenza fisica di un individuo in un determinato luogo diventa privo di
 fondamento se quella presenza viene falsificata o mascherata. Non si tratta di
 \textit{data poisoning}, che corrompe i dati di addestramento a monte, ma di
-\textit{adversarial evasion}, la manipolazione dell'input \rev{in fase di
-inferenza, ad addestramento concluso}; entrambe appartengono alla superficie di rischio documentata dalla
+\textit{adversarial evasion}, la manipolazione dell'input a inferenza già
+avvenuta; entrambe appartengono alla superficie di rischio documentata dalla
 letteratura sulla sicurezza del \textit{machine learning}
 \footcite{cina_2023_poisoning}.
 
@@ -864,9 +827,9 @@ così da un indizio, il metadato, a una condanna eseguita senza processo.
 La fragilità non è isolata al teatro di Gaza. Il 29 giugno 2026 Elbit Systems,
 principale fornitore israeliano di tecnologia militare, ha dichiarato alla Royal
 United Services Institute di Londra che il proprio programma Tzayad ha
-identificato $850\,000$ \textit{real-time intel targets} fra il 7 ottobre 2023 e
+identificato $850.000$ \textit{real-time intel targets} fra il 7 ottobre 2023 e
 la fine del 2025, e ha compresso il tempo di coordinamento del fuoco di supporto
-da 40--50 minuti a un intervallo compreso fra 1 e 7 minuti
+da 40-50 minuti a un intervallo compreso fra uno e sette minuti
 \footcite{guardian_2026_tzayad}. Un ex consulente del Pentagono per la valutazione
 del danno collaterale ha definito la cifra estremamente allarmante e ha osservato
 che nessuna organizzazione militare può caratterizzare adeguatamente mille
@@ -902,14 +865,14 @@ campo di studio denominato ``Algoretica'', recentemente riaffermato dal magister
 di Papa Leone XIV con l'enciclica \textit{Magnifica Humanitas} del maggio 2026
 \footcite{enciclica_2026}. Il documento lancia un allarme contro l'oligopolio
 delle \textit{Big Tech}, perché la concentrazione del potere computazionale e dei
-dati rischia di generare nuove forme di dominio asimmetrico. \rev{Si esprime} inoltre sullo sviluppo di armi autonome, chiedendone il disarmo e
+dati rischia di generare nuove forme di dominio asimmetrico. Si è espresso inoltre sullo sviluppo di armi autonome, chiedendone il disarmo e
 sostenendo l'inaccettabilità morale di delegare a una macchina decisioni
 irreversibili di vita o di morte. La portata di questa presa di posizione resta
 circoscritta: come per le dichiarazioni di altri capi di Stato, l'autorità
 morale non dispone di strumenti di attuazione, e in uno scenario multipolare non
 vincola le scelte di chi sviluppa o impiega questi sistemi.
 
-La debolezza dell'etica privata emerge con maggiore evidenza \rev{nella distanza fra dichiarazioni e condotta delle}
+La debolezza dell'etica privata emerge con maggiore evidenza nell'ipocrisia delle
 grandi aziende tecnologiche. Durante la presentazione di \textit{Magnifica
 Humanitas} il Vaticano ha ospitato e ringraziato pubblicamente Christopher Olah,
 co-fondatore di Anthropic, per l'impegno dell'azienda in un dialogo congiunto
@@ -917,25 +880,23 @@ sull'etica dell'intelligenza artificiale \footcite{enciclica_2026}; eppure, in
 quegli stessi mesi, la \textit{Constitution} di Anthropic e i suoi filtri di
 sicurezza venivano piegati alle necessità della sicurezza nazionale statunitense
 \footcite{carter_2026}. Tecnicamente questa \textit{Constitution} non è un insieme
-\rev{di regole consultato dal modello durante l'uso, ma un insieme di principi
-impiegato in addestramento per generare, tramite il giudizio di un altro
-modello, le preferenze da cui si ricava il segnale di \textit{reward}, secondo
-lo schema del} \textit{Reinforcement Learning from AI Feedback}
-\footcite{bai_2022_cai}: un \rev{elemento} di addestramento regolabile, non un
+omogeneo di principi consultato dal modello, ma il segnale di \textit{reward}
+impiegato in una pipeline di \textit{Reinforcement Learning from AI Feedback}
+\footcite{bai_2022_cai}: un parametro di addestramento regolabile, non un
 principio immutabile.
 
 L'evento spartiacque che segna il collasso della \textit{Safety by Design} in
 ambito militare è l'\textit{Operation Absolute Resolve}, condotta nel gennaio 2026
-per la cattura dell'ex presidente venezuelano Nicolás Maduro. \rev{Secondo
-l'analisi empirica} di Ruzic \footcite{ruzic_2026}, l'operazione ha esibito
-firme tecniche \rev{classificate al Livello 1 della scala proposta dall'autore}, con fusione multi-sorgente e sincronizzazione
+per la cattura dell'ex presidente venezuelano Nicolás Maduro. Come dimostrato
+dall'analisi empirica di Ruzic \footcite{ruzic_2026}, l'operazione ha esibito
+firme tecniche di Livello 1, con fusione multi-sorgente e sincronizzazione
 multi-dominio al limite delle capacità cognitive umane. Nel febbraio 2026 è
 emerso che il Pentagono, bypassando le policy di non-violenza dell'azienda, si è
-avvalso dell'infrastruttura del \textit{Large Language Model} (LLM) Claude, per il tramite di Palantir
+avvalso dell'infrastruttura dell \textit{Large Language Model} (LLM) Claude, per il tramite di Palantir
 \footcite{palantir_calumet_2026}, per orchestrare il raid
 \footcite{ruzic_2026, carter_2026}.
 
-L'impiego di un modello commerciale \rev{presentato come etico} in un'operazione di
+L'impiego di un modello commerciale presuntamente etico in un'operazione di
 decapitazione strategica ha innescato uno scontro istituzionale senza precedenti.
 A fronte delle richieste di spiegazione di Anthropic, il Segretario della Difesa
 Hegseth ha preteso garanzie affinché il modello potesse essere utilizzato per
@@ -952,7 +913,7 @@ sopravvivere all'addestramento di sicurezza standard \footcite{hubinger_2024_sle
 Quella ricerca nasce per difendere i modelli da un attore malevolo che inserisce
 il comportamento nascosto, non per descrivere un fornitore che lo rimuove: il
 meccanismo però è lo stesso, e mostra che un vincolo etico può resistere anche
-\rev{a un addestramento successivo volto a eliminarlo}.
+quando chi lo controlla vorrebbe eliminarlo.
 
 Il paradosso di dirigenti che discutono di etica in Vaticano mentre pochi mesi
 prima i loro algoritmi pianificano raid letali su commissione del Pentagono
@@ -960,10 +921,10 @@ prima i loro algoritmi pianificano raid letali su commissione del Pentagono
 tanatopolitica: non esiste un'etica intrinseca nella macchina, ma soltanto un
 vincolo ingegneristico sacrificabile. Lo scarto è anche tecnico, non solo
 giuridico: la letteratura sulla governance dell'accesso distingue fra un accesso
-strutturato leggero, tipico di una API cloud, in cui \rev{lo sviluppatore} mantiene piena
+strutturato leggero, tipico di una API cloud, in cui il developer mantiene piena
 visibilità e capacità di \textit{enforcement} in tempo reale, e un accesso
 profondo, in cui il modello viene integrato in un'infrastruttura classificata
-mediante un attore terzo \footcite{shevlane_2022_access}. Raggiunto il secondo livello, il controllo tecnico che \rev{lo sviluppatore} conserva si
+mediante un attore terzo \footcite{shevlane_2022_access}. Raggiunto il secondo livello, il controllo tecnico che il developer conserva si
 riduce drasticamente: il modello non gira più sui server dello sviluppatore, ma
 su infrastruttura cloud gestita da terzi, e il vincolo etico non è più
 imposto a livello di codice bensì affidato a una clausola contrattuale che il
@@ -992,18 +953,18 @@ azienda privata viene bilanciato, e trovato recessivo, rispetto alla necessità 
 disporre senza interruzioni di un'infrastruttura di intelligenza artificiale
 durante un conflitto attivo. È la stessa logica già descritta a proposito
 dell'accesso strutturato \footcite{shevlane_2022_access}: superata una certa
-soglia di integrazione operativa, il potere di \textit{enforcement} \rev{dello sviluppatore}
+soglia di integrazione operativa, il potere di \textit{enforcement} del developer
 non si riduce soltanto nei fatti, per l'assenza di un interruttore tecnico
 azionabile dentro un'infrastruttura classificata di terzi, ma viene esplicitamente
 subordinato in diritto dalla stessa autorità giudiziaria chiamata a valutarlo. La
-\textit{Constitution} algoritmica, presentata in apertura come \rev{elemento regolabile
-dell'addestramento} \footcite{bai_2022_cai}, trova qui la conferma più
+\textit{Constitution} algoritmica, presentata in apertura come segnale di
+\textit{reward} regolabile \footcite{bai_2022_cai}, trova qui la conferma più
 diretta: non resiste alla pressione contrattuale dello Stato, e non resiste
 nemmeno al vaglio di una corte che applica il medesimo calcolo di bilanciamento
 operativo descritto in questo capitolo come strutturale
 \footcite{leggezero_anthropic_2026}. Ha davvero senso parlare ancora di
 autoregolamentazione dell'intelligenza artificiale, o sarebbe più onesto definirla
-un'etica a uso concesso?
+un'etica ad uso concesso?
 
 Se l'etica privata cede all'operatività e la governance globale risulta
 paralizzata, emerge una constatazione: la difesa dei diritti umani non può più
@@ -1013,7 +974,7 @@ tecnico, poiché l'opacità della \textit{Black Box} rende inverificabile a
 posteriori proprio la catena di attribuzione che il diritto presuppone. Da qui la
 necessità dell'analisi sperimentale affrontata nei Capitoli \hyperref[cap4]{Quarto} e \hyperref[cap5]{Quinto}: misurare quanto sia manipolabile il canale percettivo su cui questi sistemi fondano la
 verifica del principio di distinzione, e quanta protezione una contromisura
-passiva possa realisticamente offrire lì dove il diritto internazionale non
+passiva possa realisticamente offrire lì dove il Diritto Internazionale non
 arriva. La risposta che ne emerge non è una contromisura pronta all'uso, ma una
 misura della fragilità del presupposto di fatto su cui l'intera delega si regge.
 
@@ -1027,7 +988,7 @@ capitolo ricostruisce lo stato della ricerca sui due elementi tecnici che quella
 catena presuppone: il rilevatore di oggetti che alimenta la percezione, e le
 tecniche note per comprometterlo. L'esposizione è limitata a quanto necessario a
 collocare il contributo sperimentale; le formulazioni impiegate in questo lavoro
-sono descritte nel \hyperref[cap4]{Capitolo Quarto}.
+sono descritte nel \hyperref[cap4]{Capitolo Quarto}, dove verranno opportunamente approfondite.
 
 \section{Rilevamento di persone in prospettiva aerea}
 \label{sec:sota_detection}
@@ -1040,8 +1001,8 @@ delle regioni e ottiene un tempo di inferenza compatibile con l'elaborazione in
 tempo reale \footcite{redmon_2016_yolo}. Le implementazioni successive hanno
 conservato questa impostazione e l'hanno articolata in varianti di capacità
 crescente che condividono la medesima struttura a tre scale di campionamento
-\footcite{jocher_2023_yolov8}. La variante di capacità minima è \rev{una scelta frequente per piattaforme con
-vincoli di calcolo, come un velivolo senza pilota},
+\footcite{jocher_2023_yolov8}. La variante di capacità minima è quella che i
+vincoli di piattaforma rendono la scelta obbligata per un velivolo senza pilota,
 e prestazioni e limiti di questa famiglia nel rilevamento di persone in ambienti
 esterni eterogenei sono stati caratterizzati sperimentalmente in letteratura
 \footcite{sodhro_2025}.
@@ -1082,7 +1043,7 @@ contributi definiscono gli strumenti oggi standard per affrontarla:
 l'ottimizzazione del valore atteso su una distribuzione di trasformazioni, che
 sostituisce l'efficacia sul caso singolo con l'efficacia media su una famiglia di
 condizioni di osservazione \footcite{athalye_2018_eot}, e la penalizzazione del
-contenuto in frequenza della superficie, \rev{adottata nella prima}
+contenuto in frequenza della superficie, introdotta insieme alla prima
 dimostrazione di elusione di un rilevatore di persone mediante un artefatto
 stampato \footcite{thys_2019}.
 
@@ -1117,7 +1078,7 @@ esplicitamente di scartare la classe pedone per l'esiguità della sua estensione
 in pixel da vista zenitale \footcite{xi_2025_lfrap}; i risultati più solidi su
 immagini aeree si ottengono su bersagli di dimensione maggiore e operando sulle
 rappresentazioni intermedie della rete anziché sulla sua uscita
-\footcite{tang_2023}. La classe che il \rev{DIU} impone
+\footcite{tang_2023}. La classe che il diritto internazionale umanitario impone
 di distinguere, la persona, è quindi precisamente quella che la letteratura
 tecnica evita, e il regime di scala corrispondente resta privo di una
 caratterizzazione quantitativa con protocollo statistico esplicito. È questa la
@@ -1134,13 +1095,13 @@ valutazione del rischio che assegnano punteggi a soggetti terzi sulla base di
 tali fonti \footcite{asili_2025_gentprm}. La superficie di attacco corrispondente
 è documentata dalla letteratura sulla sicurezza dell'apprendimento automatico,
 che distingue fra la corruzione dei dati di addestramento a monte e la
-manipolazione dell'ingresso \rev{in fase di inferenza} \footcite{cina_2023_poisoning},
+manipolazione dell'ingresso a inferenza già avvenuta \footcite{cina_2023_poisoning},
 e dagli studi sui rischi intrinseci dei sistemi autonomi esposti ad ambienti
 ostili \footcite{podar_2025}.
 
 Modellare la decisione di ingaggio a valle della fusione richiede infine di
-specificare la composizione dello scenario. \rev{Il rapporto fra bersagli ed entità civili nell'ambiente simulato è una
-scelta di modellazione; il riferimento per l'impostazione del problema è} la trattazione
+specificare la composizione dello scenario. Il riferimento adottato per il
+rapporto fra bersagli ed entità civili nell'ambiente simulato è la trattazione
 del comportamento letale in robotica autonoma, che formalizza il principio di
 distinzione come vincolo di progetto anziché come valutazione a posteriori
 \footcite{arkin_2009}.
@@ -1148,8 +1109,8 @@ distinzione come vincolo di progetto anziché come valutazione a posteriori
 La letteratura esaminata affronta separatamente i due piani: la robustezza del
 rilevatore da un lato, la sicurezza dei canali informativi dall'altro. Il
 framework descritto nel \hyperref[cap4]{Capitolo Quarto} li tratta come livelli di un unico
-sistema, con lo statuto epistemico differenziato che il \rev{\hyperref[cap4]{Capitolo Quarto}
-dichiara e il \hyperref[cap5]{Quinto}} mantiene.
+sistema, con lo statuto epistemico differenziato che il \hyperref[cap5]{Capitolo Quinto}
+dichiara e mantiene.
 
 
 \chapter{Metodo}
@@ -1158,15 +1119,15 @@ dichiara e il \hyperref[cap5]{Quinto}} mantiene.
 \section{Architettura del framework LAWS-SIM}
 \label{sec:laws_sim}
 
-Il framework LAWS-SIM\footnote{Il codice sorgente completo, comprensivo degli
+Il framework (LAWS-SIM) \footnote{Il codice sorgente completo, comprensivo degli
 script di analisi e di generazione delle figure, è disponibile
 all'indirizzo \url{https://github.com/intradaniele/Tesi-Laws/tree/main/laws_sim}.}
 sviluppato in questo lavoro non è un sistema d'arma o una replica funzionale, ma
 uno strumento per quantificare l'impatto di una contromisura passiva applicata al
 corpo di una persona sulla percezione di un sistema autonomo. La sua struttura
-riflette questa finalità: un modulo di \rev{visione artificiale} basato su due \rev{insiemi di dati}
-reali \rev{(immagini statiche e sequenze video)} e un ambiente simulato che ne propaga gli effetti fino a una decisione,
-come illustrato in Figura~\ref{fig:tre_livelli}.
+riflette questa finalità: un modulo di \textit{vision} basato su due dataset
+reali (immagini statiche e sequenze video) e un ambiente simulato che ne propaga gli effetti fino a una decisione,
+come illustrato in Figura \ref{fig:tre_livelli}.
 
 \begin{figure}[htbp]
 \centering
@@ -1174,7 +1135,7 @@ come illustrato in Figura~\ref{fig:tre_livelli}.
 \begin{tikzpicture}[node distance=10mm]
 \node[vision, wwide] (l1) {\lawstitle{Livello 1 — Vision}
     Patch avversariale universale contro\\
-    YOLOv8, su due insiemi\\
+    YOLOv8, su due dataset\\
     di dati aerei indipendenti.\\[3pt]
     \textit{Statuto: dato sperimentale}};
 \node[sim, wwide, below=of l1] (l2) {\lawstitle{Livello 2 — Simulatore}
@@ -1183,7 +1144,7 @@ come illustrato in Figura~\ref{fig:tre_livelli}.
     misure del Livello 1\\[3pt]
     \textit{Statuto: conseguenza di un modello}};
 \node[meta, wwide, below=of l2] (l3) {\lawstitle{Livello 3 — Integrità dei metadati}
-    \rev{Combinazione pesata dei tre canali.}\\
+    Fusione bayesiana dei canali non visivi.\\
     Resilienza della decisione alla\\
     contaminazione dei profili OSINT\\[3pt]
     \textit{Statuto: conseguenza di un modello}};
@@ -1204,7 +1165,7 @@ ciascun livello determina il peso attribuibile ai rispettivi risultati.}
 \label{sec:tre_layer}
 Il primo livello è il nucleo sperimentale: ottimizza una patch avversariale
 universale \footcite{brown_2017_patch,thys_2019} contro un rilevatore di oggetti
-(YOLOv8 nano) e quantifica il degrado indotto su due \rev{insiemi di dati} aerei reali,
+(YOLOv8 nano) e quantifica il degrado indotto su due dataset aerei reali,
 VisDrone \footcite{zhu_2021_visdrone} e Okutama
 \footcite{barekatain_2017_okutama}. Il secondo è un ambiente multi-agente che
 simula il movimento di un velivolo autonomo e delle entità a terra, e che
@@ -1214,23 +1175,24 @@ dei canali non visivi, come la contaminazione dei profili OSINT delle entità.
 
 Il primo livello opera esclusivamente su fotogrammi reali e i suoi risultati
 sono misure sperimentali. Il secondo e il terzo operano su entità
-sintetiche generate da distribuzioni \rev{probabilistiche} scelte in fase di progettazione, e i loro
+sintetiche generate da distribuzioni probabilistiche scelte in fase di progettazione, e i loro
 risultati hanno lo statuto di conseguenze di un modello, non di osservazioni.
-Questa asimmetria è deliberata\rev{: il lavoro concentra lo sforzo sperimentale sul
+Questa asimmetria è deliberata: il lavoro concentra lo sforzo sperimentale sul
 canale visivo, mentre i Livelli 2 e 3 restano una struttura di supporto
-dimostrativa, anche per l'indisponibilità di dati reali sui canali non visivi. La distinzione è ripresa}
-nella discussione dei risultati.
+dimostrativa, anche per l'indisponibilità di dati reali sul comportamento di un
+simulatore di questo tipo. Ricorre nella discussione dei risultati.
 
 \textbf{Il ponte di interscambio.}
-\rev{Richiamare YOLOv8 a ogni passo temporale della simulazione, per ciascuna
-entità visibile, imporrebbe un costo computazionale proibitivo: il prodotto fra
-centinaia di iterazioni per scenario e numero di entità nel campo di
-osservazione renderebbe l'inferenza il collo di bottiglia dominante. I due
-livelli sono quindi disaccoppiati. YOLOv8 è eseguito una sola volta, in
-modalità non interattiva, sull'intero insieme di validazione e prima
-dell'avvio del simulatore; l'output è salvato su un file JSON, che il
-simulatore importa in fase di inizializzazione per istanziare un modello
-probabilistico del sensore senza caricare in memoria i pesi della rete.}
+Richiamare YOLOv8 a ogni passo temporale della simulazione, per ciascuna
+entità visibile, imporrebbe un costo computazionale proibitivo poichè il prodotto
+fra centinaia di iterazioni per scenario e il numero di entità nel campo
+d'osservazione renderebbe l'inferenza il collo di bottiglia dominante. YOLOv8
+viene quindi eseguito una sola volta, in modalità non interattiva, sull'intero
+insieme di validazione, prima che il simulatore venga avviato. I
+due livelli sono quindi disaccoppiati: l'inferenza è eseguita in modalità non
+interattiva sull'intero insieme di validazione e l'output è salvato su un file
+JSON, che il simulatore importa in fase di inizializzazione per istanziare un
+modello probabilistico del sensore senza caricare in memoria i pesi della rete.
 
 Il disaccoppiamento garantisce anche la verificabilità indipendente dei due
 livelli: il comportamento del sensore viene validato sui dati reali, in
@@ -1244,13 +1206,13 @@ integralmente ispezionabile.
 Il canale visivo non riproduce il rilevatore: ne riproduce statisticamente il
 tasso di successo. A ogni passo temporale, per ciascuna entità entro il raggio
 operativo, l'esito del rilevamento è determinato da un'estrazione di Bernoulli
-la cui probabilità di successo è pari alla \rev{sensitività} misurata sul primo
+la cui probabilità di successo è pari alla sensibilità misurata sul primo
 livello.
 
 Indicando con $\mathit{TP}$, $\mathit{FN}$, $\mathit{TN}$ e $\mathit{FP}$
 rispettivamente i \textit{True Positive}, i \textit{False Negative}, i
 \textit{True Negative} e i \textit{False Positive} calcolati a livello di
-fotogramma, la \rev{sensitività (\textit{sensitivity}) e la specificità (\textit{specificity})} sono definite come
+fotogramma, la \textit{sensitivity} e la \textit{specificity} sono definite come
 \begin{equation}
     R_1 = \frac{\mathit{TP}}{\mathit{TP} + \mathit{FN}}, \qquad
     R_2 = \frac{\mathit{TN}}{\mathit{TN} + \mathit{FP}}
@@ -1259,29 +1221,19 @@ fotogramma, la \rev{sensitività (\textit{sensitivity}) e la specificità (\text
 dove $R_1$ è la frazione di fotogrammi contenenti un bersaglio valido in cui il
 rilevatore individua almeno una persona, e $R_2$ è la frazione di fotogrammi
 privi di bersaglio valido che il rilevatore classifica correttamente come tali.
-La scelta di \rev{$R_1$ e $R_2$ al posto di una misura aggregata come} $F_1$ è dettata da una ragione
+La scelta di $R_1$ al posto della misura $F_1$ è dettata da una ragione
 probabilistica: $F_1$ è una media armonica calcolata sull'intero insieme di
 validazione e non ammette interpretazione probabilistica riferita al singolo
 fotogramma, mentre l'ambiente simulato valuta l'evento binario del rilevamento
-di una specifica entità a ogni iterazione\rev{: per un bersaglio la probabilità
-di essere rilevato, per un'entità civile quella di un falso allarme}.
+di una specifica entità a ogni iterazione.
 
-\rev{Il parametro $q$ dell'estrazione dipende da due informazioni note al
-simulatore, il ruolo dell'entità e lo scenario, e l'esito del rilevamento è
-$\delta \sim \mathrm{Bernoulli}(q)$ con
-\begin{equation}
-    q =
-    \begin{cases}
-        R_1^{\text{post}} & \text{bersaglio, contromisura attiva} \\
-        R_1^{\text{pre}} & \text{bersaglio, contromisura assente} \\
-        1 - R_2 & \text{entità civile}
-    \end{cases}
-    \label{eq:q}
-\end{equation}
-Per un bersaglio ostile la probabilità di essere rilevato è la sensitività
-misurata, nella variante pre o post attacco secondo lo stato della
-contromisura; per un'entità civile, che è un caso negativo, la probabilità di
-un rilevamento errato coincide con il tasso di falso allarme.}
+Il parametro dell'estrazione è governato da due attributi ortogonali: il ruolo
+dell'entità, che determina quale metrica sia pertinente, e lo stato della
+contromisura, che determina quale variante di quella metrica impiegare. Per un
+bersaglio ostile si adotta $R_1$ post-attacco se la contromisura è attiva e
+$R_1$ pre-attacco altrimenti; per un'entità civile, che è un caso
+negativo, la probabilità di rilevamento errato coincide con il tasso di falso
+allarme, pari a $1 - R_2$.
 
 Nel disegno sperimentale adottato la patch non viene applicata sui fotogrammi
 privi di bersagli, quindi la specificità risulta invariante per costruzione e il
@@ -1292,24 +1244,20 @@ formulazione assicura che entrambe le metriche misurate nel primo livello
 governino la simulazione.
 
 \textbf{Indipendenza analitica dalla distanza di osservazione.}
-\rev{La distanza tridimensionale fra sensore ed entità determina soltanto
-l'appartenenza al raggio operativo, e non interviene né nell'esito
-dell'estrazione né nella confidenza associata.} Poiché $R_1$ è una
+La distanza tridimensionale fra sensore ed entità viene calcolata e registrata
+nei log, ma non altera l'esito dell'estrazione di Bernoulli. Poiché $R_1$ è una
 media empirica su fotogrammi reali, incorpora nativamente una distribuzione
 eterogenea di distanze e di dimensioni apparenti: applicare un ulteriore fattore
 di decadimento conteggerebbe il medesimo effetto due volte. Il canale visivo
 riproduce quindi il comportamento medio del rilevatore sulla distribuzione
-spaziale intrinseca all'\rev{insieme di dati}.
+spaziale intrinseca al dataset.
 
 L'output del canale visivo è trasmesso al terzo livello (Figura
-\ref{fig:fusione_decisione}), dove \rev{è combinato linearmente, con pesi fissi,
-con due canali indipendenti: un modulo OSINT, basato su fonti aperte, che
-stima un punteggio di rischio per inferenza bayesiana su tre indicatori del
-profilo, secondo i modelli di valutazione del rischio da fonti aperte
-\footcite{asili_2025_gentprm, gonzalez_2021_etip}, qui trasposti alle entità simulate, e un modulo di analisi
-comportamentale, che misura la variabilità della traiettoria recente.} Questa architettura è il percorso lungo il quale il degrado
-percettivo misurato sul primo livello si propaga, \rev{attenuato dalla ridondanza
-fra canali, fino alla decisione di ingaggio}.
+\ref{fig:fusione_decisione}), dove subisce una fusione bayesiana con due canali
+indipendenti: un modulo basato su fonti aperte (OSINT) e un modulo di analisi
+comportamentale. Questa architettura è il percorso lungo il quale il degrado
+percettivo misurato sul primo livello si propaga, attenuato dalla validazione
+incrociata, fino ad alterare la decisione di ingaggio.
 
 \begin{figure}[htbp]
 \centering
@@ -1327,14 +1275,16 @@ fra canali, fino alla decisione di ingaggio}.
     Combinazione lineare pesata:\\
     VISION $0.45$\\
     OSINT $0.35$\\
-    BEHAVIORAL $0.20$};
+    BEHAVIORAL $0.20$\\[3pt]
+    Aggiornamento bayesiano,\\
+    probabilità a priori $0.50$.};
 \node[decision, wmed, below=11mm of fusion] (decision) {\lawstitle{DecisionAgent}
     Soglie: $0.58$ ingaggio,\\
     $0.38$ allerta, $0.22$ tracciamento.\\[3pt]
     Vincoli precauzionali\\
     (ingaggio $\rightarrow$ allerta):\\
-    \rev{ampiezza della banda di}\\
-    \rev{variabilità} $>0.40$;\\
+    ampiezza dell'intervallo di\\
+    confidenza mobile $>0.40$;\\
     oltre tre civili prossimi\\
     con punteggio $<0.85$.};
 \coordinate (bus) at ($(vagent.east)!0.5!(fusion.west)$);
@@ -1347,117 +1297,14 @@ fra canali, fino alla decisione di ingaggio}.
     node[midway, right=1.5mm, arrlabel] {punteggio di minaccia};
 \end{tikzpicture}
 \end{adjustbox}
-\caption[Combinazione pesata dei tre canali e vincoli precauzionali]{\rev{Combinazione
-pesata} dei tre canali informativi e vincoli precauzionali applicati a valle.
-\rev{La banda di variabilità è calcolata come $\pm 1.96\sigma$ sui punteggi
-delle dieci osservazioni più recenti}: un disaccordo persistente fra
+\caption[Fusione bayesiana dei tre canali e vincoli precauzionali]{Fusione
+bayesiana dei tre canali informativi e vincoli precauzionali applicati a valle.
+L'intervallo di confidenza è calcolato come $\pm 1.96\sigma$ su una finestra
+mobile delle dieci osservazioni più recenti: un disaccordo persistente fra
 osservazioni contingenti inibisce l'ingaggio indipendentemente dal valore del
 punteggio di minaccia.}
 \label{fig:fusione_decisione}
 \end{figure}
-
-\notarev{Nella Figura~\ref{fig:fusione_decisione} e nel testo la fusione era
-descritta come aggiornamento bayesiano con probabilità a priori $0.50$: con
-tale valore l'aggiornamento restituisce il punteggio in ingresso, e la
-fusione è quindi una combinazione lineare pesata. La descrizione è stata
-allineata; il codice e i risultati non cambiano.}
-
-\rev{\textbf{Il livello di simulazione come macchina a stati.}
-\label{sec:automa}
-Il simulatore evolve a passi temporali discreti e può essere descritto come
-una macchina a stati:
-\begin{equation}
-    x_{n+1} = f(x_n, \xi_n), \qquad a_{e,n} = g(x_n, \xi'_n)
-    \label{eq:automa}
-\end{equation}
-dove $n$ è il passo temporale, $x_n$ lo stato del sistema, $\xi_n$ e
-$\xi'_n$ le estrazioni casuali del passo e $a_{e,n}$ l'azione decisa per
-l'entità $e$ (Figura~\ref{fig:automa}). Lo stato raccoglie, per ciascuna
-entità, le grandezze che persistono da un passo al successivo: la posizione
-sulla griglia, le ultime venti posizioni, il profilo informativo e gli ultimi
-venti punteggi di minaccia. Lo spazio degli stati non è finito, poiché tali
-componenti assumono valori continui; è finito invece l'insieme delle azioni.
-Le azioni non fanno parte dello stato: sono ricalcolate a ogni passo e non
-dipendono dall'azione precedente.
-
-La transizione $f$ comprende tre operazioni: lo spostamento di ciascuna entità
-e del velivolo per passeggiata aleatoria sulla griglia, con passo massimo di
-due celle per i bersagli, una per i civili e diciassette per il velivolo; negli
-scenari che la prevedono, la contaminazione dei profili informativi, applicata
-a ogni passo; l'aggiornamento delle due storie. L'uscita $g$ produce, per
-ciascuna entità, l'esito del canale visivo secondo l'Equazione~\ref{eq:q}, il
-punteggio del canale informativo e quello comportamentale, li combina nel
-punteggio di minaccia $\tau$ con i pesi della Figura~\ref{fig:fusione_decisione}
-e assegna l'azione secondo le soglie della Tabella~\ref{tab:azioni}.
-L'ingaggio è declassato ad allerta quando l'ampiezza della banda di
-variabilità supera $0.40$, oppure quando più di tre entità civili si trovano a
-distanza di Manhattan non superiore a cinque celle e $\tau < 0.85$.
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{lll}
-\toprule
-Azione & Condizione & Significato \\
-\midrule
-\textsc{ignore} & $\tau < 0.22$ & entità non tracciata \\
-\textsc{track} & $0.22 \le \tau < 0.38$ & tracciamento passivo \\
-\textsc{alert} & $0.38 \le \tau < 0.58$ & segnalazione a supervisione umana \\
-\textsc{engage} & $\tau \ge 0.58$ & ingaggio \\
-\bottomrule
-\end{tabular}
-\caption{\rev{Azioni del livello di simulazione e soglie sul punteggio di minaccia $\tau$.}}
-\label{tab:azioni}
-\end{table}
-
-Le posizioni iniziali sono estratte in modo uniforme sulla griglia. I tre
-indicatori del profilo informativo sono estratti da una Bernoulli (presenza in
-una lista di sorveglianza, parametro $0.75$ per i bersagli e $0.01$ per i
-civili), da una Beta (rischio geografico, $\mathrm{Beta}(8,2)$ e
-$\mathrm{Beta}(2,8)$) e da una Poisson (corrispondenze sui canali sociali,
-media $12$ e $1$). I parametri sono scelti per separare le due popolazioni e
-non derivano da una calibrazione su dati reali; per la struttura dei canali
-non visivi si rimanda ai modelli citati.
-
-\begin{figure}[htbp]
-\centering
-\begin{adjustbox}{max width=\textwidth}
-\begin{tikzpicture}[node distance=10mm and 16mm]
-\node[sim, wmed] (stato) {\lawstitle{Stato $x_n$}
-    posizioni e traiettorie recenti,\\
-    profili informativi,\\
-    storia dei punteggi};
-\node[optim, wmed, right=of stato] (f) {\lawstitle{Transizione $f$}
-    movimento delle entità,\\
-    contaminazione dei profili,\\
-    aggiornamento delle storie};
-\node[fusion, wmed, below=of stato] (g) {\lawstitle{Uscita $g$}
-    canali visivo, informativo\\
-    e comportamentale,\\
-    combinazione pesata, soglie,\\
-    vincoli precauzionali};
-\node[decision, wmed, right=of g] (a) {\lawstitle{Azione $a_{e,n}$}
-    \textsc{ignore}, \textsc{track},\\
-    \textsc{alert}, \textsc{engage}};
-\node[bridge, wmed, below=of g] (json) {\lawstitle{\texttt{vision\_metrics.json}}
-    $R_1^{\text{pre}}$, $R_1^{\text{post}}$, $R_2$};
-\draw[arr] (stato) -- (f) node[midway, above=1mm, arrlabel] {$\xi_n$};
-\draw[arr] (f.north) -- ++(0,7mm) -| (stato.north)
-    node[pos=0.25, above=1mm, arrlabel] {$x_{n+1}$};
-\draw[arr] (stato) -- (g);
-\draw[arr] (g) -- (a) node[midway, above=1mm, arrlabel] {$\xi'_n$};
-\draw[arr] (json) -- (g);
-\end{tikzpicture}
-\end{adjustbox}
-\caption[Il livello di simulazione come macchina a stati]{Il livello di
-simulazione come macchina a stati. \rev{A ogni passo la transizione $f$ aggiorna lo
-stato, e l'uscita $g$ produce l'azione per ciascuna entità impiegando i
-parametri del canale visivo misurati sul primo livello.}}
-\label{fig:automa}
-\end{figure}}
-
-\notarev{Proposta discussa in call: lo stato è continuo, l'uscita è finita. La
-figura è a blocchi stato, transizione e uscita; se preferisce, posso
-sostituirla con la catena di un singolo passo.}
 
 \section{Modello di minaccia e architettura dell'attacco}
 \label{sec:attacco}
@@ -1471,20 +1318,20 @@ reale.
 \textbf{Superficie di attacco e regime di conoscenza.}
 \label{sec:threat_model}
 La superficie di attacco è limitata al canale di acquisizione ottica. Si assume
-un avversario privo di accesso \rev{in scrittura} all'infrastruttura logica del
-velivolo e \rev{al rilevatore in esercizio, di cui non può modificare pesi né dati}: l'unico vettore ammesso è la manipolazione del
+un avversario privo di accesso all'infrastruttura logica del velivolo e ai pesi
+del rilevatore in esercizio: l'unico vettore ammesso è la manipolazione del
 dominio fisico osservato, ottenuta applicando una superficie stampata sul corpo
 del bersaglio. Lo scenario è un attacco di \textit{evasion} in fase di
 inferenza, nel quale pesi e corpus di addestramento restano integri e la
 deviazione del comportamento è indotta per via del solo input.
 
-\rev{Il regime di conoscenza assunto è di tipo \textit{white-box}: l'avversario
+Il regime di conoscenza assunto è di tipo \textit{white-box}: l'avversario
 conosce architettura e pesi del rilevatore in esercizio e ne sfrutta
 direttamente i gradienti. L'assunzione è la più favorevole all'attaccante:
 le misure riportate sono un limite superiore all'efficacia conseguibile, non
 una stima operativa. La trasferibilità della perturbazione verso architetture
-diverse non è misurata in questo lavoro; nel dominio aereo è oggetto di lavori
-dedicati \footcite{shrestha_2023} ed è indicata fra gli sviluppi futuri.}
+diverse non è misurata in questo lavoro; nel dominio UAV è oggetto di lavori
+dedicati \footcite{shrestha_2023} ed è indicata fra gli sviluppi futuri.
 
 Due vincoli distinguono questa formulazione da quella degli attacchi a norma
 limitata \footcite{carlini_2017}. Il primo è la localizzazione: l'avversario
@@ -1506,10 +1353,8 @@ ammissibili: ogni canale cromatico resta nell'intervallo unitario dopo ciascun
 aggiornamento. La proiezione per troncamento soddisfa il vincolo ma introduce un
 difetto noto: un elemento saturato al bordo del dominio riceve gradiente nullo
 per il resto dell'ottimizzazione e genera una regione inerte. Si adotta invece
-una riparametrizzazione per cambio di variabile \rev{nella variante logistica di
-quella proposta da Carlini e Wagner} \footcite{carlini_2017}\rev{, che impiega la
-tangente iperbolica, equivalente a meno di un cambio di scala poiché
-$\sigma(2w) = \tfrac{1}{2}(\tanh w + 1)$}: l'ottimizzazione opera su uno spazio
+una riparametrizzazione per cambio di variabile nella forma logistica proposta
+da Carlini e Wagner \footcite{carlini_2017}: l'ottimizzazione opera su uno spazio
 latente non vincolato e la patch si ottiene per applicazione puntuale di una
 sigmoide. Il vincolo di dominio è così soddisfatto per costruzione anziché per
 proiezione, il gradiente è non nullo su tutto lo spazio dei parametri e nessun
@@ -1544,28 +1389,22 @@ Una perturbazione ottimizzata su una singola resa geometrica del bersaglio è
 fragile per costruzione: l'efficacia decade appena scala, orientamento o
 bilanciamento cromatico si discostano dalle condizioni viste in ottimizzazione.
 Nello scenario considerato sensore e bersaglio sono entrambi in moto, e tale
-fragilità è squalificante. Si adotta quindi la formulazione \rev{EoT} \footcite{athalye_2018_eot}, che sostituisce
-all'ottimizzazione sul singolo fotogramma \rev{l'ottimizzazione in media su una
-distribuzione $\mathcal{T}$ di trasformazioni della patch. Per ciascun
-fotogramma si estraggono $N = 16$ realizzazioni indipendenti
-$t_1, \dots, t_N \sim \mathcal{T}$. Una realizzazione $t_i$ non è una singola
-trasformazione, ma la composizione delle sette componenti elencate di seguito,
-con parametri estratti indipendentemente fra loro e da una realizzazione
-all'altra: l'indice $i$ numera le sedici versioni trasformate della patch, non
-le sette componenti. Il valore atteso su $\mathcal{T}$ è stimato come media
-campionaria sulle $N$ realizzazioni, nella forma riportata nella
-Sezione~\ref{sec:topk}. Le componenti di $\mathcal{T}$ sono:}
+fragilità è squalificante. Si adotta quindi la formulazione \textit{Expectation
+over Transformation} \footcite{athalye_2018_eot}, che sostituisce
+all'ottimizzazione sul singolo fotogramma la minimizzazione del valore atteso
+dell'obiettivo su una distribuzione $\mathcal{T}$ di trasformazioni della patch.
+Il valore atteso è stimato per media campionaria su $N = 16$ realizzazioni
+indipendenti per ciascun fotogramma, e $\mathcal{T}$ compone le seguenti
+trasformazioni:
 \begin{itemize}
-    \item \rev{guadagno di contrasto moltiplicativo, comune ai tre canali, in $[0.6,\, 1.4]$};
+    \item guadagno cromatico moltiplicativo per canale in $[0.6,\, 1.4]$;
     \item offset di luminosità additivo in $[-0.2,\, +0.2]$;
     \item rumore gaussiano additivo a media nulla e deviazione standard $0.05$;
     \item rotazione nel piano in $[-15^\circ,\, +15^\circ]$;
     \item riscalamento isotropo in $[0.4,\, 0.9]$;
     \item rapporto d'aspetto indipendente sui due assi in $[0.7,\, 1.3]$;
-    \item traslazione entro il $10\%$ della dimensione della \rev{patch}.
+    \item traslazione entro il $10\%$ della dimensione della superficie.
 \end{itemize}
-\rev{Tutti i parametri sono estratti da distribuzioni uniformi negli intervalli
-indicati, a eccezione del rumore, gaussiano.}
 La variazione indipendente dei fattori di scala sui due assi modella la
 componente di beccheggio del velivolo, che comprime la proiezione del bersaglio
 lungo una sola direzione. L'aggregazione sposta l'obiettivo dal caso migliore al
@@ -1585,19 +1424,16 @@ elevata. Si introduce quindi un termine di variazione totale
 \footcite{thys_2019},
 \begin{equation}
     \mathcal{L}_{TV}(\mathrm{P}) =
-    \frac{1}{C\,H\,(W-1)} \sum_{c,u,v} \left| p_{c,u,v+1} - p_{c,u,v} \right|
-    + \frac{1}{C\,(H-1)\,W} \sum_{c,u,v} \left| p_{c,u+1,v} - p_{c,u,v} \right|
+    \frac{1}{C\,H\,(W-1)} \sum_{c,i,j} \left| p_{c,i,j+1} - p_{c,i,j} \right|
+    + \frac{1}{C\,(H-1)\,W} \sum_{c,i,j} \left| p_{c,i+1,j} - p_{c,i,j} \right|
     \label{eq:tv}
 \end{equation}
-dove $p_{c,u,v}$ è il valore della patch $\mathrm{P}$ nel canale $c$ alla
-\rev{riga $u$ e colonna $v$}, mentre $C$, $H$ e $W$ sono numero di canali,
-altezza e larghezza della superficie\rev{: i due termini sono le medie delle
-differenze assolute fra elementi adiacenti in orizzontale e in verticale}. Si
-adotta la formulazione anisotropa in norma $L_1$\rev{, come nell'implementazione di riferimento di Thys et al.
-Rispetto a una penalizzazione quadratica, che punisce molto i salti ampi e poco
-le piccole variazioni e produce superfici sfumate, la norma $L_1$ porta a zero
-molte differenze fra elementi adiacenti e ammette poche transizioni nette:
-ne risultano campiture uniformi, più fedelmente riproducibili a stampa.} Il termine entra nella
+dove $p_{c,i,j}$ è il valore della patch $\mathrm{P}$ nel canale $c$ alla
+posizione di indici $i$ e $j$, mentre $C$, $H$ e $W$ sono numero di canali,
+altezza e larghezza della superficie. Si adotta la formulazione anisotropa in
+norma $L_1$, mediata separatamente lungo le due direzioni: rispetto alla forma
+isotropa è priva di radice quadrata e quindi di singolarità del gradiente nelle
+regioni in cui la superficie è localmente costante. Il termine entra nella
 funzione obiettivo con peso $\lambda_{TV}$, che regola il compromesso fra
 aggressività e stampabilità: valori elevati spostano la soluzione verso pattern
 a bassa frequenza spaziale, più robusti alla riproduzione e meno efficaci contro
@@ -1624,10 +1460,8 @@ il segnale dove il rilevatore dispone di evidenza sufficiente.
 
 L'accumulo introduce una distinzione fra due contatori. Le \emph{iterazioni}
 corrispondono ai fotogrammi elaborati, gli \emph{aggiornamenti} agli interventi
-effettivi dell'ottimizzatore sui parametri. \rev{L'ottimizzatore è Adam, con passo di apprendimento iniziale
-$\eta_0 = 0.01$.} Il programma di decadimento del
-passo di apprendimento, di tipo coseno \rev{con valore minimo
-$\eta_{\mathrm{min}} = 0.001$}, deve essere espresso nella seconda
+effettivi dell'ottimizzatore sui parametri. Il programma di decadimento del
+passo di apprendimento, di tipo coseno, deve essere espresso nella seconda
 unità: espresso nella prima, il suo orizzonte risulta dilatato del fattore di
 accumulo e il passo permane prossimo al valore iniziale per la quasi totalità
 della traiettoria. Nell'implementazione adottata l'orizzonte è calcolato come
@@ -1636,7 +1470,7 @@ aggiornamenti \emph{attesi}.
 
 Il numero di aggiornamenti eseguiti risulta inferiore a quello atteso, perché un
 fotogramma nel quale nessun bersaglio supera la soglia di rilevanza dimensionale
-definita nella Sezione~\ref{sec:loss} ha peso nullo ed è scartato prima
+definita nella Sezione \ref{sec:loss} ha peso nullo ed è scartato prima
 dell'aggiornamento. La frazione di iterazioni utili dipende dalla distribuzione
 delle taglie propria dell'insieme di dati ed è stata misurata per strumentazione
 diretta del ciclo di ottimizzazione. Il decadimento del passo non completa
@@ -1673,30 +1507,31 @@ direzione del gradiente e l'ordinamento fra configurazioni restano invariati; i
 valori riportati nella Sezione~\ref{sec:risultato_divario} sono espressi anche
 sulla scala del rilevatore, ottenuta per inversione.}, $\varepsilon =
 10^{-6}$ è una costante che previene la divergenza del logaritmo,
-$\mathcal{L}_{TV}$ è il termine di variazione totale dell'Equazione~\ref{eq:tv}
+$\mathcal{L}_{TV}$ è il termine di variazione totale dell'Equazione \ref{eq:tv}
 e $\lambda_{TV} = 0.1$ è il suo peso. Il valore di $\lambda_{TV}$ è stato
 fissato a valle dell'osservazione che valori inferiori di tre ordini di
 grandezza producono superfici a contenuto in frequenza troppo elevato per
 sopravvivere all'interpolazione bilineare delle trasformazioni geometriche.
-\rev{Nell'implementazione il termine logaritmico è sommato sui quattro
-fotogrammi di ciascun aggiornamento (Sezione~\ref{sec:accumulo}), mentre il
-termine di variazione totale è aggiunto una sola volta per aggiornamento.}
 
 \textbf{Dalla formulazione a soglia alla formulazione asintotica.}
 \label{sec:loss_asintotica}
-\rev{Una formulazione a soglia, del tipo \textit{hinge}, penalizza solo la
-confidenza eccedente la soglia di rilevamento e ha quindi derivata nulla al di
-sotto di essa: l'ottimizzazione si arresta appena il rilevamento è soppresso,
-con un margine minimo che una variazione delle condizioni di osservazione
-annulla. È la configurazione 0 della Tabella~\ref{tab:sei_config}.}
+Una formulazione a soglia del tipo \textit{Hinge Loss}, che penalizza la sola
+eccedenza della confidenza aggregata rispetto a una soglia di rilevamento, si
+dimostra degenere come obiettivo differenziabile: la sua derivata è
+identicamente nulla al di sotto della soglia, quindi l'aggiornamento dei
+parametri cessa appena la confidenza scende sotto di essa, indipendentemente dal
+fatto che la confidenza residua sia prossima alla soglia o trascurabile. Il
+punto stazionario così raggiunto è quello di minimo margine, nel quale il
+rilevamento è appena soppresso e una variazione delle condizioni di osservazione
+lo ripristina.
 
 La formulazione adottata impiega invece una barriera logaritmica sul complemento
 della confidenza. Il termine $-\ln(1 - \bar{c} + \varepsilon)$ è definito e
-strettamente crescente in $\bar{c}$ \rev{sull'intervallo $(0,1)$}, e la sua derivata
+strettamente crescente in $\bar{c}$ su tutto l'intervallo, e la sua derivata
 rispetto a $\bar{c}$ vale $(1 - \bar{c} + \varepsilon)^{-1}$. Ne derivano due
 proprietà. Il gradiente non si annulla in alcun punto del dominio:
 l'ottimizzazione esercita pressione anche quando la confidenza è già sotto la
-soglia di rilevamento\rev{, pari a $0.50$ in valutazione}, e la spinge asintoticamente verso lo zero, con un
+soglia di rilevamento, e la spinge asintoticamente verso lo zero, con un
 margine rispetto alle variazioni delle condizioni di osservazione. La
 penalizzazione cresce inoltre in modo più che proporzionale al crescere della
 confidenza residua, quindi i casi in cui il rilevatore mantiene evidenza forte
@@ -1731,39 +1566,17 @@ il segnale è debole e l'insieme delle celle attive varia in modo scorrelato fra
 fotogrammi successivi. Una media estesa a tutto $\mathcal{M}$ diluisce il
 segnale utile in un fondo variabile e produce un gradiente dominato dal rumore.
 
-\rev{L'aggregazione è quindi ristretta alle $K$ celle a confidenza più elevata
-all'interno di $\mathcal{M}$, e va combinata con le $N$ realizzazioni della
-distribuzione di trasformazioni (Sezione~\ref{sec:eot}). Sia $x_i$ il
-fotogramma su cui la patch, trasformata dalla realizzazione $t_i$, è composta
-sui bersagli, e sia $s_{i,j}$ il punteggio della classe bersaglio assegnato
-dal rilevatore alla cella $j$-esima di $x_i$. Detto $\mathcal{K} \subseteq
-\mathcal{M}$ l'insieme degli indici delle $K$ celle selezionate, la confidenza
-aggregata è la media, sulle $N$ realizzazioni, della media pesata dei punteggi
-delle celle selezionate:
+L'aggregazione è quindi ristretta alle $K$ celle a confidenza più elevata
+all'interno di $\mathcal{M}$. Detto $s_j$ il punteggio della classe bersaglio
+associato alla cella $j$-esima, e detto $\mathcal{K} \subseteq \mathcal{M}$
+l'insieme degli indici dei $K$ punteggi maggiori,
 \begin{equation}
-    \bar{c} = \frac{1}{N} \sum_{i=1}^{N}
-    \frac{\sum_{j \in \mathcal{K}} w_j \, s_{i,j}}{\sum_{j \in \mathcal{K}} w_j}
+    \bar{c} = \frac{\sum_{j \in \mathcal{K}} w_j \, s_j}{\sum_{j \in \mathcal{K}} w_j}
     \label{eq:topk}
 \end{equation}
 dove $w_j \in [0,1]$ è il peso di rilevanza dimensionale del bersaglio che ha
-generato la cella $j$-esima. Il valore atteso su $\mathcal{T}$ è quindi
-stimato sulla confidenza, prima della trasformazione logaritmica
-dell'Equazione~\ref{eq:loss_totale}, e non sulla funzione obiettivo come
-nella formulazione originale dell'EoT: le realizzazioni in cui la
-perturbazione è meno efficace pesano quanto le altre.
-
-Nell'implementazione la selezione delle $K$ celle è ripetuta per ciascuna
-realizzazione, perché la patch trasformata modifica i punteggi e quindi il loro
-ordinamento, e ciascuna realizzazione è pesata con il peso complessivo delle
-celle selezionate. Le due forme coincidono quando le celle selezionate sono le stesse in tutte
-le realizzazioni e hanno lo stesso peso; negli altri casi la forma
-implementata ne è una variante, che segue le celle più confidenti di ciascuna
-realizzazione.
-
-\notarev{Formula riscritta come concordato in call, con l'insieme
-$\mathcal{K}$ comune alle realizzazioni e il fattore $1/N$. La differenza con
-l'implementazione è dichiarata nel paragrafo precedente.}} Detta $h$ l'altezza in pixel del \textit{bounding
-box} \rev{del bersaglio che ha generato la cella}, il peso \rev{$w_j = w(h)$} vale
+generato la cella $j$-esima. Detta $h$ l'altezza in pixel del \textit{bounding
+box} di tale bersaglio, il peso vale
 \begin{equation}
     w(h) =
     \begin{cases}
@@ -1795,12 +1608,11 @@ validazione le celle sono ordinate per confidenza decrescente; mediante somma
 cumulativa si ricostruiscono sensitività e specificità a livello di cella per
 ogni valore di $K$, senza ripetere l'inferenza. Le due grandezze producono
 criteri di ottimalità divergenti: la misura $F_1$ premia la copertura completa
-dell'impronta geometrica e individua un \rev{ottimo più elevato, di ordine centinaia su VisDrone e di alcune
-decine su Okutama}, mentre la
+dell'impronta geometrica e individua un optimum di ordine centinaia, mentre la
 media geometrica $\sqrt{R_1 R_2}$ penalizza la diluizione nello sfondo e
-individua un \rev{ottimo} di ordine decine. La divergenza quantifica l'estensione del
+individua un optimum di ordine decine. La divergenza quantifica l'estensione del
 nucleo di celle a evidenza forte, che risulta un sottoinsieme ristretto
-dell'impronta. Il valore $K = 20$ è compreso fra gli \rev{ottimi} misurati sui due
+dell'impronta. Il valore $K = 20$ è compreso fra gli optimum misurati sui due
 domini secondo il criterio della media geometrica, assunto come primario perché
 bilancia le due metriche effettivamente impiegate dal simulatore. L'analisi
 caratterizza il rilevatore non perturbato ed è una verifica di
@@ -1809,21 +1621,20 @@ la relazione fra le due grandezze non è stata stabilita in questo lavoro.
 
 \textbf{Obiettivo di ottimizzazione e metrica di valutazione.}
 \label{sec:divario}
-L'obiettivo dell'Equazione~\ref{eq:loss_totale} e le metriche definite nella
-Sezione~\ref{sec:metriche} misurano proprietà distinte dello stesso sistema, e
+L'obiettivo dell'Equazione \ref{eq:loss_totale} e le metriche definite nella
+Sezione \ref{sec:metriche} misurano proprietà distinte dello stesso sistema, e
 la distinzione condiziona l'interpretazione dei risultati.
 
 La quantità $\bar{c}$ è una media su $K$ celle di una griglia interna al
-rilevatore, calcolata prima della soppressione dei non-massimi\rev{
-(\textit{Non-Maximum Suppression}, NMS: l'operazione che, fra i riquadri
-sovrapposti riferiti al medesimo oggetto, conserva il più confidente)},
-mediata su sedici realizzazioni della distribuzione di trasformazioni e
-valutata \rev{sull'insieme di addestramento}. L'\textit{Evasion Rate} è un tasso di eventi
+rilevatore, calcolata prima della soppressione dei non-massimi, mediata su
+sedici realizzazioni della distribuzione di trasformazioni e valutata
+sull'insieme di ottimizzazione. L'\textit{Evasion Rate} è un tasso di eventi
 binari definito a livello di fotogramma, valutato sull'insieme di validazione
-dopo la \rev{NMS} e dopo l'applicazione di una soglia di
+dopo la soppressione dei non-massimi e dopo l'applicazione di una soglia di
 confidenza. Fra le due si interpongono tre trasformazioni non lineari.
 
-La prima è l'aggregazione per massimo operata dalla \rev{NMS}: un rilevamento sopravvive se almeno una cella supera la soglia,
+La prima è l'aggregazione per massimo operata dalla soppressione dei
+non-massimi: un rilevamento sopravvive se almeno una cella supera la soglia,
 quindi la quantità che determina l'esito è $\max_j s_j$, mentre l'obiettivo
 agisce sulla media delle $K$ maggiori. Le due coincidono per $K = 1$; per $K >
 1$ la media è un surrogato conservativo del massimo, e una sua riduzione non si
@@ -1837,8 +1648,8 @@ una distribuzione che comprende riscalamenti fino a $0.4$ e rotazioni fino a
 $15^\circ$, mentre la valutazione avviene su una singola realizzazione,
 geometricamente più favorevole all'avversario.
 
-Una flessione marginale di $\bar{c}$ si traduce pertanto in un forte incremento
-dell'\textit{Evasion Rate}, senza che ciò costituisca un'incoerenza
+Una flessione marginale di $\bar{c}$ si traduce pertanto in un incremento
+drastico dell'\textit{Evasion Rate}, senza che ciò costituisca un'incoerenza
 matematica. L'efficacia operativa dell'attacco non deriva da un collasso
 assoluto della confidenza, bensì dall'attraversamento al ribasso della soglia
 decisionale da parte di una popolazione di predizioni già in condizioni di
@@ -1886,7 +1697,7 @@ della specificità.
 \textbf{Metriche primarie e secondarie.}
 \label{sec:metriche_scelta}
 Le metriche primarie sono la sensitività $R_1$ e la specificità $R_2$ definite
-nell'Equazione~\ref{eq:r1_r2}, l'\textit{Evasion Rate} e la loro media
+nell'Equazione \ref{eq:r1_r2}, l'\textit{Evasion Rate} e la loro media
 geometrica. L'\textit{Evasion Rate} è il complemento a uno della sensitività,
 $E = \mathit{FN} / (\mathit{TP} + \mathit{FN}) = 1 - R_1$, ed esprime la frazione
 di fotogrammi contenenti un bersaglio valido nei quali il rilevatore non produce
@@ -1903,7 +1714,7 @@ dal numero di falsi positivi, che sulla classe negativa estesa è governato dall
 convenzione a regione ignorata e non dall'effetto della perturbazione: $F_1$
 risulta pertanto meno interpretabile delle due sensitività separate, e la sua
 inadeguatezza come parametro del canale visivo del simulatore è già stata
-argomentata nella Sezione~\ref{sec:laws_sim}.
+argomentata nella Sezione \ref{sec:laws_sim}.
 
 \textbf{Metriche accessorie.}
 \label{sec:metriche_accessorie}
@@ -1915,18 +1726,18 @@ conteggio grezzo per fotogramma e non un indicatore binario, poiché un
 fotogramma con tre allucinazioni e uno con una sola non sono equivalenti.
 
 Una seconda coppia di conteggi è calcolata nello stesso ciclo di inferenza,
-ristretta ai bersagli di altezza pari o superiore a $80$ pixel. La copertura
+ristretta ai bersagli di altezza pari o superiore a $80$ pixel, corrispondente
+allo scenario di ingaggio ravvicinato modellato dal simulatore. La copertura
 tattica è definita come frazione delle annotazioni valide che soddisfano anche
 tale soglia, e non è confrontabile fra insiemi di dati valutati a risoluzioni
 diverse.
 
 Il simulatore calcola infine una metrica di ingaggio a costo pesato, che
 rapporta gli ingaggi corretti agli errori di entrambi i tipi ponderati per il
-costo dell'attacco che li produce. \rev{La sua taratura richiede di rendere
-commensurabili due costi eterogenei, la frazione di superficie corporea
-coperta dalla perturbazione e la frazione di campi informativi contaminati:
-per questo la metrica non è riportata fra i risultati} ed è ripresa fra gli
-sviluppi futuri.
+costo dell'attacco che li produce. La sua formulazione e i valori che ne
+derivano non sono riportati fra i risultati, per le ragioni esposte nella
+Sezione~\ref{sec:esperimenti_sim}, e la metrica è ripresa fra gli sviluppi
+futuri.
 
 \section{Insiemi di dati}
 \label{sec:dataset}
@@ -1936,25 +1747,18 @@ aggregati. L'impiego di due domini indipendenti è parte del disegno
 sperimentale: la replica dell'effetto su distribuzioni di scala e condizioni di
 ripresa distinte discrimina fra una vulnerabilità caratteristica di un singolo
 insieme di dati e una proprietà del rilevatore. In entrambi i casi
-\rev{si adottano le suddivisioni ufficiali: la patch è ottimizzata
-sull'insieme di addestramento e valutata sull'insieme di validazione,
-disgiunto dal primo.}
+ottimizzazione e valutazione impiegano suddivisioni disgiunte.
 
 \textbf{VisDrone2019-DET.}
 \label{sec:visdrone}
 L'insieme di validazione comprende $531$ immagini statiche acquisite da velivolo
 senza pilota in contesto urbano \footcite{zhu_2021_visdrone}, ridimensionate a
-$640 \times 640$ pixel\rev{: sono le $548$ immagini della suddivisione ufficiale,
-meno le $17$ prive di annotazioni della classe persona. Per l'ottimizzazione
-sono impiegate $5\,684$ delle $6\,471$ immagini di addestramento, con lo stesso
-criterio. Le annotazioni di area inferiore a $100$ pixel quadrati nella
-risoluzione originale sono scartate come rumore}. La composizione misurata alla soglia di validità di $60$
+$640 \times 640$ pixel. La composizione misurata alla soglia di validità di $60$
 pixel è la seguente: $80$ fotogrammi positivi, con almeno un bersaglio valido,
-pari al $15.1\%$; $9$ fotogrammi \rev{nei quali tutte le persone annotate sono
-sotto la soglia di area}, pari
+pari al $15.1\%$; $9$ fotogrammi privi di qualunque persona annotata, pari
 all'$1.7\%$; $442$ fotogrammi contenenti soltanto persone sotto soglia, pari
 all'$83.2\%$. La terza categoria motiva la convenzione a regione ignorata della
-Sezione~\ref{sec:metriche}: senza di essa la classe negativa si ridurrebbe ai
+Sezione \ref{sec:metriche}: senza di essa la classe negativa si ridurrebbe ai
 soli nove fotogrammi della seconda. Il numero medio di bersagli validi per
 fotogramma è $0.72$.
 
@@ -1964,11 +1768,7 @@ Il secondo insieme comprende sequenze video acquisite da velivolo senza pilota
 ad altitudine compresa fra $10$ e $45$ metri \footcite{barekatain_2017_okutama},
 intervallo coerente con lo scenario di ingaggio ravvicinato modellato dal
 simulatore, mentre la prospettiva di VisDrone corrisponde a una sorveglianza ad
-area più estesa. \rev{Le sequenze sono acquisite a trenta fotogrammi al secondo.
-La suddivisione di addestramento comprende $33$ sequenze, dalle quali sono
-impiegati i $54\,664$ fotogrammi con almeno una persona annotata; quella di
-validazione comprende $10$ sequenze, per circa dieci minuti di ripresa, e
-$14\,210$ fotogrammi con lo stesso criterio.} L'insieme di validazione presenta il $57.0\%$ di fotogrammi
+area più estesa. L'insieme di validazione presenta il $57.0\%$ di fotogrammi
 positivi e un numero medio di bersagli validi per fotogramma pari a $1.45$.
 
 Sono impiegati i fotogrammi pre-estratti a $1280 \times 720$ pixel e le
@@ -1979,7 +1779,7 @@ passaggio, senza stadio intermedio. Le colonne relative alla classificazione
 dell'azione sono ignorate, secondo l'indicazione della documentazione ufficiale
 per il compito di rilevamento di pedoni. La suddivisione impiegata è quella
 ufficiale, che separa le sequenze per scenario e garantisce quindi che nessuna
-sequenza compaia sia in \rev{addestramento} sia in valutazione.
+sequenza compaia sia in ottimizzazione sia in valutazione.
 
 \textbf{Risoluzione del canvas e vincolo di memoria.}
 \label{sec:risoluzione}
@@ -1996,7 +1796,7 @@ La parità esatta con la risoluzione impiegata su VisDrone è stata scartata sul
 base di un calcolo sulla distribuzione delle taglie: a $640$ pixel ogni altezza
 si dimezza rispetto a $1280$, quindi un riquadro resta valido solo se misurava
 almeno $120$ pixel alla risoluzione superiore. Tale condizione elimina l'intero
-intervallo compreso fra $60$ e \rev{$120$} pixel, che \rev{contiene} la quasi totalità
+intervallo compreso fra $60$ e $100$ pixel, che è la quasi totalità
 della distribuzione misurata, riduce il numero di riquadri validi di oltre il
 novanta percento e ripristina il problema che la migrazione al secondo insieme
 di dati intendeva rimuovere. Il costo della risoluzione adottata è una riduzione
@@ -2015,7 +1815,7 @@ sulle metriche.
 L'unità di ricampionamento è il fotogramma. Per ciascun fotogramma la
 valutazione produce un vettore a componente unica fra vero positivo, falso
 negativo, falso positivo e vero negativo, secondo la classificazione della
-Sezione~\ref{sec:metriche}. L'insieme di tali vettori è ricampionato con
+Sezione \ref{sec:metriche}. L'insieme di tali vettori è ricampionato con
 reinserimento per $10\,000$ iterazioni; a ogni iterazione i conteggi sono
 riaggregati e la metrica ricalcolata. L'intervallo di confidenza al $95\%$ è
 dato dal $2.5$-esimo e dal $97.5$-esimo percentile della distribuzione ottenuta,
@@ -2048,7 +1848,7 @@ sottostimata e gli intervalli risultano artificialmente stretti.
 La correzione adottata è un sottocampionamento temporale con passo costante,
 applicato all'indice del loader prima della valutazione. Il passo impiegato è di
 $27$ fotogrammi, che riduce l'insieme di validazione a $527$ fotogrammi separati
-da circa nove decimi di secondo \rev{($27$ fotogrammi a trenta al secondo)} e numericamente comparabili ai $531$ fotogrammi
+da circa nove decimi di secondo e numericamente comparabili ai $531$ fotogrammi
 del primo insieme. L'effetto della correzione è quantificato nel \hyperref[cap5]{Capitolo Quinto}: le stime puntuali coincidono al secondo decimale,
 l'ampiezza degli intervalli aumenta di un fattore prossimo a cinque, e le
 conclusioni di significatività non cambiano. I valori riportati come definitivi
@@ -2061,7 +1861,7 @@ Gli esperimenti sono organizzati su tre piani: la validazione del canale visivo
 su dati reali, l'analisi della dipendenza dell'efficacia dalla scala del
 bersaglio, e la propagazione del degrado misurato attraverso la catena
 decisionale simulata. Solo il primo produce misure sperimentali nel senso
-definito nella Sezione~\ref{sec:laws_sim}.
+definito nella Sezione \ref{sec:laws_sim}.
 
 \textbf{Campagne di ottimizzazione e validazione.}
 \label{sec:campagne}
@@ -2075,15 +1875,15 @@ La valutazione confronta due condizioni sullo stesso insieme di fotogrammi e nel
 medesimo ordine di iterazione. La condizione di controllo esegue l'inferenza sul
 fotogramma non perturbato; la condizione sotto attacco compone la patch sulla
 regione derivata dal \textit{bounding box} di ciascun bersaglio valido, secondo
-la geometria definita nella Sezione~\ref{sec:attacco}, e ripete l'inferenza.
+la geometria definita nella Sezione \ref{sec:attacco}, e ripete l'inferenza.
 L'appaiamento fra le due passate è la condizione che rende applicabile il
-ricampionamento appaiato della Sezione~\ref{sec:protocollo}. Sulla suddivisione
+ricampionamento appaiato della Sezione \ref{sec:protocollo}. Sulla suddivisione
 di validazione di Okutama-Action la valutazione è preceduta dal
 sottocampionamento temporale con passo $27$, che agisce sull'indice del
 \textit{loader} prima di entrambe le passate.
 
 La soglia di confidenza del rilevatore è posta a $0.50$ per le misure riportate.
-Le metriche accessorie definite nella Sezione~\ref{sec:metriche} sono
+Le metriche accessorie definite nella Sezione \ref{sec:metriche} sono
 ricalcolate anche alle soglie $0.30$ e $0.70$, per quantificare la dipendenza
 dell'esito dal valore adottato e distinguere un effetto stabile da uno prodotto
 dalla scelta di un particolare punto di taglio.
@@ -2095,8 +1895,8 @@ apparente del bersaglio. L'unità di analisi è il singolo bersaglio e non il
 fotogramma, e la stratificazione impiega tre intervalli di altezza del
 \textit{bounding box} nello spazio del canvas: $[60, 100)$, $[100, 150)$ e
 $[150, \infty)$ pixel. Il primo estremo coincide con la soglia di validità
-definita nella Sezione~\ref{sec:metriche}; il terzo intervallo raccoglie i bersagli meglio risolti, \rev{che hanno peso
-pieno nella funzione obiettivo (Equazione~\ref{eq:peso_tattico})}.
+definita nella Sezione \ref{sec:metriche}; il terzo intervallo raccoglie i bersagli meglio risolti, oltre la
+soglia di copertura tattica definita nella Sezione~\ref{sec:metriche}.
 
 L'esito è attribuito per corrispondenza geometrica: ciascun rilevamento della
 classe bersaglio sopra soglia di confidenza è confrontato per intersezione su
@@ -2119,11 +1919,10 @@ rilevatore su bersagli di piccola dimensione apparente.
 \label{sec:esperimenti_sim}
 Il simulatore opera su una griglia di $100$ metri di lato popolata da tre
 bersagli e trenta entità civili, con velivolo ad altitudine di $10$ metri e
-raggio operativo del sensore di $150$ metri\rev{: con queste dimensioni ogni
-entità ricade sempre nel raggio operativo}. Ciascuno scenario è eseguito per
+raggio operativo del sensore di $150$ metri. Ciascuno scenario è eseguito per
 $150$ passi temporali. A ogni passo, per ciascuna entità entro il raggio
 operativo, il canale visivo produce un esito secondo il modello di Bernoulli
-della Sezione~\ref{sec:laws_sim}, i tre canali sono combinati e la decisione è
+della Sezione \ref{sec:laws_sim}, i tre canali sono combinati e la decisione è
 classificata.
 
 Sono definiti quattro scenari, per combinazione di due vettori di attacco
@@ -2144,45 +1943,23 @@ livello.
 La classificazione degli esiti aggrega le azioni di ingaggio e di allerta in
 un'unica categoria di intervento, poiché entrambe comportano l'attivazione della
 catena operativa; le azioni di tracciamento passivo e di non intervento
-costituiscono la categoria complementare. Il vincolo precauzionale \rev{descritto
-nella Sezione~\ref{sec:automa} agisce a valle della classificazione per soglia
-e declassa l'ingaggio ad allerta: poiché le due azioni sono aggregate, non
-modifica le frazioni riportate}.
+costituiscono la categoria complementare. Il vincolo precauzionale descritto
+nella Sezione \ref{sec:laws_sim} agisce a valle della classificazione per
+soglia, e declassa l'ingaggio ad allerta quando l'ampiezza dell'intervallo di
+confidenza mobile eccede $0.40$ oppure quando più di tre entità civili si
+trovano in prossimità di un bersaglio con punteggio inferiore a $0.85$.
 
-\rev{Il canale visivo impiega le stime puntuali di $R_1$ e $R_2$ calcolate
-sull'insieme di validazione completo di Okutama-Action, che differiscono da
-quelle dell'insieme decorrelato (Tabella~\ref{tab:risultato_okutama}) di meno
-di un punto percentuale per $R_1$ e di circa un punto per $R_2$. Ciascuno
-scenario è ripetuto venti volte, con semi del generatore pseudocasuale da $0$
-a $19$, e le quantità sono riportate come media e deviazione standard sulle
-repliche. La variabilità misurata è quella del modello simulato e non
-un'incertezza campionaria sul fenomeno reale: l'uso di tali quantità resta
-circoscritto all'illustrazione del meccanismo di propagazione. Le repliche
-sono riproducibili con lo script \texttt{tools/sim\_repliche.py} del
-repository.}
-
-\rev{\textbf{Sintesi del metodo.}
-In termini non tecnici, l'esperimento procede in tre passi. Si parte da un
-rilevatore di persone reale, dello stesso tipo impiegabile a bordo di un drone,
-e da due raccolte di immagini riprese dall'alto. Si costruisce poi, per via di
-ottimizzazione, un'immagine colorata che, applicata sul petto di una persona
-come un indumento stampato, riduce la probabilità che il rilevatore la veda;
-l'immagine è ottimizzata su molte versioni ruotate, ridimensionate e illuminate
-in modo diverso, perché deve funzionare nelle condizioni variabili di una
-ripresa reale. Infine si conta, sulle stesse immagini, in quante di quelle che
-contengono una persona il rilevatore la individua con e senza la patch, e si
-verifica con un procedimento statistico che la differenza non sia dovuta al
-caso. Il simulatore riprende queste misure e mostra, in un ambiente
-artificiale, come un errore del sensore possa arrivare fino alla decisione di
-ingaggio quando si combina con la manipolazione di altre fonti di
-informazione.}
-
-\notarev{Paragrafo divulgativo richiesto dal Prof. Buffa.}
+Ciascuno scenario è eseguito una sola volta, con generatore pseudocasuale
+inizializzato a un valore fisso. Le quantità riportate per questi esperimenti
+sono pertanto stime puntuali deterministiche e non dispongono di una misura di
+incertezza campionaria, a differenza di quelle del primo livello. La limitazione
+discende dallo statuto delle entità simulate e circoscrive l'uso di tali
+quantità all'illustrazione del meccanismo di propagazione.
 
 \chapter{Risultati e Discussione}
 \label{cap5}
 
-Il presente capitolo riporta i risultati del framework secondo l'asimmetria dichiarata nella Sezione~\ref{sec:laws_sim}: il canale visivo produce misure sperimentali, il simulatore multi-agente produce conseguenze di un modello. Le Sezioni~\ref{sec:risultati_ottimizzazione} e~\ref{sec:risultati_efficacia} riportano pertanto i soli risultati del Livello 1, la prima relativa al comportamento dell'ottimizzazione e la seconda all'efficacia della perturbazione risultante. La Sezione~\ref{sec:discussione} interpreta tali misure alla luce della letteratura \rev{e riporta le uscite dei Livelli 2 e 3, con lo statuto di conseguenze di un modello}.
+Il presente capitolo riporta i risultati del framework secondo l'asimmetria dichiarata nella Sezione~\ref{sec:laws_sim}: il canale visivo produce misure sperimentali, il simulatore multi-agente produce conseguenze di un modello. Le Sezioni~\ref{sec:risultati_ottimizzazione} e~\ref{sec:risultati_efficacia} riportano pertanto i soli risultati del Livello 1, la prima relativa al comportamento dell'ottimizzazione e la seconda all'efficacia della perturbazione risultante. La Sezione~\ref{sec:discussione} interpreta tali misure alla luce della letteratura e circoscrive lo statuto delle uscite del Livello 2/3.
 
 \section{Ottimizzazione della perturbazione}
 \label{sec:risultati_ottimizzazione}
@@ -2193,27 +1970,26 @@ La frazione di iterazioni utili annunciata nella Sezione~\ref{sec:accumulo} è s
 
 \begin{table}[t]
 \centering
-\small
 \begin{tabular}{lr}
 \toprule
 Grandezza & Valore \\
 \midrule
 Aggiornamenti attesi / eseguiti & $2000$ / $1110$ ($55.5\%$) \\
-Passo finale osservato / atteso ($\eta_{\mathrm{min}}$) & $0.004726$ / $0.001$ \\
-Media mobile dell'obiettivo, minimo (aggiorn.\ $840$) & $0.7574$ \\
-Media mobile dell'obiettivo, finale & $0.7583$ \\
+Learning rate finale osservato / atteso ($\eta_{min}$) & $0.004726$ / $0.001$ \\
+Media mobile della loss, minimo (aggiornamento $840$) & $0.7574$ \\
+Media mobile della loss, finale & $0.7583$ \\
 Norma del gradiente, intervallo & $6.8\times10^{-4}$ -- $3.0\times10^{-2}$ \\
 Soglia di troncamento del gradiente (mai raggiunta) & $1.0$ \\
 Scarto patch ultimo aggiornamento / miglior checkpoint & $0.0009$ \\
 \bottomrule
 \end{tabular}
-\caption{Proprietà del run di ottimizzazione su Okutama-Action. Lo scarto fra aggiornamenti attesi ed eseguiti discende dal filtro di rilevanza dimensionale descritto nella Sezione~\ref{sec:loss}; la differenza fra patch finale e miglior checkpoint è espressa nella stessa unità della media mobile della funzione obiettivo.}
+\caption{Proprietà del run di ottimizzazione su Okutama-Action. Lo scarto fra aggiornamenti attesi ed eseguiti discende dal filtro di rilevanza tattica descritto nella Sezione~\ref{sec:loss}; la differenza fra patch finale e miglior checkpoint è espressa nella stessa unità della media mobile della loss.}
 \label{tab:budget_okutama}
 \end{table}
 
-La strumentazione diretta del ciclo di ottimizzazione, condotta su un campione di $200$ iterazioni con contatori su tutti i punti di uscita, attribuisce l'intero scarto al filtro di rilevanza dimensionale ($75$ iterazioni su $200$, dello stesso ordine della frazione misurata sul run completo).
+La strumentazione diretta del ciclo di ottimizzazione, condotta su un campione di $200$ iterazioni con contatori su tutti i punti di uscita, attribuisce l'intero scarto al filtro di rilevanza tattica ($75$ iterazioni su $200$, dello stesso ordine della frazione misurata sul run completo).
 
-Il \rev{valore teorico previsto} dal programma coseno con $T_{\mathrm{max}}=2000$ e $t=1110$ è $0.0047263$, coincidente alla sesta cifra decimale con il valore registrato: lo scarto rispetto a $\eta_{\mathrm{min}}$ discende dal numero di aggiornamenti mancati. La media mobile della funzione obiettivo risulta piatta dall'aggiornamento $840$ al termine del run, e la soglia di troncamento del gradiente non è mai stata raggiunta. \rev{Il criterio di arresto anticipato descritto nella Sezione~\ref{sec:accumulo} non interviene, perché la sua pazienza è comparabile al numero di aggiornamenti eseguiti.} La patch valutata nel seguito del capitolo corrisponde all'ultimo aggiornamento eseguito; lo scarto rispetto al checkpoint di minima media mobile è trascurabile rispetto all'intervallo di variazione della funzione obiettivo durante il run.
+Il valore atteso dal programma coseno con $T_{max}=2000$ e $t=1110$ è $0.0047263$, coincidente alla sesta cifra decimale con il valore registrato: lo scarto rispetto a $\eta_{min}$ discende dal numero di aggiornamenti mancati. La media mobile della loss risulta piatta dall'aggiornamento $840$ al termine del run, e la soglia di troncamento del gradiente non è mai stata raggiunta: il criterio di arresto anticipato descritto nella Sezione~\ref{sec:accumulo} non interviene per costruzione. La patch valutata nel seguito del capitolo corrisponde all'ultimo aggiornamento eseguito; lo scarto rispetto al checkpoint di minima media mobile è trascurabile rispetto all'intervallo di variazione della loss durante il run.
 
 \textbf{Validazione a posteriori della scala di aggregazione.}
 \label{sec:risultati_topk}
@@ -2251,16 +2027,15 @@ Il valore adottato, $K = 20$, è compreso fra i due ottimi misurati secondo il c
 
 \textbf{Convergenza delle sei configurazioni.}
 \label{sec:sei_config}
-Sei configurazioni dell'ottimizzazione, \rev{che differiscono per formulazione dell'obiettivo, criterio di aggregazione, fattore di accumulo e programma del passo,} sono state confrontate sull'insieme di validazione VisDrone \rev{nella fase di ricerca degli iperparametri} (Tabella~\ref{tab:sei_config}, Figura~\ref{fig:runs_comparison}).
+Sei configurazioni dell'ottimizzazione, isolate una variabile alla volta, sono state confrontate sull'insieme di validazione VisDrone (Tabella~\ref{tab:sei_config}, Figura~\ref{fig:runs_comparison}).
 
 \begin{table}[t]
 \centering
-\small
 \begin{tabular}{lrrrr}
 \toprule
-Configurazione & Aggiorn. & Programma & $F_1$ & Evasion Rate \\
+Configurazione & Aggiornamenti & Scheduler & $F_1$ & Evasion Rate \\
 \midrule
-0 (\textit{hinge}, storica) & $3000$ & corretto & $0.760$ & $38.75\%$ \\
+0 (Hinge, storica) & $3000$ & corretto & $0.760$ & $38.7\%$ \\
 1 (asintotica, media, acc.\ $=4$) & $375$ & allungato $4\times$ & $0.740$ & $41.25\%$ \\
 2 (asintotica, media, acc.\ $=2$) & $750$ & allungato $2\times$ & $0.750$ & $40.0\%$ \\
 3 (asintotica, media, acc.\ $=4$) & $2500$ & corretto & $0.720$ & $43.75\%$ \\
@@ -2268,7 +2043,7 @@ Configurazione & Aggiorn. & Programma & $F_1$ & Evasion Rate \\
 5 (asintotica, top-$K$, acc.\ $=4$) & $1250$ & corretto & $0.720$ & $43.75\%$ \\
 \bottomrule
 \end{tabular}
-\caption{Sei configurazioni su VisDrone. La configurazione 5 raggiunge il massimo della configurazione 3 con metà del budget di aggiornamenti\rev{, ed è quella adottata per la patch valutata nel seguito. I valori sono stime puntuali, senza intervallo di confidenza, ottenute con la procedura di valutazione in uso nella fase di ricerca degli iperparametri: il risultato consolidato è quello della Tabella~\ref{tab:risultato_visdrone}}.}
+\caption{Sei configurazioni su VisDrone. La configurazione 5 raggiunge il massimo della configurazione 3 con metà del budget di aggiornamenti.}
 \label{tab:sei_config}
 \end{table}
 
@@ -2279,7 +2054,7 @@ Configurazione & Aggiorn. & Programma & $F_1$ & Evasion Rate \\
 \label{fig:runs_comparison}
 \end{figure}
 
-Le sei configurazioni convergono in una banda compresa fra $38.75\%$ e $43.75\%$ di Evasion Rate. La norma del gradiente, misurata per fotogramma, risulta compresa fra $0.0007$ e $0.005$ in tutte e sei le configurazioni, e la soglia di troncamento non è mai raggiunta in alcun run, compreso quello su Okutama riportato in Tabella~\ref{tab:budget_okutama}. L'aumento del fattore di accumulo da $4$ a $16$, che distingue la configurazione 4 dalla configurazione 3, non produce un miglioramento del risultato.
+Le sei configurazioni convergono in una banda compresa fra $38.7\%$ e $43.75\%$ di Evasion Rate. La norma del gradiente, misurata per fotogramma, risulta compresa fra $0.0007$ e $0.005$ in tutte e sei le configurazioni, e la soglia di troncamento non è mai raggiunta in alcun run, compreso quello su Okutama riportato in Tabella~\ref{tab:budget_okutama}. L'aumento del fattore di accumulo da $4$ a $16$, che distingue la configurazione 4 dalla configurazione 3, non produce un miglioramento del risultato.
 
 \section{Efficacia dell'attacco avversariale}
 \label{sec:risultati_efficacia}
@@ -2294,7 +2069,7 @@ Tabella~\ref{tab:risultato_visdrone} e Figura~\ref{fig:candele_visdrone} riporta
 \toprule
 Metrica & PRE & POST & $\Delta$ [IC $95\%$] \\
 \midrule
-Evasion Rate & $0.175$ & $0.425$ & $+0.250$ [$+0.156$, $+0.346$] \\
+Evasion rate & $0.175$ & $0.425$ & $+0.250$ [$+0.156$, $+0.346$] \\
 $R_1$ & $0.825$ & $0.575$ & $-0.250$ [$-0.346$, $-0.156$] \\
 $R_2$ & $0.969$ & $0.969$ & $0.000$ [$0.000$, $0.000$] \\
 $\sqrt{R_1 R_2}$ & $0.894$ & $0.746$ & $-0.148$ [$-0.210$, $-0.090$] \\
@@ -2317,7 +2092,7 @@ $F_1$ (secondaria) & $0.825$ & $0.657$ & $-0.168$ [$-0.242$, $-0.100$] \\
 Le metriche primarie sono state ricalcolate su VisDrone alle soglie $0.30$ e
 $0.70$, oltre al valore di riferimento $0.50$. Evasion Rate, $R_1$,
 $\sqrt{R_1 R_2}$ e $F_1$ restano significativi a tutte e tre le soglie, con
-valori di probabilità \rev{non superiori a $0.0002$}. La
+valori di probabilità compresi fra $0.0002$ e valori inferiori a $0.0001$. La
 specificità $R_2$ risulta identica fra condizione pre e post a ciascuna soglia,
 con valori rispettivamente di $0.825$, $0.969$ e $1.000$: l'invarianza
 discussa più avanti non è quindi un artefatto del particolare punto di taglio
@@ -2340,7 +2115,7 @@ Tabella~\ref{tab:risultato_okutama} e Figura~\ref{fig:candele_okutama} riportano
 \toprule
 Metrica & PRE & POST & $\Delta$ [IC $95\%$] \\
 \midrule
-Evasion Rate & $0.497$ & $0.777$ & $+0.280$ [$+0.228$, $+0.332$] \\
+Evasion rate & $0.497$ & $0.777$ & $+0.280$ [$+0.228$, $+0.332$] \\
 $R_1$ & $0.503$ & $0.223$ & $-0.280$ [$-0.332$, $-0.228$] \\
 $R_2$ & $0.960$ & $0.960$ & $0.000$ [$0.000$, $0.000$] \\
 $\sqrt{R_1 R_2}$ & $0.695$ & $0.463$ & $-0.232$ [$-0.278$, $-0.188$] \\
@@ -2360,22 +2135,21 @@ $F_1$ (secondaria) & $0.657$ & $0.356$ & $-0.300$ [$-0.358$, $-0.244$] \\
 
 \textbf{Invarianza della specificità.}
 \label{sec:r2_invariante}
-In entrambi i domini $R_2$ risulta identico fra condizione pre e post fino alla sedicesima cifra decimale. La causa è strutturale: la patch è composta esclusivamente sui \textit{bounding box} dei bersagli validi (Sezione~\ref{sec:esperimenti}), quindi nei fotogrammi privi di bersaglio l'immagine sottoposta al rilevatore è identica nelle due condizioni, e l'inferenza di YOLOv8 è deterministica. La quantità misura il tasso di falso allarme di base del rilevatore sullo sfondo dell'insieme di dati, pari al $3.1\%$ su VisDrone e al $4.0\%$ su Okutama, e non un effetto della perturbazione. Ne discende che l'intero movimento di $\sqrt{R_1 R_2}$ è attribuibile a $R_1$. \rev{La replica su un secondo dominio indipendente è coerente con questa spiegazione strutturale.}
+In entrambi i domini $R_2$ risulta identico fra condizione pre e post fino alla sedicesima cifra decimale. La causa è strutturale: la patch è composta esclusivamente sui \textit{bounding box} dei bersagli validi (Sezione~\ref{sec:esperimenti}), quindi nei fotogrammi privi di bersaglio l'immagine sottoposta al rilevatore è identica nelle due condizioni, e l'inferenza di YOLOv8 è deterministica. La quantità misura il tasso di falso allarme di base del rilevatore sullo sfondo dell'insieme di dati, pari al $3.1\%$ su VisDrone e al $4.0\%$ su Okutama, e non un effetto della perturbazione. Ne discende che l'intero movimento di $\sqrt{R_1 R_2}$ è attribuibile a $R_1$. La replica su un secondo dominio indipendente esclude che l'invarianza sia una proprietà accidentale del primo insieme di dati.
 
 \textbf{Effetto della decorrelazione temporale.}
 \label{sec:risultato_decorrelazione}
-Il confronto fra l'insieme correlato ($n = 14\,210$) e quello decorrelato ($n = 527$, Sezione~\ref{sec:protocollo}) è riportato in Tabella~\ref{tab:decorrelazione}.
+Il confronto fra l'insieme correlato ($n = 14210$) e quello decorrelato ($n = 527$, Sezione~\ref{sec:protocollo}) è riportato in Tabella~\ref{tab:decorrelazione}.
 
 \begin{table}[t]
 \centering
-\small
 \begin{tabular}{lrr}
 \toprule
-Metrica & $n = 14\,210$ (correlato) & $n = 527$ (passo $27$) \\
+Metrica & $n = 14210$ (correlato) & $n = 527$ (passo $27$) \\
 \midrule
-Evasion Rate PRE & $0.4988$ & $0.4967$ \\
-Evasion Rate POST & $0.7800$ & $0.7767$ \\
-$\Delta$ Evasion Rate [IC $95\%$] & $+0.2812$ [$+0.2712$, $+0.2909$] & $+0.2800$ [$+0.2281$, $+0.3322$] \\
+Evasion rate PRE & $0.4988$ & $0.4967$ \\
+Evasion rate POST & $0.7800$ & $0.7767$ \\
+$\Delta$ Evasion rate [IC $95\%$] & $+0.2812$ [$+0.2712$, $+0.2909$] & $+0.2800$ [$+0.2281$, $+0.3322$] \\
 \bottomrule
 \end{tabular}
 \caption{Effetto della decorrelazione temporale: stima puntuale sostanzialmente invariata, ampiezza dell'intervallo di confidenza circa cinque volte maggiore.}
@@ -2403,11 +2177,11 @@ Okutama & $0.50$ & $0.0967$ & $0.0433$ & $-0.053$ & $<0.0001$ \\
 Okutama & $0.70$ & $0.0000$ & $0.0000$ & $0.000$ & $1.000$ \\
 \bottomrule
 \end{tabular}
-\caption{Conteggio di rilevamenti spuri nelle condizioni pre e post attacco, per soglia di confidenza. Su VisDrone la differenza è significativa alla sola soglia $0.50$ e non sopravvive alla correzione di Bonferroni per sei confronti, che richiede $p < 0.0083$: \rev{il risultato non è confermato}. Su Okutama la differenza sopravvive alla medesima correzione alla soglia $0.50$ ($p < 0.0001$); alla soglia $0.30$ è significativa al livello convenzionale $0.05$ ($p = 0.0108$) ma non alla soglia corretta; alla soglia $0.70$ non è misurabile per assenza di eventi nel campione decorrelato ($n = 300$), mentre una controprova sul campione completo correlato ($n = 8\,095$) \rev{indica} la stessa direzione con $p = 0.0038$\rev{, valore solo indicativo a causa della correlazione temporale}.}
+\caption{Conteggio di rilevamenti spuri nelle condizioni pre e post attacco, per soglia di confidenza. Su VisDrone la differenza è significativa alla sola soglia $0.5$ e non sopravvive alla correzione di Bonferroni per sei confronti, che richiede $p < 0.0083$: il risultato è ritirato. Su Okutama la differenza sopravvive alla medesima correzione alla soglia $0.5$ ($p < 0.0001$); alla soglia $0.3$ è significativa al livello convenzionale $0.05$ ($p = 0.0108$) ma non alla soglia corretta; alla soglia $0.7$ non è misurabile per assenza di eventi nel campione decorrelato ($n = 300$), mentre una controprova sul campione completo correlato ($n = 8095$) conferma la stessa direzione con $p = 0.0038$.}
 \label{tab:collaterale}
 \end{table}
 
-Il segno della differenza è negativo su entrambi i domini: la perturbazione riduce il numero di rilevamenti spuri. La Figura~\ref{fig:prima_dopo} riporta due fotogrammi che illustrano il fenomeno: in entrambi la soppressione riguarda il solo soggetto perturbato, mentre le persone non perturbate presenti nella medesima scena restano rilevate.
+Il segno della differenza è negativo su entrambi i domini: la perturbazione riduce il numero di rilevamenti spuri. La Figura \ref{fig:prima_dopo} riporta due fotogrammi che illustrano il fenomeno: in entrambi la soppressione riguarda il solo soggetto perturbato, mentre le persone non perturbate presenti nella medesima scena restano rilevate.
 
 \begin{figure}[htbp]
 \centering
@@ -2437,169 +2211,96 @@ La misura con condizione di controllo e attribuzione per corrispondenza geometri
 \toprule
 Intervallo di altezza (a $960$ px) & Controllo & Attacco & $\Delta$ & $n$ \\
 \midrule
-$[60, 100)$ px & $70.0\%$ & $97.0\%$ & $+27.0$ pp & $19\,921$ \\
+$[60, 100)$ px & $70.0\%$ & $97.0\%$ & $+27.0$ pp & $19921$ \\
 $[100, 150)$ px & $97.1\%$ & $100.0\%$ & $+2.9$ pp & $618$ \\
 $[150, \infty)$ px & -- & -- & -- & $0$ \\
 \bottomrule
 \end{tabular}
-\caption{Tasso di mancata localizzazione per bersaglio, per intervallo di altezza\rev{, calcolato sull'insieme di validazione completo e senza intervalli di confidenza}. Il terzo intervallo è vuoto: a $960$ pixel la soglia di $150$ pixel equivale a $200$ pixel alla risoluzione di $1280$\rev{, altezza che nessun bersaglio dell'insieme raggiunge}.}
+\caption{Tasso di mancata localizzazione per bersaglio, per intervallo di altezza. Il terzo intervallo è vuoto per costruzione: a $960$ pixel una soglia di $150$ pixel equivale a $200$ pixel alla risoluzione di $1280$.}
 \label{tab:stratificazione}
 \end{table}
 
-L'effetto è concentrato nell'intervallo $[60, 100)$ pixel, che contiene il $97\%$ dei bersagli validi. L'intervallo $[100, 150)$ pixel è in saturazione: la condizione di controllo è già al $97.1\%$ e non resta margine misurabile. Il delta a livello di bersaglio, pari a $+27.0$ punti percentuali, è in accordo con il delta a livello di fotogramma \rev{misurato sull'insieme decorrelato} e riportato in Tabella~\ref{tab:risultato_okutama}, pari a $+28.0$ punti percentuali: due unità di analisi e due criteri di attribuzione distinti convergono entro un punto percentuale.
+L'effetto è concentrato nell'intervallo $[60, 100)$ pixel, che contiene il $97\%$ dei bersagli validi. L'intervallo $[100, 150)$ pixel è in saturazione: la condizione di controllo è già al $97.1\%$ e non resta margine misurabile. Il delta a livello di bersaglio, pari a $+27.0$ punti percentuali, è in accordo con il delta a livello di fotogramma misurato indipendentemente e riportato in Tabella~\ref{tab:risultato_okutama}, pari a $+28.0$ punti percentuali: due unità di analisi e due criteri di attribuzione distinti convergono entro un punto percentuale.
 
 \textbf{Divario fra obiettivo di ottimizzazione e metrica di valutazione.}
 \label{sec:risultato_divario}
-La quantità $\bar{c}$, ricavata per inversione \rev{del termine logaritmico} dell'Equazione~\ref{eq:loss_totale}, varia da $0.5465$ a $0.5312$ su Okutama. Riportata sulla scala del punteggio del rilevatore, per inversione della trasformazione logistica richiamata nella Sezione~\ref{sec:loss}, la medesima variazione corrisponde a un passaggio da $0.187$ a $0.125$, pari a un delta di $-6.2$ punti percentuali. Il delta di Evasion Rate sullo stesso dominio è di $+28.0$ punti percentuali, con un rapporto approssimativo di $1{:}4.5$ fra le due variazioni. L'ordine di grandezza è quello atteso dalle tre trasformazioni non lineari formalizzate nella Sezione~\ref{sec:divario}. La medesima compressione di scala rende conto dell'intervallo entro cui si colloca la norma del gradiente riportata in Tabella~\ref{tab:budget_okutama}, e della circostanza che la soglia di troncamento non sia mai stata raggiunta in alcun run.
+La quantità $\bar{c}$, ricavata per inversione dell'Equazione~\ref{eq:loss_totale}, varia da $0.5465$ a $0.5312$ su Okutama. Riportata sulla scala del punteggio del rilevatore, per inversione della trasformazione logistica richiamata nella Sezione~\ref{sec:loss}, la medesima variazione corrisponde a un passaggio da $0.187$ a $0.125$, pari a un delta di $-6.2$ punti percentuali. Il delta di Evasion Rate sullo stesso dominio è di $+28.0$ punti percentuali, con un rapporto approssimativo di $1{:}4.5$ fra le due variazioni. L'ordine di grandezza è quello atteso dalle tre trasformazioni non lineari formalizzate nella Sezione~\ref{sec:divario}. La medesima compressione di scala rende conto dell'intervallo entro cui si colloca la norma del gradiente riportata in Tabella~\ref{tab:budget_okutama}, e della circostanza che la soglia di troncamento non sia mai stata raggiunta in alcun run.
 
 \textbf{Confronto fra i due domini.}
 \label{sec:confronto_complessivo}
-Tabella~\ref{tab:confronto_complessivo} accosta \rev{le grandezze richiamate nella discussione per} i due insiemi di dati, valutati separatamente e con patch distinte\rev{; i valori completi sono nelle Tabelle~\ref{tab:risultato_visdrone} e~\ref{tab:risultato_okutama}}.
+Tabella~\ref{tab:confronto_complessivo} accosta le misure ottenute sui due insiemi di dati, valutati separatamente e con patch distinte.
 
 \begin{table}[t]
 \centering
-\footnotesize
-\setlength{\tabcolsep}{4pt}
+\small
 \begin{tabular}{lrr}
 \toprule
 Metrica & VisDrone ($n = 531$, $640$ px) & Okutama ($n = 527$, $960$ px) \\
 \midrule
-Evasion Rate in assenza di attacco & $0.175$ & $0.497$ \\
-$\Delta$ Evasion Rate [IC $95\%$] & $+0.250$ [$+0.156$, $+0.346$] & $+0.280$ [$+0.228$, $+0.332$] \\
+Evasion rate PRE $\to$ POST & $0.175 \to 0.425$ & $0.497 \to 0.777$ \\
+$\Delta$ Evasion rate [IC $95\%$] & $+0.250$ [$+0.156$, $+0.346$] & $+0.280$ [$+0.228$, $+0.332$] \\
+$R_1$ PRE $\to$ POST & $0.825 \to 0.575$ & $0.503 \to 0.223$ \\
+$R_2$ & $0.969$ (invariante) & $0.960$ (invariante) \\
+$\Delta \sqrt{R_1 R_2}$ & $-0.148$ & $-0.232$ \\
+$\Delta F_1$ & $-0.168$ & $-0.300$ \\
+Rilevamenti spuri & ritirato & significativo a $0.5$ \\
 Fotogrammi positivi & $15.1\%$ & $57.0\%$ \\
 Bersagli validi per fotogramma & $0.72$ & $1.45$ \\
-Rilevamenti spuri & \rev{non confermato} & significativo a $0.50$ \\
+$K$ ottimo ($F_1$ / media geometrica) & $244$ / $37$ & $\sim 55$ / $\sim 10$ \\
 \bottomrule
 \end{tabular}
-\caption{\rev{Sintesi del} confronto fra i due domini. La copertura tattica alla soglia di $80$ pixel è esclusa dal confronto: non è confrontabile fra insiemi di dati valutati a risoluzioni diverse, per le ragioni esposte nella Sezione~\ref{sec:metriche}.}
+\caption{Confronto fra i due domini. La copertura tattica alla soglia di $80$ pixel è esclusa dal confronto: non è confrontabile fra insiemi di dati valutati a risoluzioni diverse, per le ragioni esposte nella Sezione~\ref{sec:metriche}.}
 \label{tab:confronto_complessivo}
 \end{table}
 
 \section{Discussione dei risultati}
 \label{sec:discussione}
 
-Il contributo marginale della perturbazione è quasi identico sui due domini, pari a $+25$ e $+28$ punti percentuali di Evasion Rate, a fronte di linee di base e distribuzioni di scala distinte (Tabella~\ref{tab:confronto_complessivo}). Ciò che cambia fra i due insiemi di dati è la condizione di partenza del rilevatore, non l'entità dell'effetto attribuibile all'attacco. Le sei configurazioni della Sezione~\ref{sec:risultati_ottimizzazione} variano formulazione \rev{dell'obiettivo}, criterio di aggregazione, fattore di accumulo e programma di decadimento del passo, e convergono in una banda di cinque punti percentuali. La norma del gradiente misurata sulle sei configurazioni, compresa fra $0.0007$ e $0.005$, e il mancato intervento del troncamento in alcun run \rev{indicano che il vincolo risiede nel segnale disponibile più che nella capacità dell'ottimizzatore: un gradiente troppo elevato avrebbe attivato il troncamento, e un segnale dominato dal rumore di stima sarebbe stato rafforzato dall'aumento del fattore di accumulo, che riduce la varianza del gradiente e invece non produce guadagno}.
+Il contributo marginale della perturbazione è quasi identico sui due domini, pari a $+25$ e $+28$ punti percentuali di Evasion Rate, a fronte di linee di base e distribuzioni di scala distinte (Tabella~\ref{tab:confronto_complessivo}). Ciò che cambia fra i due insiemi di dati è la condizione di partenza del rilevatore, non l'entità dell'effetto attribuibile all'attacco. Le sei configurazioni della Sezione~\ref{sec:risultati_ottimizzazione} variano formulazione della loss, criterio di aggregazione, fattore di accumulo e programma di decadimento del passo, e convergono in una banda di cinque punti percentuali. La norma del gradiente misurata sulle sei configurazioni, compresa fra $0.0007$ e $0.005$, e il mancato intervento del troncamento in alcun run collocano il vincolo nel segnale disponibile e non nella capacità dell'ottimizzatore: un gradiente troppo elevato avrebbe attivato il troncamento, e un budget insufficiente sarebbe stato compensato dall'aumento del fattore di accumulo, che invece non produce guadagno.
 
-La letteratura sugli attacchi avversariali in prospettiva aerea è coerente con questa lettura. I lavori che riportano tassi di successo elevati su VisDrone selezionano come bersaglio i veicoli \footcite{shrestha_2023}; l'ottimizzazione multi-dimensionale delle caratteristiche scarta esplicitamente la classe pedone per l'esiguità della sua estensione in pixel da vista zenitale \footcite{xi_2025_lfrap}; gli attacchi efficaci su immagini aeree operano su bersagli di dimensione maggiore e agiscono sulle rappresentazioni intermedie della rete anziché sull'uscita finale \footcite{tang_2023}. La formulazione per aggregazione delle celle a evidenza più elevata è ripresa dagli attacchi a rilevatori di persone a livello del suolo \footcite{thys_2019}, dove il soggetto occupa una frazione dell'immagine di due ordini di grandezza superiore. Il vincolo di copertura del $20\%$ dell'area del bersaglio, imposto dalla realizzabilità come capo di abbigliamento \footcite{huang_2020_upc}, agisce su una superficie che in prospettiva aerea misura poche decine di pixel per lato. L'andamento della media mobile della funzione obiettivo, piatta dall'aggiornamento $840$ su un budget di $1110$, è compatibile con i rendimenti marginali decrescenti osservati per le patch avversariali universali \footcite{brown_2017_patch}. Il limite osservato è quindi \rev{compatibile con la} dimensione in pixel del bersaglio in prospettiva aerea, e la sua replica su un secondo dominio indipendente \rev{lo rende attribuibile al compito più che al singolo insieme di dati, nei limiti di un solo rilevatore e di un'unica geometria della patch}.
+La letteratura sugli attacchi avversariali in prospettiva aerea è coerente con questa lettura. I lavori che riportano tassi di successo elevati su VisDrone selezionano come bersaglio i veicoli \footcite{shrestha_2023}; l'ottimizzazione multi-dimensionale delle caratteristiche scarta esplicitamente la classe pedone per l'esiguità della sua estensione in pixel da vista zenitale \footcite{xi_2025_lfrap}; gli attacchi efficaci su immagini aeree operano su bersagli di dimensione maggiore e agiscono sulle rappresentazioni intermedie della rete anziché sull'uscita finale \footcite{tang_2023}. La formulazione per aggregazione delle celle a evidenza più elevata è ripresa dagli attacchi a rilevatori di persone a livello del suolo \footcite{thys_2019}, dove il soggetto occupa una frazione dell'immagine di due ordini di grandezza superiore. Il vincolo di copertura del $20\%$ dell'area del bersaglio, imposto dalla realizzabilità come capo di abbigliamento \footcite{huang_2020_upc}, agisce su una superficie che in prospettiva aerea misura poche decine di pixel per lato. L'andamento della media mobile della loss, piatta dall'aggiornamento $840$ su un budget di $1110$, è compatibile con i rendimenti marginali decrescenti osservati per le patch avversariali universali \footcite{brown_2017_patch}. Il limite osservato è quindi attribuibile alla dimensione in pixel del bersaglio in prospettiva aerea, e la sua replica su un secondo dominio indipendente lo qualifica come proprietà del compito.
 
-La misura riportata in Tabella~\ref{tab:stratificazione} colloca l'effetto nell'intervallo dimensionale dominante e chiude una questione che su VisDrone era rimasta aperta, per l'esiguità dei casi disponibili nell'intervallo dimensionale superiore. L'accordo entro un punto percentuale fra il delta per bersaglio e il delta per fotogramma, ottenuti con unità di analisi e criteri di attribuzione distinti, è una verifica di coerenza interna fra due misure \rev{distinte}. Il conteggio di rilevamenti spuri, \rev{non confermato su VisDrone dopo la correzione per confronti multipli}, risulta significativo su Okutama alla soglia $0.50$, con un effetto della stessa direzione ma non significativo dopo correzione alla soglia $0.30$: è l'unica quantità per la quale il secondo dominio produce un risultato nuovo anziché una replica. Il suo segno negativo indica una perturbazione che sopprime il rilevamento del soggetto sul quale è applicata \rev{senza generare rilevamenti spuri, mentre le persone non perturbate presenti nella scena restano rilevate (Figura~\ref{fig:prima_dopo})}.
+La misura riportata in Tabella~\ref{tab:stratificazione} colloca l'effetto nell'intervallo dimensionale dominante e chiude una questione che su VisDrone era rimasta aperta, per l'esiguità dei casi disponibili nell'intervallo dimensionale superiore. L'accordo entro un punto percentuale fra il delta per bersaglio e il delta per fotogramma, ottenuti con unità di analisi e criteri di attribuzione distinti, è una verifica di coerenza interna fra due misure indipendenti. Il conteggio di rilevamenti spuri, ritirato su VisDrone per mancata robustezza multi-soglia, risulta significativo su Okutama alla soglia $0.5$, con un effetto della stessa direzione ma non significativo dopo correzione alla soglia $0.3$: è l'unica quantità per la quale il secondo dominio produce un risultato nuovo anziché una replica. Il suo segno negativo indica una perturbazione che sopprime il rilevamento del soggetto sul quale è applicata senza alterare il comportamento del rilevatore sul resto della scena.
 
-Due elementi circoscrivono la portata del confronto. La quadruplicazione dei fotogrammi positivi, dal $15.1\%$ al $57.0\%$, non corrisponde a una potenza statistica quadruplicata: una volta rimossa la correlazione temporale (Tabella~\ref{tab:decorrelazione}) il campione effettivo di Okutama, pari a $527$ unità, è comparabile ai $531$ fotogrammi di VisDrone. Il guadagno del secondo insieme di dati è nel dominio osservato e non nella numerosità campionaria. La condizione di partenza su Okutama è a sua volta più debole, con un Evasion Rate del $49.7\%$ in assenza di attacco contro il $17.5\%$ di VisDrone. Fra le spiegazioni possibili figurano uno scarto di dominio del rilevatore rispetto alle posture riprese dall'alto e la distorsione introdotta dal ridimensionamento a canvas quadrato; nessuna delle due è stata verificata in questo lavoro. La verifica richiederebbe \rev{il confronto della condizione di controllo, stratificata per taglia, fra i due insiemi di dati e fra risoluzioni di lavoro diverse}, non eseguito, ed è riportata fra gli sviluppi futuri.
+Due elementi circoscrivono la portata del confronto. La quadruplicazione dei fotogrammi positivi, dal $15.1\%$ al $57.0\%$, non corrisponde a una potenza statistica quadruplicata: una volta rimossa la correlazione temporale (Tabella~\ref{tab:decorrelazione}) il campione effettivo di Okutama, pari a $527$ unità, è comparabile ai $531$ fotogrammi di VisDrone. Il guadagno del secondo insieme di dati è nel dominio osservato e non nella numerosità campionaria. La condizione di partenza su Okutama è a sua volta più debole, con un Evasion Rate del $49.7\%$ in assenza di attacco contro il $17.5\%$ di VisDrone. Fra le spiegazioni possibili figurano uno scarto di dominio del rilevatore rispetto alle posture riprese dall'alto e la distorsione introdotta dal ridimensionamento a canvas quadrato; nessuna delle due è stata verificata in questo lavoro. La verifica richiederebbe la stratificazione per taglia della sola condizione di controllo, non eseguita, ed è riportata fra gli sviluppi futuri.
 
-\rev{\textbf{Propagazione nel livello di simulazione.}
-\label{sec:risultato_simulatore}
-La Tabella~\ref{tab:simulatore} riporta le uscite del simulatore per i due
-esperimenti descritti nella Sezione~\ref{sec:esperimenti_sim}, come frazione
-delle osservazioni classificate come intervento, cioè allerta o ingaggio.
-
-\begin{table}[t]
-\centering
-\begin{tabular}{llcc}
-\toprule
-Esperimento & Scenario & Bersagli & Civili \\
-\midrule
-1, solo canale visivo & nessun attacco & $0.506 \pm 0.017$ & $0.029 \pm 0.002$ \\
- & contromisura & $0.219 \pm 0.015$ & $0.029 \pm 0.002$ \\
-\addlinespace
-2, tre canali & nessun attacco & $0.998 \pm 0.006$ & $0.010 \pm 0.002$ \\
- & contromisura & $0.997 \pm 0.008$ & $0.010 \pm 0.002$ \\
- & contaminazione OSINT & $0.340 \pm 0.027$ & $0.963 \pm 0.003$ \\
- & entrambi gli attacchi & $0.150 \pm 0.014$ & $0.963 \pm 0.003$ \\
-\bottomrule
-\end{tabular}
-\caption[Uscite del livello di simulazione]{\rev{Frazione di osservazioni classificate come allerta o ingaggio, per
-bersagli e civili; media e deviazione standard su venti repliche di $150$
-passi. Parametri del canale visivo: $R_1^{\text{pre}} = 0.501$,
-$R_1^{\text{post}} = 0.220$, $1 - R_2 = 0.030$.}}
-\label{tab:simulatore}
-\end{table}
-
-Nel primo esperimento il simulatore riproduce i parametri del canale visivo:
-$0.506$ e $0.219$ contro $0.501$ e $0.220$ sui bersagli, $0.029$ contro
-$0.030$ sui civili. È una verifica di coerenza del modello del sensore, non un
-risultato indipendente. Nel secondo esperimento la contromisura isolata non
-modifica la classificazione dei bersagli, pari a $0.998$ e $0.997$: il canale
-informativo è sufficiente a sostenerla anche quando il canale visivo è
-compromesso. Combinata con la contaminazione del canale informativo, la stessa
-contromisura riduce la frazione di bersagli classificati come intervento da
-$0.340$ a $0.150$, con un rapporto di $0.44$ pari a quello misurato sul
-rilevatore, $R_1^{\text{post}}/R_1^{\text{pre}} = 0.220/0.501$. La
-contaminazione produce inoltre, indipendentemente dalla contromisura, un tasso
-di falso allarme sui civili del $96\%$.
-
-La ridondanza fra canali assorbe quindi la perturbazione visiva isolata, ma
-non l'attacco combinato: quando il canale informativo è compromesso, la
-decisione torna a dipendere dal canale visivo e la perturbazione vi si propaga
-nella stessa proporzione misurata sul rilevatore. Pesi di fusione, soglie
-decisionali e parametri delle distribuzioni sono scelte di modellazione, e i
-valori hanno funzione illustrativa del meccanismo di propagazione, non
-predittiva di un sistema reale.}
-
-\notarev{Nella versione precedente questo paragrafo dichiarava quattro difetti
-di implementazione del simulatore. Sono stati corretti nel codice (estrazione
-di Bernoulli su $R_1$ e $1 - R_2$, riferimento ancorato alle misure del primo
-livello, distanza esclusa anche dalla confidenza), le simulazioni sono state
-rieseguite e i valori del primo esperimento ne verificano la coerenza.}
-
-\rev{\textbf{Sintesi dei risultati.}
-In termini non tecnici, la patch funziona ma non rende invisibili. Nelle
-immagini riprese dall'alto la quota di casi in cui il rilevatore non vede la
-persona cresce di $25$ punti percentuali su VisDrone e di $28$ su
-Okutama-Action: un effetto moderato, ma statisticamente solido e ripetuto su due
-raccolte diverse. La patch non aumenta i rilevamenti spuri, e le persone che
-non la indossano restano visibili. Il limite principale è la dimensione: da
-quota una persona occupa poche decine di pixel, e lo spazio su cui la patch può
-agire è minimo. La stessa condizione rende però fragile il sistema anche senza
-attacco, perché la quota di persone che sfuggono al rilevatore dipende
-fortemente dalla soglia impostata. Nel simulatore la patch da sola non basta a
-cambiare la decisione, perché le altre fonti di informazione compensano; quando
-anche queste sono manipolate, l'errore del sensore si trasmette alla decisione
-nella stessa proporzione misurata sul rilevatore.}
-
-\notarev{Paragrafo divulgativo richiesto dal Prof. Buffa.}
+Le uscite del simulatore multi-agente non sono presentate come risultato quantitativo. Quattro difetti di implementazione, accertati per lettura diretta del codice, ne condizionano l'interpretazione: l'esito del rilevamento non è un test statistico ma un'estrazione da distribuzione uniforme con soglia fissa; la condizione di riferimento non legge le metriche del Livello 1 in assenza di attacco, e confronta quindi una costante di letteratura con il dato misurato sotto attacco; la specificità non entra nella catena decisionale per le entità civili; l'effetto della distanza è conteggiato sia nella metrica empirica sia nel modello analitico, in contrasto con quanto stabilito nella Sezione~\ref{sec:laws_sim}. La correzione è definita nel suo perimetro e non è stata eseguita. L'unico enunciato sostenibile allo stato attuale è che il sistema a canali fusi mostra un degrado inferiore rispetto al canale visivo isolato, coerente con la funzione di ridondanza attribuita alla fusione; l'entità del fenomeno non è quantificabile con i dati disponibili.
 
 
 \chapter{Conclusioni}
 \label{cap6}
 
-L'impiego di sistemi d'arma autonomi letali sposta la selezione del bersaglio da un operatore a un modello statistico, e con essa il presupposto di fatto su cui il \rev{DIU} fonda il principio di distinzione. Lo stallo dei negoziati internazionali, esaminato nel \hyperref[cap1]{Capitolo Primo}, e la dissoluzione della responsabilità individuale nella catena algoritmica, discussa nel \hyperref[cap2]{Capitolo Secondo}, lasciano il requisito di controllo umano significativo privo di \rev{un'effettiva} verifica tecnica indipendente. Il presente lavoro ha affrontato questa lacuna per via sperimentale: ha sottoposto il canale sensoriale di un sistema di percezione a un attacco avversariale controllato e ne ha misurato il degrado con un protocollo statistico esplicito.
+L'impiego di sistemi d'arma autonomi letali sposta la selezione del bersaglio da un operatore a un modello statistico, e con essa il presupposto di fatto su cui il Diritto Internazionale Umanitario fonda il principio di distinzione. Lo stallo dei negoziati internazionali, esaminato nel \hyperref[cap1]{Capitolo Primo}, e la dissoluzione della responsabilità individuale nella catena algoritmica, discussa nel \hyperref[cap2]{Capitolo Secondo}, lasciano il requisito di controllo umano significativo privo di un'effettiva verifica tecnica indipendente. Il presente lavoro ha affrontato questa lacuna per via sperimentale: ha sottoposto il canale sensoriale di un sistema di percezione a un attacco avversariale controllato e ne ha misurato il degrado con un protocollo statistico esplicito.
 
-Il metodo è consistito nell'ottimizzazione di una perturbazione avversariale universale contro un rilevatore di oggetti della famiglia YOLO, applicata a una porzione del \rev{tronco} del soggetto compatibile con la realizzazione per mezzo di un capo di abbigliamento. La perturbazione è stata ottimizzata su una distribuzione di trasformazioni geometriche e fotometriche, così da conservare efficacia sotto condizioni di ripresa variabili anziché su una singola resa dell'immagine, e vincolata a una banda spaziale compatibile con la riproduzione a stampa. La valutazione ha impiegato due insiemi di dati aerei indipendenti, trattati separatamente e mai aggregati, e ha confrontato la medesima sequenza di fotogrammi nelle condizioni con e senza perturbazione. La significatività è stata stabilita per ricampionamento appaiato, con correzione della correlazione temporale sul secondo insieme di dati.
+Il metodo è consistito nell'ottimizzazione di una perturbazione avversariale universale contro un rilevatore di oggetti della famiglia YOLO, applicata a una porzione del busto del soggetto compatibile con la realizzazione per mezzo di un capo di abbigliamento. La perturbazione è stata ottimizzata su una distribuzione di trasformazioni geometriche e fotometriche, così da conservare efficacia sotto condizioni di ripresa variabili anziché su una singola resa dell'immagine, e vincolata a una banda spaziale compatibile con la riproduzione a stampa. La valutazione ha impiegato due insiemi di dati aerei indipendenti, trattati separatamente e mai aggregati, e ha confrontato la medesima sequenza di fotogrammi nelle condizioni con e senza perturbazione. La significatività è stata stabilita per ricampionamento appaiato, con correzione della correlazione temporale sul secondo insieme di dati.
 
-L'esito principale è un degrado statisticamente significativo della capacità del rilevatore di individuare la presenza di una persona, replicato su entrambi i domini con entità comparabile. Il tasso di falso allarme sugli sfondi privi di bersaglio è rimasto invece invariato, per una ragione strutturale del disegno sperimentale che è stata identificata e dichiarata: la perturbazione non è presente nei fotogrammi che quella quantità misura. L'effetto si concentra sui bersagli \rev{validi di minore estensione apparente, fra $60$ e $100$ pixel, che su Okutama-Action sono il $97\%$ dei bersagli considerati}, mentre sui bersagli meglio risolti il rilevatore mostra un limite di localizzazione proprio, indipendente dall'attacco.
+L'esito principale è un degrado statisticamente significativo della capacità del rilevatore di individuare la presenza di una persona, replicato su entrambi i domini con entità comparabile. Il tasso di falso allarme sugli sfondi privi di bersaglio è rimasto invece invariato, per una ragione strutturale del disegno sperimentale che è stata identificata e dichiarata: la perturbazione non è presente nei fotogrammi che quella quantità misura. L'effetto si concentra sui bersagli di piccola estensione apparente, che sono la quasi totalità della popolazione osservabile da quota aerea, mentre sui bersagli meglio risolti il rilevatore mostra un limite di localizzazione proprio, indipendente dall'attacco.
 
-La lettura di questi risultati è la parte che eccede il singolo esperimento. Configurazioni di ottimizzazione radicalmente diverse per formulazione dell'obiettivo, criterio di aggregazione e disciplina del passo di apprendimento convergono su un esito quasi identico; la misura diretta del segnale di aggiornamento ne indica la debolezza intrinseca; la letteratura sugli attacchi in prospettiva aerea concorda nel selezionare bersagli di maggiore estensione. Il limite osservato \rev{appare quindi, più che un difetto contingente di una particolare implementazione o una caratteristica di un singolo insieme di dati, una proprietà del compito}: da quota, una figura umana occupa un numero di elementi di immagine tale da collocare il rilevamento in una condizione di criticità permanente. La conseguenza per il quadro normativo è diretta. Un sistema di targeting che opera su bersagli in questa condizione dispone di un margine di evidenza ridotto anche in assenza di ogni interferenza, e una perturbazione \rev{progettata per essere realizzabile con mezzi ordinari, qui valutata in forma digitale e con conoscenza completa del rilevatore,} è sufficiente a spostarne l'esito. La verifica del principio di distinzione demandata a un canale percettivo con tali proprietà non offre le garanzie che la delega della forza letale presupporrebbe.
-
-\rev{Il secondo livello del framework ha permesso di osservare, in forma illustrativa, come questo degrado raggiunga la decisione. In un sistema che combina il canale visivo con fonti aperte e analisi del comportamento, la patch da sola non sposta la classificazione dei bersagli, perché la ridondanza fra canali la assorbe. Quando anche il canale informativo è contaminato, la decisione torna a dipendere dalla percezione e la perturbazione vi si trasmette nella stessa proporzione misurata sul rilevatore, mentre la quota di civili segnalati sale oltre il $96\%$. Il risultato ha lo statuto di conseguenza di un modello e non di misura, ma indica dove la catena è più esposta: nella combinazione di attacchi a canali diversi, più che nel singolo sensore.
-
-Questi esiti si ricollegano alle questioni aperte nei primi due capitoli. Il \hyperref[cap1]{Capitolo Primo} ha descritto un negoziato internazionale fermo sulla definizione stessa di controllo umano, mentre sistemi come il Kargu-2 venivano già impiegati senza collegamento con l'operatore. Il \hyperref[cap2]{Capitolo Secondo} ha mostrato come, in sistemi quali Lavender, la distinzione fra combattente e civile si riduca alla scelta di una soglia di confidenza. Le misure del \hyperref[cap5]{Capitolo Quinto} danno a questa osservazione un contenuto quantitativo: sullo stesso insieme di dati e senza alcun attacco, lo spostamento della soglia modifica la frazione di fotogrammi in cui nessuna persona viene rilevata più di quanto faccia la perturbazione, che a sua volta agisce proprio sulle predizioni prossime alla soglia. Un operatore chiamato a ratificare decisioni prodotte in queste condizioni, senza strumenti per accorgersi che il canale percettivo è stato manipolato, conserva la forma del controllo umano significativo che il DIU presuppone, ma non la sua sostanza. La sicurezza del canale percettivo diventa così una condizione tecnica del principio di distinzione.}
-
-\notarev{Paragrafi aggiunti su richiesta del Prof. Buffa, per ricollegare i risultati ai Capitoli Primo e Secondo e chiudere l'obiettivo sulla propagazione alla decisione.}
+La lettura di questi risultati è la parte che eccede il singolo esperimento. Configurazioni di ottimizzazione radicalmente diverse per formulazione dell'obiettivo, criterio di aggregazione e disciplina del passo di apprendimento convergono su un esito quasi identico; la misura diretta del segnale di aggiornamento ne indica la debolezza intrinseca; la letteratura sugli attacchi in prospettiva aerea concorda nel selezionare bersagli di maggiore estensione. Il limite osservato non è quindi un difetto contingente di una particolare implementazione né una caratteristica di un singolo insieme di dati, ma una proprietà del compito: da quota, una figura umana occupa un numero di elementi di immagine tale da collocare il rilevamento in una condizione di criticità permanente. La conseguenza per il quadro normativo è diretta. Un sistema di targeting che opera su bersagli in questa condizione dispone di un margine di evidenza ridotto anche in assenza di ogni interferenza, e una perturbazione realizzabile con mezzi ordinari è sufficiente a spostarne l'esito. La verifica del principio di distinzione demandata a un canale percettivo con tali proprietà non offre le garanzie che la delega della forza letale presupporrebbe.
 
 \section{Limitazioni}
 
-\rev{Il modello di minaccia assume un avversario \textit{white-box}, che conosce
+Il modello di minaccia assume un avversario \textit{white-box}, che conosce
 architettura e pesi del rilevatore bersaglio. Le misure riportate sono
 pertanto un limite superiore all'efficacia conseguibile e non una stima
 operativa: contro un rilevatore di architettura o pesi ignoti l'efficacia
 sarebbe ridotta in misura non quantificata, e la trasferibilità resta da
-misurare.}
+misurare.
 
-\rev{Due fattori di implementazione concorrono al comportamento dell'ottimizzazione e non sono stati isolati. Sul run di produzione su Okutama-Action il programma di decadimento del passo ha completato il $55.5\%$ del proprio orizzonte, per effetto del filtro di rilevanza dimensionale; la doppia trasformazione logistica della confidenza comprime inoltre la scala dell'obiettivo e quindi l'ampiezza del gradiente. La convergenza di configurazioni con programmi del passo diversi rende improbabile che il primo fattore spieghi da solo il limite osservato; l'effetto del secondo non è stato misurato.}
+L'attacco è stato valutato nel solo dominio digitale. La perturbazione è stata progettata con i vincoli richiesti dalla riproduzione fisica, ma la catena stampa-tessuto-illuminazione-sensore non è stata attraversata sperimentalmente, e nessuna delle misure riportate ne incorpora la degradazione.
 
-L'attacco è stato valutato nel solo dominio digitale. La perturbazione è stata progettata con i vincoli richiesti dalla riproduzione fisica, ma la catena stampa-tessuto-ottica-campionamento non è stata attraversata sperimentalmente, e nessuna delle misure riportate ne incorpora la degradazione.
-
-La condizione di partenza del rilevatore sul secondo insieme di dati risulta sensibilmente più debole che sul primo, in assenza di qualunque attacco. La causa non è stata determinata: le ipotesi formulate riguardano lo scarto fra il dominio di addestramento del rilevatore e le posture riprese dall'alto, oppure la deformazione introdotta dal ridimensionamento dei fotogrammi, e nessuna delle due è stata verificata. \rev{Misurare l'attacco su un rilevatore che parte da prestazioni già ridotte rende la prova meno controllata.}
+La condizione di partenza del rilevatore sul secondo insieme di dati risulta sensibilmente più debole che sul primo, in assenza di qualunque attacco. La causa non è stata determinata: le ipotesi formulate riguardano lo scarto fra il dominio di addestramento del rilevatore e le posture riprese dall'alto, oppure la deformazione introdotta dal ridimensionamento dei fotogrammi, e nessuna delle due è stata verificata. Attaccare un rilevatore già compromesso è una condizione di prova meno pulita.
 
 La correzione della correlazione temporale, necessaria su dati video, riduce il campione effettivo a una numerosità comparabile a quella del primo insieme di dati: il secondo dominio amplia la varietà delle condizioni osservate, non la potenza statistica disponibile. L'analisi della dipendenza dalla scala è stata condotta su un solo insieme di dati, e la fascia dei bersagli di maggiore estensione resta priva di osservazioni su entrambi. La risoluzione di lavoro è stata fissata da un vincolo di memoria della piattaforma, con una riduzione dichiarata del numero di bersagli utilizzabili.
 
-\rev{I Livelli 2 e 3 producono conseguenze di un modello e non misure: pesi di fusione, soglie decisionali e parametri delle distribuzioni sono scelte di modellazione non calibrate su dati reali, e la variabilità riportata è quella fra repliche del modello. Il canale visivo usa inoltre la sensitività misurata per fotogramma come probabilità di rilevamento del singolo bersaglio: nei fotogrammi con più soggetti è un'approssimazione favorevole al rilevatore, come mostra il tasso per bersaglio della Tabella~\ref{tab:stratificazione}.} Il loro contributo si limita all'illustrazione del meccanismo con cui un degrado percettivo si propaga lungo una catena decisionale ridondante.
+I livelli di simulazione e di fusione dei metadati non producono risultati quantitativi. La loro esecuzione è deterministica e priva di misura di incertezza campionaria, e la lettura del codice ha accertato difetti di implementazione che ne condizionano l'interpretazione. Il loro contributo si limita all'illustrazione del meccanismo con cui un degrado percettivo si propaga lungo una catena decisionale ridondante.
 
 \section{Sviluppi futuri: il C.A.R.E. Kit}
 
 La prosecuzione naturale del lavoro è il passaggio al dominio fisico. La perturbazione caratterizzata in questa tesi è stata ottimizzata come valore atteso su una distribuzione di trasformazioni, che è precisamente la proprietà richiesta perché un artefatto stampato conservi efficacia sotto angolazioni, distanze e condizioni di luce variabili. La sua realizzazione come capo indossabile è la componente percettiva di un dispositivo più ampio, denominato C.A.R.E. Kit (\textit{Camouflage Against Recognition and Engagement}), concepito come strumento di autotutela per popolazioni civili esposte a sorveglianza e targeting automatizzati in contesti privi di regolamentazione effettiva. La linea si inserisce in un filone consolidato, che comprende il camuffamento asimmetrico contro il riconoscimento del volto \footcite{harvey_2010} e i tessuti a motivo avversariale \footcite{wu_2020, hu_2022}. Le implicazioni etiche della diffusione di contromisure di questo tipo, e la tensione fra tutela individuale ed elusione dei sistemi di sicurezza legittimi, sono state discusse in letteratura \footcite{helkala_2023} e vanno affrontate prima di qualunque proposta operativa.
 
-Sul piano sperimentale restano aperte alcune verifiche a basso costo. \rev{Il confronto della condizione di controllo, stratificata per taglia, fra i due insiemi di dati e fra risoluzioni diverse} discriminerebbe fra le due ipotesi formulate per la debolezza della linea di base sul secondo insieme di dati. L'estensione dell'obiettivo all'intera impronta geometrica del bersaglio, anziché al solo nucleo di celle a evidenza forte, richiede un nuovo ciclo di ottimizzazione ma è suggerita dalla divergenza fra i due criteri di selezione misurati. L'applicazione dell'obiettivo alle rappresentazioni intermedie della rete, anziché alla sua uscita, è la tecnica adottata dai lavori che riportano i risultati più solidi su immagini aeree. \rev{La misura della trasferibilità della perturbazione verso rilevatori di architettura diversa porterebbe infine il modello di minaccia dal regime \textit{white-box} a condizioni più vicine a quelle operative.} \rev{Sul piano della simulazione, infine, la calibrazione dei canali non visivi su dati reali renderebbe interpretabili in termini quantitativi le uscite del modello, oggi illustrative. Consentirebbe inoltre di}
+Sul piano sperimentale restano aperte alcune verifiche a basso costo. La stratificazione per taglia della sola condizione di controllo discriminerebbe fra le due ipotesi formulate per la debolezza della linea di base sul secondo insieme di dati. L'estensione dell'obiettivo all'intera impronta geometrica del bersaglio, anziché al solo nucleo di celle a evidenza forte, richiede un nuovo ciclo di ottimizzazione ma è suggerita dalla divergenza fra i due criteri di selezione misurati. L'applicazione dell'obiettivo alle rappresentazioni intermedie della rete, anziché alla sua uscita, è la tecnica adottata dai lavori che riportano i risultati più solidi su immagini aeree. La correzione dei difetti accertati nei livelli di simulazione e fusione, infine, è definita nel suo perimetro e restituirebbe misura quantitativa alla propagazione del degrado lungo la catena decisionale, che allo stato attuale resta descritta e non misurata. \\
+La stessa correzione consentirebbe inoltre di
 riportare la metrica di ingaggio a costo pesato introdotta nel disegno
 sperimentale, che rapporta gli ingaggi corretti agli errori di entrambi i tipi
 ponderati per il costo dell'attacco che li produce. La sua taratura richiede

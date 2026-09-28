@@ -1,0 +1,145 @@
+\documentclass[a4paper,12pt]{report}
+
+%  PREAMBOLO: stesso impianto della tesi (tesi.sty, frontespizio ridefinito)
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{setspace}
+\usepackage{tesi}
+\usepackage[a4paper]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+%  FRONTESPIZIO: identico a quello di main.tex
+\makeatletter
+\def\@sottotitolo{}
+\newcommand{\sottotitolo}[1]{\gdef\@sottotitolo{#1}}
+\def\titlep{%
+  \thispagestyle{empty}%
+  \begin{center}
+    \Large
+    {\sc Universit\`a degli Studi di Milano} \\
+    Facolt\`a di Scienze e Tecnologie \\
+    {\em \@dept}
+  \end{center}
+  \vskip1in
+  \begin{center}
+    {\hyphenpenalty=10000\setstretch{1.15}\huge\bfseries \@title\par}%
+    \ifx\@sottotitolo\@empty\else
+      \vspace{1.4em}%
+      {\hyphenpenalty=10000\setstretch{1.15}\fontsize{15}{18}\selectfont \@sottotitolo\par}%
+    \fi
+    \vspace{2.5em}%
+    {\Large\sc Riassunto della tesi\par}%
+  \end{center}
+  \vfill
+  \begin{description}
+    \item[Relatore:] \@relatore
+    \item[Correlatore:] \@correlatore
+  \end{description}
+  \vskip0.5in
+  \null\hfill
+  \parbox{3in}{Tesi di: \\ \@author \\ Matricola: \@matricola}
+  \vfill
+  \begin{center}\large Anno Accademico \@anno\end{center}
+  \newpage}
+\makeatother
+
+\begin{document}
+\title{Vulnerabilità avversariali nei sistemi d'arma autonomi tra algoritmi e diritti}
+\sottotitolo{Un'analisi sperimentale sulla robustezza della computer vision, implicazioni per il principio di distinzione e per il controllo umano}
+\author{Daniele Intra}
+\dept{Corso di Laurea Magistrale in Sicurezza Informatica}
+\anno{2025-2026}
+\matricola{53665A}
+\relatore{Prof. Matteo Buffa}
+\correlatore{Prof. Massimo Walter Rivolta}
+
+\titlep
+%  Testo: indicazioni di Ateneo, margini 2.5 cm e interlinea 1.5
+\newgeometry{margin=2.5cm}
+\pagestyle{plain}
+\setcounter{page}{1}
+\onehalfspacing
+
+I sistemi d'arma autonomi letali (Lethal Autonomous Weapon Systems, LAWS)
+affidano a un algoritmo la selezione del bersaglio, un compito che finora
+spettava a un operatore umano. Il Diritto Internazionale Umanitario (DIU) impone
+di distinguere fra combattenti e civili e di mantenere un controllo umano
+significativo sull'uso della forza. Questi principi presuppongono però che il
+sistema percepisca correttamente la scena. Nei LAWS la percezione è affidata a
+reti neurali di visione artificiale, note per essere vulnerabili agli attacchi
+avversariali: alterazioni dell'immagine costruite appositamente possono far
+sparire una persona agli occhi del rilevatore. Il problema affrontato dalla tesi
+è quanto sia affidabile questo canale percettivo e che cosa accada alla
+decisione di ingaggio quando viene manipolato.
+
+La questione non è teorica. Sistemi con autonomia letale sono già stati
+impiegati, per esempio con il drone Kargu-2 in Libia e nella guerra in Ucraina,
+e piattaforme di targeting come Lavender e Habsora riducono la distinzione fra
+combattente e civile alla scelta di una soglia su un punteggio. La prima parte
+della tesi mostra che le regole non tengono il passo: i negoziati nell'ambito
+della Convenzione su certe armi convenzionali (CCW) sono fermi, l'AI Act europeo
+esclude gli usi militari e le verifiche statunitensi restano interne alla catena
+di comando. Anche i vincoli etici fissati dalle aziende cedono alle esigenze
+degli Stati, come mostra lo scontro fra Anthropic e il Pentagono. In questo
+quadro nessuno misura in modo indipendente l'affidabilità del sensore su cui
+poggia il principio di distinzione.
+
+La ricerca sugli attacchi avversariali ha studiato soprattutto persone riprese
+da terra, che occupano gran parte dell'immagine. Nei pochi lavori su immagini
+aeree i risultati più solidi riguardano i veicoli, e in alcuni casi i pedoni
+sono esclusi perché troppo piccoli. Manca quindi una misura, con un protocollo
+statistico esplicito, proprio per la classe che il DIU impone di proteggere: la
+persona ripresa da un drone.
+
+Per colmare questa lacuna è stato sviluppato LAWS-SIM, un framework articolato
+in tre livelli. Nel primo si ottimizza, contro il rilevatore di persone YOLOv8
+e con piena conoscenza della rete (regime \emph{white-box}), una patch
+avversariale universale: una trama che copre il $20\%$ della figura sulla parte
+superiore del tronco e può quindi essere stampata su un indumento. Perché
+resti efficace in condizioni di ripresa variabili, la patch è ottimizzata con
+la tecnica Expectation over Transformation (EoT), cioè in media su sedici
+versioni ruotate, ridimensionate e diversamente illuminate per ogni
+fotogramma, e con un vincolo di variazione totale che ne limita le alte
+frequenze e la rende stampabile. L'effetto è misurato su due insiemi di dati
+aerei indipendenti, VisDrone2019-DET e Okutama-Action, confrontando gli stessi
+fotogrammi con e senza patch. La metrica principale è l'Evasion Rate, la
+frazione di fotogrammi contenenti una persona in cui il rilevatore non ne
+individua alcuna; la significatività è stabilita con un bootstrap appaiato su
+$10\,000$ ricampionamenti, dopo aver rimosso la correlazione fra fotogrammi
+consecutivi delle sequenze video. Il secondo e il terzo livello formano un
+simulatore descritto come macchina a stati, in cui il canale visivo,
+parametrizzato con le misure del primo livello, è combinato con informazioni da
+fonti aperte (Open Source Intelligence, OSINT) e con l'analisi del
+comportamento, fino alla decisione di ingaggio.
+
+La patch aumenta l'Evasion Rate in modo statisticamente significativo e con
+entità quasi identica sui due domini: dal $17.5\%$ al $42.5\%$ su VisDrone
+($+25.0$ punti percentuali) e dal $49.7\%$ al $77.7\%$ su Okutama-Action
+($+28.0$ punti), con $p < 0.0001$ in entrambi i casi. L'effetto riguarda solo
+chi indossa la patch: le altre persone nella scena restano rilevate e i falsi
+allarmi non aumentano. Sei configurazioni di ottimizzazione molto diverse
+raggiungono lo stesso limite, che dipende dalle dimensioni ridotte della figura
+umana vista dall'alto più che dall'ottimizzatore. La stessa fragilità esiste
+anche senza attacco: modificando la sola soglia di confidenza del rilevatore,
+l'Evasion Rate su VisDrone passa da meno del $4\%$ a oltre il $72\%$. Nel
+simulatore la patch da sola è compensata dagli altri canali; quando anche le
+fonti aperte sono manipolate, invece, la quota di bersagli segnalati scende dal
+$34\%$ al $15\%$, nella stessa proporzione misurata sul rilevatore, e il $96\%$
+dei civili viene segnalato come sospetto.
+
+Ne emerge che un sistema chiamato a riconoscere persone da quota lavora con un
+margine ridotto già in condizioni normali, e che una contromisura pensata per
+essere stampata su un capo di abbigliamento basta a modificarne l'esito.
+L'operatore che deve approvare le decisioni del sistema non ha modo di
+accorgersi della manipolazione, e il controllo umano significativo rischia di
+restare una formalità. La sicurezza informatica del canale percettivo diventa
+così una condizione tecnica del principio di distinzione. I risultati hanno
+limiti dichiarati: l'attacco è stato valutato su immagini digitali e in regime
+\emph{white-box}, per cui le misure sono un limite superiore dell'efficacia
+ottenibile, e il simulatore ha valore illustrativo. I passi successivi sono la
+prova fisica della patch stampata, la verifica su altri rilevatori e lo studio
+di un dispositivo di autotutela per i civili, il C.A.R.E. Kit, da valutare
+anche sul piano etico. Il codice è disponibile all'indirizzo
+\url{https://github.com/intradaniele/Tesi-Laws}.
+
+\end{document}
