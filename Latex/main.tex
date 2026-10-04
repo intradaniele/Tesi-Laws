@@ -1,4 +1,8 @@
 \documentclass[a4paper,12pt]{report}
+\pdfminorversion=4
+\usepackage[utf8]{inputenc}
+\PassOptionsToPackage{hidelinks}{hyperref}
+\usepackage[a-1b]{pdfx}
 
 %  PREAMBOLO 
 \usepackage[a4paper]{geometry}
@@ -10,7 +14,6 @@
 \usepackage{setspace}
 \usepackage{tesi} 
 \usepackage{wrapfig}
-\usepackage[hidelinks]{hyperref}
 \usepackage[export]{adjustbox}
 \usepackage{epigraph}
 \usepackage{blindtext}
@@ -27,7 +30,7 @@
 
 %  REVISIONE: modifiche in blu e note per i relatori.
 %  Per la versione finale basta sostituire \revisionetrue con \revisionefalse
-\newif\ifrevisione \revisionetrue
+\newif\ifrevisione \revisionefalse
 \DeclareRobustCommand{\rev}[1]{\ifrevisione{\color{blue!65!black}#1}\else#1\fi}
 \newcommand{\notarev}[1]{\ifrevisione\par\medskip\noindent\fcolorbox{blue!65!black}{blue!4}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\small\setstretch{1}\textbf{Nota per la revisione.} #1}}\par\medskip\fi}
 
@@ -1814,8 +1817,8 @@ Sezione~\ref{sec:metriche} misurano proprietà distinte dello stesso sistema, e
 la distinzione condiziona l'interpretazione dei risultati.
 
 La quantità $\bar{c}$ è una media su $K$ celle di una griglia interna al
-rilevatore, calcolata prima della soppressione dei non-massimi\rev{
-(\textit{Non-Maximum Suppression}, NMS: l'operazione che, fra i riquadri
+rilevatore, calcolata prima della soppressione dei non-massimi
+\rev{(\textit{Non-Maximum Suppression}, NMS: l'operazione che, fra i riquadri
 sovrapposti riferiti al medesimo oggetto, conserva il più confidente)},
 mediata su sedici realizzazioni della distribuzione di trasformazioni e
 valutata \rev{sull'insieme di addestramento}. L'\textit{Evasion Rate} è un tasso di eventi
@@ -2484,7 +2487,7 @@ La letteratura sugli attacchi avversariali in prospettiva aerea è coerente con 
 
 La misura riportata in Tabella~\ref{tab:stratificazione} colloca l'effetto nell'intervallo dimensionale dominante e chiude una questione che su VisDrone era rimasta aperta, per l'esiguità dei casi disponibili nell'intervallo dimensionale superiore. L'accordo entro un punto percentuale fra il delta per bersaglio e il delta per fotogramma, ottenuti con unità di analisi e criteri di attribuzione distinti, è una verifica di coerenza interna fra due misure \rev{distinte}. Il conteggio di rilevamenti spuri, \rev{non confermato su VisDrone dopo la correzione per confronti multipli}, risulta significativo su Okutama alla soglia $0.50$, con un effetto della stessa direzione ma non significativo dopo correzione alla soglia $0.30$: è l'unica quantità per la quale il secondo dominio produce un risultato nuovo anziché una replica. Il suo segno negativo indica una perturbazione che sopprime il rilevamento del soggetto sul quale è applicata \rev{senza generare rilevamenti spuri, mentre le persone non perturbate presenti nella scena restano rilevate (Figura~\ref{fig:prima_dopo})}.
 
-Due elementi circoscrivono la portata del confronto. La quadruplicazione dei fotogrammi positivi, dal $15.1\%$ al $57.0\%$, non corrisponde a una potenza statistica quadruplicata: una volta rimossa la correlazione temporale (Tabella~\ref{tab:decorrelazione}) il campione effettivo di Okutama, pari a $527$ unità, è comparabile ai $531$ fotogrammi di VisDrone. Il guadagno del secondo insieme di dati è nel dominio osservato e non nella numerosità campionaria. La condizione di partenza su Okutama è a sua volta più debole, con un Evasion Rate del $49.7\%$ in assenza di attacco contro il $17.5\%$ di VisDrone. Fra le spiegazioni possibili figurano uno scarto di dominio del rilevatore rispetto alle posture riprese dall'alto e la distorsione introdotta dal ridimensionamento a canvas quadrato; nessuna delle due è stata verificata in questo lavoro. La verifica richiederebbe \rev{il confronto della condizione di controllo, stratificata per taglia, fra i due insiemi di dati e fra risoluzioni di lavoro diverse}, non eseguito, ed è riportata fra gli sviluppi futuri.
+Due elementi circoscrivono la portata del confronto. La quadruplicazione dei fotogrammi positivi, dal $15.1\%$ al $57.0\%$, non corrisponde a una potenza statistica quadruplicata: una volta attenuata la correlazione temporale (Tabella~\ref{tab:decorrelazione}) il campione effettivo di Okutama, pari a $527$ unità, è comparabile ai $531$ fotogrammi di VisDrone. Il guadagno del secondo insieme di dati è nel dominio osservato e non nella numerosità campionaria. La condizione di partenza su Okutama è a sua volta più debole, con un Evasion Rate del $49.7\%$ in assenza di attacco contro il $17.5\%$ di VisDrone. Fra le spiegazioni possibili figurano uno scarto di dominio del rilevatore rispetto alle posture riprese dall'alto e la distorsione introdotta dal ridimensionamento a canvas quadrato; nessuna delle due è stata verificata in questo lavoro. La verifica richiederebbe \rev{il confronto della condizione di controllo, stratificata per taglia, fra i due insiemi di dati e fra risoluzioni di lavoro diverse}, non eseguito, ed è riportata fra gli sviluppi futuri.
 
 \rev{\textbf{Propagazione nel livello di simulazione.}
 \label{sec:risultato_simulatore}

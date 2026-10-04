@@ -1,4 +1,8 @@
 \documentclass[a4paper,12pt]{report}
+\pdfminorversion=4
+\usepackage[utf8]{inputenc}
+\PassOptionsToPackage{hidelinks}{hyperref}
+\usepackage[a-1b]{pdfx}
 
 %  PREAMBOLO: stesso impianto della tesi (tesi.sty, frontespizio ridefinito)
 \usepackage[utf8]{inputenc}
@@ -6,7 +10,6 @@
 \usepackage{setspace}
 \usepackage{tesi}
 \usepackage[a4paper]{geometry}
-\usepackage[hidelinks]{hyperref}
 
 %  FRONTESPIZIO: identico a quello di main.tex
 \makeatletter
@@ -104,8 +107,9 @@ frequenze e la rende stampabile. L'effetto è misurato su due insiemi di dati
 aerei indipendenti, VisDrone2019-DET e Okutama-Action, confrontando gli stessi
 fotogrammi con e senza patch. La metrica principale è l'Evasion Rate, la
 frazione di fotogrammi contenenti una persona in cui il rilevatore non ne
-individua alcuna; la significatività è stabilita con un bootstrap appaiato su
-$10\,000$ ricampionamenti, dopo aver rimosso la correlazione fra fotogrammi
+individua alcuna; la significatività statistica dell'uso della patch è stabilita con un
+bootstrap appaiato su
+$10\,000$ ricampionamenti, dopo aver mitigato la correlazione fra fotogrammi
 consecutivi delle sequenze video. Il secondo e il terzo livello formano un
 simulatore descritto come macchina a stati, in cui il canale visivo,
 parametrizzato con le misure del primo livello, è combinato con informazioni da
