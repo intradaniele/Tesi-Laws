@@ -1,8 +1,7 @@
 \documentclass[a4paper,12pt]{report}
-\pdfminorversion=4
 \usepackage[utf8]{inputenc}
 \PassOptionsToPackage{hidelinks}{hyperref}
-\usepackage[a-1b]{pdfx}
+\usepackage[a-2b]{pdfx}
 
 %  PREAMBOLO 
 \usepackage[a4paper]{geometry}
@@ -65,12 +64,10 @@
 \def\titlep{%
   \thispagestyle{empty}%
   \begin{center}
-    \Large
-    {\sc Universit\`a degli Studi di Milano} \\
-    Facolt\`a di Scienze e Tecnologie \\
-    {\em \@dept}
+    \includegraphics[width=0.78\textwidth]{img/logo_unimi.png}\\[0.8em]
+    \Large {\em \@dept}
   \end{center}
-  \vskip1in
+  \vskip0.5in
   \begin{center}
     {\hyphenpenalty=10000\setstretch{1.15}\huge\bfseries \@title\par}%
     \ifx\@sottotitolo\@empty\else
