@@ -1,3 +1,4 @@
+\newif\ifstampa \stampatrue % \stampatrue: pagina bianca dopo il frontespizio (stampa fronte/retro)
 \documentclass[a4paper,12pt]{report}
 \pdfminorversion=4
 \usepackage[utf8]{inputenc}
@@ -16,33 +17,43 @@
 \makeatletter
 \def\@sottotitolo{}
 \newcommand{\sottotitolo}[1]{\gdef\@sottotitolo{#1}}
+\newdimen\coverdx
 \def\titlep{%
   \thispagestyle{empty}%
+  \enlargethispage{3cm}%
+  \coverdx=\dimexpr(2in+2\oddsidemargin+\textwidth-\paperwidth)/2\relax
+  \advance\oddsidemargin by -\coverdx
+  \vspace*{-1.0cm}%
   \begin{center}
-    \includegraphics[width=0.78\textwidth]{img/logo_unimi.png}\\[0.8em]
-    \Large {\em \@dept}
+    \includegraphics[width=0.96\textwidth]{img/logo_unimi.png}\\[1.6em]
+    {\Large\em \@dept}
   \end{center}
-  \vskip0.5in
+  \vfill
   \begin{center}
-    {\hyphenpenalty=10000\setstretch{1.15}\huge\bfseries \@title\par}%
+    {\hyphenpenalty=10000\setstretch{1.15}\Huge\bfseries \@title\par}%
     \ifx\@sottotitolo\@empty\else
       \vspace{1.4em}%
       {\hyphenpenalty=10000\setstretch{1.15}\fontsize{15}{18}\selectfont \@sottotitolo\par}%
     \fi
-    \vspace{2.5em}%
+    \vspace{2.2em}%
     {\Large\sc Riassunto della tesi\par}%
   \end{center}
   \vfill
-  \begin{description}
-    \item[Relatore:] \@relatore
-    \item[Correlatore:] \@correlatore
-  \end{description}
-  \vskip0.5in
-  \null\hfill
-  \parbox{3in}{Tesi di: \\ \@author \\ Matricola: \@matricola}
-  \vfill
-  \begin{center}\large Anno Accademico \@anno\end{center}
-  \newpage}
+  \noindent
+  \begin{minipage}[t]{0.55\textwidth}
+    \Large
+    \textbf{Relatore}\\ \@relatore\\[0.9em]
+    \textbf{Correlatore}\\ \@correlatore
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.38\textwidth}
+    \Large\raggedleft
+    \textbf{Tesi di}\\ \@author\\ Matricola \@matricola
+  \end{minipage}
+  \vskip3em
+  \begin{center}\Large Anno Accademico \@anno\end{center}
+  \vskip1cm
+  \newpage
+  \advance\oddsidemargin by \coverdx}
 \makeatother
 
 \begin{document}
@@ -56,6 +67,7 @@
 \correlatore{Prof. Massimo Walter Rivolta}
 
 \titlep
+\ifstampa\thispagestyle{empty}\null\newpage\fi
 %  Testo: indicazioni di Ateneo, margini 2.5 cm e interlinea 1.5
 \newgeometry{margin=2.5cm}
 \pagestyle{plain}

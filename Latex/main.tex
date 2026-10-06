@@ -1,4 +1,8 @@
-\documentclass[a4paper,12pt]{report}
+%  STAMPA FRONTE/RETRO: con \stampatrue le pagine sono alternate (twoside), i capitoli
+%  iniziano a destra e il retro del frontespizio resta bianco. Con \stampafalse si
+%  ottiene il file digitale singolo (come il PDF depositato).
+\newif\ifstampa \stampatrue
+\ifstampa\documentclass[a4paper,12pt,twoside,openright]{report}\else\documentclass[a4paper,12pt]{report}\fi
 \usepackage[utf8]{inputenc}
 \PassOptionsToPackage{hidelinks}{hyperref}
 \usepackage[a-2b]{pdfx}
@@ -35,6 +39,11 @@
 
 \usepackage{csquotes}
 %  BIBLIOGRAFIA: motore biblatex/biber per citazioni a piè di pagina 
+\makeatletter
+\ifstampa
+\renewcommand\cleardoublepage{\clearpage\if@twoside\ifodd\c@page\else\hbox{}\thispagestyle{empty}\newpage\fi\fi}
+\fi
+\makeatother
 \usepackage[backend=biber, citestyle=verbose-ibid, bibstyle=numeric, sorting=none, giveninits=true]{biblatex}
 \addbibresource{bibliografia.bib}
 
@@ -61,31 +70,41 @@
 \makeatletter
 \def\@sottotitolo{}
 \newcommand{\sottotitolo}[1]{\gdef\@sottotitolo{#1}}
+\newdimen\coverdx
 \def\titlep{%
   \thispagestyle{empty}%
+  \enlargethispage{3cm}%
+  \coverdx=\dimexpr(2in+2\oddsidemargin+\textwidth-\paperwidth)/2\relax
+  \advance\oddsidemargin by -\coverdx
+  \vspace*{-1.8cm}%
   \begin{center}
-    \includegraphics[width=0.78\textwidth]{img/logo_unimi.png}\\[0.8em]
-    \Large {\em \@dept}
+    \includegraphics[width=0.96\textwidth]{img/logo_unimi.png}\\[1.6em]
+    {\Large\em \@dept}
   \end{center}
-  \vskip0.5in
+  \vfill
   \begin{center}
-    {\hyphenpenalty=10000\setstretch{1.15}\huge\bfseries \@title\par}%
+    {\hyphenpenalty=10000\setstretch{1.15}\Huge\bfseries \@title\par}%
     \ifx\@sottotitolo\@empty\else
       \vspace{1.4em}%
       {\hyphenpenalty=10000\setstretch{1.15}\fontsize{15}{18}\selectfont \@sottotitolo\par}%
     \fi
   \end{center}
   \vfill
-  \begin{description}
-    \item[Relatore:] \@relatore
-    \item[Correlatore:] \@correlatore
-  \end{description}
-  \vskip0.5in
-  \null\hfill
-  \parbox{3in}{Tesi di: \\ \@author \\ Matricola: \@matricola}
-  \vfill
-  \begin{center}\large Anno Accademico \@anno\end{center}
-  \newpage}
+  \noindent
+  \begin{minipage}[t]{0.55\textwidth}
+    \Large
+    \textbf{Relatore}\\ \@relatore\\[0.9em]
+    \textbf{Correlatore}\\ \@correlatore
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.38\textwidth}
+    \Large\raggedleft
+    \textbf{Tesi di}\\ \@author\\ Matricola \@matricola
+  \end{minipage}
+  \vskip3em
+  \begin{center}\Large Anno Accademico \@anno\end{center}
+  \vskip1cm
+  \newpage
+  \advance\oddsidemargin by \coverdx}
 \makeatother
 
 %  TITOLO E DATI 
